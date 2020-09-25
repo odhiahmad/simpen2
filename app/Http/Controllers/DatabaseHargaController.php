@@ -16,10 +16,10 @@ class DatabaseHargaController extends Controller
     public function index(Request $request)
     {
 
-        $databaseHarga = DatabaseHarga::orderBy('id', 'DESC')->paginate(6);
+        $databaseHarga = DatabaseHarga::where('status','1')->orderBy('id', 'DESC')->paginate(6);
 
         if ($request->ajax()) {
-            return view('pages/user/database-harga/loadData', compact('databaseHarga'));
+            return view('pages/user/database-harga/indexHarga', compact('databaseHarga'));
         }
         return view('pages/user/database-harga/indexHarga', compact('databaseHarga'));
 
@@ -118,6 +118,7 @@ class DatabaseHargaController extends Controller
         $databaseHarga->asal_usul_barang = $request->asalUsulBarang;
         $databaseHarga->keterangan = $request->keterangan;
         $databaseHarga->foto = $new_name;
+        $databaseHarga->status = '1';
 
         if ($databaseHarga->save()) {
             return response()->json(['success' => 'Data Added successfully.']);
@@ -204,8 +205,11 @@ class DatabaseHargaController extends Controller
      */
     public function destroy($id)
     {
-        DatabaseHarga::find($id)->delete();
+        $form_data_insert = array(
+          'status'=>0
+        );
 
-        return response()->json(['success' => 'Book deleted successfully.']);
+        DatabaseHarga::whereId($id)->update($form_data_insert);
+        return response()->json(['success' => 'Database Harga berhasil di hapus.']);
     }
 }

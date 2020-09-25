@@ -17,7 +17,7 @@
                                 data-dropdown-toggle="click" aria-expanded="true">
                                 <a href="#"
                                    class="dropdown-toggle m-dropdown__toggle btn btn-outline-metal m-btn  m-btn--icon m-btn--pill">
-                                    <span> SISTEM MANAJEMEN PENGADAAN UPDK PEKANBARU</span>
+                                    <span> SIM PENGADAAN UPDK PEKANBARU</span>
                                 </a>
                                 <div class="m-dropdown__wrapper">
                                     <span
@@ -63,6 +63,15 @@
                                                                 <i class="m-nav__link-icon flaticon-dashboard"></i>
                                                                 <span class="m-nav__link-text">
 																			Dashboard
+																		</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a href='{!! url('user/user'); !!}'
+                                                               class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-dashboard"></i>
+                                                                <span class="m-nav__link-text">
+																			Data User
 																		</span>
                                                             </a>
                                                         </li>
@@ -243,6 +252,15 @@
                                         <span class="m-menu__item-here"></span>
                                         <span class="m-menu__link-text">
 													Dashboard
+												</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->is('user/user/index') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
+                                    aria-haspopup="true">
+                                    <a href='{!! url('user/user/index'); !!}' class="m-menu__link ">
+                                        <span class="m-menu__item-here"></span>
+                                        <span class="m-menu__link-text">
+													Data User
 												</span>
                                     </a>
                                 </li>

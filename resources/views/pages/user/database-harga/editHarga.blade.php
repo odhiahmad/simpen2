@@ -194,7 +194,7 @@
                             }
                             if (data.success) {
                                 toastr.success(data.success)
-                                $('#sample_form')[0].reset();
+
 
                             }
 

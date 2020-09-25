@@ -34,18 +34,28 @@ Route::group(['prefix'=>'admin','middleware' => ['admin']],function (){
 Route::group(['prefix'=>'user','middleware' => ['user']],function (){
     Route::get('beranda', 'BerandaController@index');
 
+    Route::group(['prefix'=>'user'],function (){
 
+        Route::post('store', 'UserController@store')->name('user.store');
+        Route::post('update', 'UserController@update')->name('user.update');
+        Route::get('destroy/{id}', 'UserController@destroy');
+        Route::get('index', 'UserController@index')->name('user.index');
+    });
     Route::group(['prefix'=>'inisiasi-pengadaan'],function (){
         Route::get('index', 'InisiasiPengadaanController@index');
         Route::get('pembayaran', 'InisiasiPengadaanController@indexPembayaranPengadaan');
         Route::get('tambah', 'InisiasiPengadaanController@tambahPengadaan');
 
         Route::post('insert', 'InisiasiPengadaanController@store')->name('inisiasi-pengadaan.insert');
+        Route::post('update', 'InisiasiPengadaanController@updateData')->name('inisiasi-pengadaan.update');
+        Route::get('update-data/{id}', 'InisiasiPengadaanController@indexUpdateView');
     });
 
 
     Route::group(['prefix'=>'data-kontrak'],function (){
         Route::get('index', 'DataKontrakController@index');
+        Route::post('uploadDoc', 'DataKontrakController@uploadDoc')->name('dataKontrak.uploadDoc');
+        Route::post('convertPdf', 'DataKontrakController@convertPdf')->name('dataKontrak.convertPdf');
     });
 
     Route::group(['prefix'=>'database-harga'],function (){
@@ -57,7 +67,7 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
         Route::get('tambah', 'DatabaseHargaController@indexTambah');
         Route::get('/cari', 'DatabaseHargaController@cari')->name('databaseHarga.cari');
 
-
+        Route::get('destroy/{id}', 'DatabaseHargaController@destroy');
         Route::post('insert', 'DatabaseHargaController@store')->name('databaseHarga.insert');
         Route::post('ubahAksi', 'DatabaseHargaController@update')->name('databaseHarga.ubahAksi');
     });

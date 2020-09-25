@@ -26,7 +26,7 @@ class UserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages/admin/data-user/indexUser');
+        return view('pages/user/data-user/indexUser');
     }
 
     public function create()

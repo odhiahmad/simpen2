@@ -18,7 +18,8 @@ class DatabaseHarga extends Model
         'hargaSatuan',
         'asalUsulBarang',
         'keterangan',
-        'foto'
+        'foto',
+        'status'
     ];
 
 }

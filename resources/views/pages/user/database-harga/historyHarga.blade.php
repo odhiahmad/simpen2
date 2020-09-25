@@ -98,10 +98,12 @@
                     {
                         data: 'harga_dari',
                         name: 'harga_dari',
+                        render: $.fn.dataTable.render.number( ',', '.', 3, 'Rp' )
                     },
                     {
                         data: 'harga_ke',
                         name: 'harga_ke',
+                        render: $.fn.dataTable.render.number( ',', '.', 3, 'Rp' )
                     },
                 ]
             });

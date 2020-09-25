@@ -24,32 +24,27 @@
                     <div class="row m-row--no-padding m-row--col-separator-xl">
                         <div class="col-md-12 col-lg-6 col-xl-3">
                             <!--begin::Total Profit-->
-                            <div class="m-widget24">
+                            <a href='{!! url('user/database-harga/index'); !!}' class="m-widget24">
                                 <div class="m-widget24__item">
                                     <h4 class="m-widget24__title">Total Produk</h4>
-                                    <br />
+                                    <br/>
                                     <span class="m-widget24__desc">
                           di Database Harga
                         </span>
                                     <span class="m-widget24__stats m--font-brand">
-                          4
+                          {{$totalProduk}}
                         </span>
                                     <div class="m--space-10"></div>
-                                    <div class="progress m-progress--sm">
-                                        <div class="progress-bar m--bg-brand" role="progressbar" style="width: 78%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <span class="m-widget24__change"> Change </span>
-                                    <span class="m-widget24__number"> 78% </span>
                                 </div>
-                            </div>
+                            </a>
                             <!--end::Total Profit-->
                         </div>
                         <div class="col-md-12 col-lg-6 col-xl-3">
                             <!--begin::New Feedbacks-->
-                            <div class="m-widget24">
+                            <a href='{!! url('user/data-kontrak/index'); !!}' class="m-widget24">
                                 <div class="m-widget24__item">
                                     <h4 class="m-widget24__title">Kontrak Baru</h4>
-                                    <br />
+                                    <br/>
                                     <span class="m-widget24__desc">
                           di Inisiasi Pengadaan
                         </span>
@@ -57,21 +52,16 @@
                           26
                         </span>
                                     <div class="m--space-10"></div>
-                                    <div class="progress m-progress--sm">
-                                        <div class="progress-bar m--bg-info" role="progressbar" style="width: 84%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <span class="m-widget24__change"> Change </span>
-                                    <span class="m-widget24__number"> 84% </span>
                                 </div>
-                            </div>
+                            </a>
                             <!--end::New Feedbacks-->
                         </div>
                         <div class="col-md-12 col-lg-6 col-xl-3">
                             <!--begin::New Orders-->
-                            <div class="m-widget24">
+                            <a href='{!! url('user/inisiasi-pengadaan/index'); !!}' class="m-widget24">
                                 <div class="m-widget24__item">
                                     <h4 class="m-widget24__title">Kontrak Dalam Proses</h4>
-                                    <br />
+                                    <br/>
                                     <span class="m-widget24__desc">
                           di Inisiasi Pengadaan
                         </span>
@@ -79,21 +69,17 @@
                           567
                         </span>
                                     <div class="m--space-10"></div>
-                                    <div class="progress m-progress--sm">
-                                        <div class="progress-bar m--bg-danger" role="progressbar" style="width: 69%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <span class="m-widget24__change"> Change </span>
-                                    <span class="m-widget24__number"> 69% </span>
+
                                 </div>
-                            </div>
+                            </a>
                             <!--end::New Orders-->
                         </div>
                         <div class="col-md-12 col-lg-6 col-xl-3">
                             <!--begin::New Users-->
-                            <div class="m-widget24">
+                            <a href='{!! url('user/inisiasi-pengadaan-sipil/data-master'); !!}' class="m-widget24">
                                 <div class="m-widget24__item">
                                     <h4 class="m-widget24__title">Kontrak Selesai</h4>
-                                    <br />
+                                    <br/>
                                     <span class="m-widget24__desc">
                           di Inisiasi Pengadaan
                         </span>
@@ -101,12 +87,11 @@
                           276
                         </span>
                                     <div class="m--space-10"></div>
-                                    <div class="progress m-progress--sm">
-                                        <div class="progress-bar m--bg-success" role="progressbar" style="width: 90%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <span class="m-widget24__change"> Change </span>
-                                    <span class="m-widget24__number"> 90% </span>
+
+                                    <span class="m-widget24__change">  </span>
+                                    <span class="m-widget24__number">  </span>
                                 </div>
+                            </a>
                             </div>
                             <!--end::New Users-->
                         </div>

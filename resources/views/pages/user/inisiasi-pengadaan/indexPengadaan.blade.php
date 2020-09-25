@@ -54,7 +54,7 @@
                                         <tr>
                                             <th>Judul</th>
                                             <th>Tahun</th>
-                                            <th>Jenis</th>
+                                            <th>Tanggal di Terima</th>
                                             <th>Aksi</th>
                                         </tr>
                                         </thead>
@@ -85,8 +85,8 @@
                         name: 'tahun'
                     },
                     {
-                        data: 'jenis',
-                        name: 'jenis',
+                        data: 'tgl_diterima_panitia',
+                        name: 'tgl_diterima_panitia',
                     },
                     {
                         data: 'action',

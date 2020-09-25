@@ -32,7 +32,7 @@
             <div class="row">
 
                 <div class="col-lg-12">
-                    <!--begin::Portlet-->
+                    <example-component></example-component>
                     <div class="m-portlet m-portlet--creative m-portlet--first m-portlet--bordered-semi">
                         <div class="m-portlet__head">
                             <div class="m-portlet__head-caption">
@@ -53,36 +53,37 @@
                             <div class="m-portlet__head-tools">
                                 <ul class="m-portlet__nav">
                                     <li class="m-portlet__nav-item">
-                                        <a href="#" class="m-portlet__nav-link btn btn-secondary m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
+                                        <a href="#"
+                                           class="m-portlet__nav-link btn btn-secondary m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill">
                                             <i class="la la-tint"></i>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="m-portlet__body">
-                            <div class="form-group m-form__group">
-                                <label for="exampleInputEmail1">
-                                    Pilih Dokumen
-                                </label>
-                                <div></div>
-                                <label class="custom-file">
-                                    <input type="file" id="file2" class="custom-file-input">
-                                    <span class="custom-file-control"></span>
-                                </label>
-                            </div>
-                            <div class="m-form__actions">
-                                <button type="reset" class="btn btn-primary">
-                                    Submit
-                                </button>
-                                <button type="reset" class="btn btn-secondary">
-                                    Cancel
-                                </button>
-                            </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-form-label col-lg-4 col-sm-12">
 
+                            </label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <form id="sample_form" method="POST" enctype="multipart/form-data">
+                                    @csrf
+
+                                    {{-- Name/Description fields, irrelevant for this article --}}
+
+                                    <div class="form-group">
+                                        <label for="document">Documents</label>
+                                        <div class="needsclick dropzone" id="document-dropzone">
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <input type="submit" value="Submit" name="action_button" id="action_button"
+                                               class="btn btn-success">
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
-
                     </div>
 
                     <!--end::Portlet-->
@@ -97,33 +98,71 @@
         </div>
     </div>
     <script>
+
         $(document).ready(function () {
-            $('#user_table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "/user/data-kontrak/index",
-                },
-                columns: [
-                    {
-                        data: 'judul',
-                        name: 'judul'
-                    },
-                    {
-                        data: 'tahun',
-                        name: 'tahun'
-                    },
-                    {
-                        data: 'jenis',
-                        name: 'jenis',
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        order: false
-                    },
-                ]
+
+            $('#sample_form').on('submit', function (event) {
+                event.preventDefault();
+                if ($('#action_button').val() == 'Submit') {
+                    $.ajax({
+                        url: "{{ route('dataKontrak.convertPdf') }}",
+                        method: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success) {
+
+
+                            }
+
+
+                        }
+                    });
+
+                }
             });
         });
+        var uploadedDocumentMap = {}
+        Dropzone.options.documentDropzone = {
+            url: '{{ route('dataKontrak.uploadDoc') }}',
+            maxFilesize: 2, // MB
+            maxFiles: 1,
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            success: function (file, response) {
+                $('form').append('<input type="hidden" name="name" value="' + response.name + '">')
+                uploadedDocumentMap[file.name] = response.name
+            },
+            removedfile: function (file) {
+                file.previewElement.remove()
+                var name = ''
+                if (typeof file.file_name !== 'undefined') {
+                    name = file.file_name
+                } else {
+                    name = uploadedDocumentMap[file.name]
+                }
+                $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+            },
+            init: function () {
+                @if(isset($project) && $project->document)
+                var files =
+                {!! json_encode($project->document) !!}
+                    for (var i in files) {
+                    var file = files[i]
+                    this.options.addedfile.call(this, file)
+                    file.previewElement.classList.add('dz-complete')
+                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+                }
+                @endif
+            }
+        }
     </script>
+@section('scripts')
+    <script src="{{ asset('watermark.js') }}" charset="utf-8"></script>
+@endsection
 @endsection

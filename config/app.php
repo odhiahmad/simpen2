@@ -174,6 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        Crabbly\Fpdf\FpdfServiceProvider::class
 
     ],
 
@@ -226,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
     ],
 
 ];

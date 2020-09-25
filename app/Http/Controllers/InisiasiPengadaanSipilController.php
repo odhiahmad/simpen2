@@ -10,6 +10,8 @@ class InisiasiPengadaanSipilController extends Controller
         return view('pages/user/inisiasi-pengadaan-sipil/indexInisiasiPengadaan');
     }
 
+
+
     public function dataMaster(){
         return view('pages/user/inisiasi-pengadaan-sipil/indexInisiasiPengadaanDataMaster');
     }
