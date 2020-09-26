@@ -27,6 +27,8 @@ class DatabaseHargaController extends Controller
     }
 
 
+
+
     public function cari(Request $request)
     {
         if ($request->has('q')) {

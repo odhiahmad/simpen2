@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DatabaseHarga;
 use App\DataKontrak;
+use App\Http\Controllers\Template\BeritaAcaraPengadaanLangsung;
 use App\Pengadaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -27,6 +28,16 @@ class InisiasiPengadaanController extends Controller
                 ->make(true);
         }
         return view('pages/user/inisiasi-pengadaan/indexPengadaan');
+    }
+
+    public function tesWord(Request $request){
+        $surveiHarga = new SurveyHargaPasar();
+        $surveiHarga->SurveiHargaPasar($request->nama,$request->nomor,$request->judul,$request->pejabatPelaksan,$request->disusunOleh,$request->hari);
+    }
+
+    public function tesWordBAPL(Request $request){
+        $surveiHarga = new BeritaAcaraPengadaanLangsung();
+        $surveiHarga->BeritaAcaraPengadaanLangsung($request->nama,$request->nomor,$request->judul,$request->pejabatPelaksan,$request->disusunOleh,$request->hari);
     }
 
     public function indexUpdateView(Request $request)

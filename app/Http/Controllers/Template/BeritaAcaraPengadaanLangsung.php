@@ -1,19 +1,17 @@
 <?php
 
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Template;
 
 
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\Style\Font;
 use PhpOffice\PhpWord\Style\Cell;
-use PhpOffice\PhpWord\Shared\Converter;
-use PhpOffice\PhpWord\Shared\Html;
-class SurveyHargaPasar
+
+class BeritaAcaraPengadaanLangsung
 {
-    public function SurveiHargaPasar($nama,$nomor,$judul,$pejabatPelaksana,$disusunOleh,$hari){
+    public function BeritaAcaraPengadaanLangsung($nama,$nomor,$judul,$pejabatPelaksana,$disusunOleh,$hari){
         $phpWord = new PhpWord();
         $paragraphOptions = array(
             'spaceBefore' => 0, 'spaceAfter' => 0
@@ -28,7 +26,7 @@ class SurveyHargaPasar
 
         $section->addText(
             'Berita Acara'
-        ,array('alignment'=>'center','name' => 'Arial', 'size' => 14,'underline' => 'single','bold'=> true),['alignment' => Jc::CENTER]
+            ,array('alignment'=>'center','name' => 'Arial', 'size' => 14,'underline' => 'single','bold'=> true),['alignment' => Jc::CENTER]
         );
 
         $section->addText(
@@ -63,40 +61,15 @@ class SurveyHargaPasar
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::BOTH]
         );
 
-        $section->addText(
-            '1. PT/CV'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10,'bold'=> true),['alignment' => Jc::START]
-        );
+        $numberStyleList = array('listType' => \PHPWord_Style_ListItem::TYPE_NUMBER);
+        $alphStyleList = array('listType' => \PHPWord_Style_ListItem::TYPE_ALPHANUM);
 
-        $styleTable = array('borderSize' => 6, 'borderColor' => '999999', 'cellMargin' => 80);
-        $styleFirstRow = array('bgColor' => 'ffcdcd');
-        $styleCell = array('valign' => 'center');
-        $styleCellBTLR = array('valign' => 'center', 'textDirection' => Cell::TEXT_DIR_BTLR);
-        $fontStyle = array('bold' => true, 'align' => 'center');
-        $phpWord->addTableStyle('Fancy Table', $styleTable, $styleFirstRow);
-        $table = $section->addTable('Fancy Table');
-        $table->addRow(300);
-        $table->addCell(200, $styleCell)->addText(htmlspecialchars('No'), $fontStyle);
-        $table->addCell(4000, $styleCell)->addText(htmlspecialchars('URAIAN'), $fontStyle);
-        $table->addCell(4000, $styleCell)->addText(htmlspecialchars('SPESIFIKASI'), $fontStyle);
-        $table->addCell(1000, $styleCell)->addText(htmlspecialchars('VOL'), $fontStyle);
-        $table->addCell(1000, $styleCell)->addText(htmlspecialchars('SAT'), $fontStyle);
-        $table->addCell(1300, $styleCell)->addText(htmlspecialchars('HARGA'), $fontStyle);
-        for ($i = 1; $i <= 3; $i++) {
-            $table->addRow();
-            $table->addCell(200)->addText(htmlspecialchars("{$i}"));
-            $table->addCell(4000)->addText(htmlspecialchars("Cell {$i}"));
-            $table->addCell(4000)->addText(htmlspecialchars("Cell {$i}"));
-            $table->addCell(1000)->addText(htmlspecialchars("Cell {$i}"));
-            $table->addCell(1000)->addText(htmlspecialchars("Cell {$i}"));
-            $table->addCell(1300)->addText(htmlspecialchars("Cell {$i}"));
-        }
-        $section->addText(
-            '',array('name' => 'Arial', 'size' => 10),['alignment' => Jc::BOTH]
-        );
-        $section->addText(
-            'Catatan :',array('name' => 'Arial', 'size' => 10),['alignment' => Jc::BOTH]
-        );
+        $section->addListItem('One', 0, null, $numberStyleList);
+        $section->addListItem('Two', 0, null, $numberStyleList);
+        $section->addListItem('Alpha', 1, null, $alphStyleList);
+        $section->addListItem('Beta', 1, null, $alphStyleList);
+        $section->addListItem('Three', 0, null, $numberStyleList);
+        $section->addListItem('Charlie', 1, null, $alphStyleList);
 
         $section->addText(
             'Demikian Survei Harga Pasar untuk paket pekerjaan pengadaan barang sebagaimana tersebut diatas ini dibuat untuk dapat dipergunkana sebagaimana mestinya.'
