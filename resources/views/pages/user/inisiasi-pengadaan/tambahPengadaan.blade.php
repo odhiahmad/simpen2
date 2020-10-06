@@ -1,7 +1,6 @@
 @section('title','Data Kontrak | Tambah')
 @extends('../../../main')
 @section('content')
-
     <div>
         <div class="m-subheader">
             <div class="d-flex align-items-center">
@@ -82,29 +81,40 @@
                                 <input
                                     name="tanggal_diterima_panitia"
                                     id="tanggal_diterima_panitia"
-                                    type='text' class="form-control  m-input" readonly
+                                    type='text' class="form-control  m-input tanggal_diterima_panitia" readonly
                                     placeholder="Tanggal Di Terima Panitia"/>
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    Bagian:
+                                    Bagian
                                 </label>
-                                <input type="text" class="form-control m-input" id="bagian" name="bagian"
-                                       placeholder="Masukan Bagian">
-                                <span class="m-form__help"></span></div>
+
+                                <select class="form-control bagian" id="bagian" name="bagian">
+                                    @foreach ($dataBagian as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="col-lg-6">
                                 <label>
-                                    Fungsi Pembangkit:
+                                    Fungsi Pembakit
                                 </label>
-                                <input type="text" class="form-control m-input" id="fungsi_pembangkit"
-                                       name="fungsi_pembangkit" placeholder="Masukan Fungsi Pembangkit">
-                                <span class="m-form__help"></span></div>
+                                <select class="form-control fungsi_pembangkit" id="fungsi_pembangkit" name="fungsi_pembangkit">
+                                    @foreach ($dataFungsiPembangkit as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="col-lg-6">
                                 <label>
                                     No Undang PL:
                                 </label>
-                                <input type="text" class="form-control m-input" id="no_undang_pl" name="no_undang_pl"
+                                <input type="text" class="form-control m-input no_undang_pl" id="no_undang_pl" name="no_undang_pl"
                                        placeholder="Masukan No Undang PL">
                                 <span class="m-form__help"></span></div>
                             <div class="col-lg-6">
@@ -116,11 +126,15 @@
                                 <span class="m-form__help"></span></div>
                             <div class="col-lg-6">
                                 <label>
-                                    Metode Pengadaan:
+                                    Metode Pengadaan
                                 </label>
-                                <input type="text" class="form-control m-input" id="metode_pengadaan"
-                                       name="metode_pengadaan" placeholder="Masukan Metode pengadaan">
-                                <span class="m-form__help"></span>
+                                <select class="form-control metode_pengadaan" id="metode_pengadaan" name="metode_pengadaan">
+                                    @foreach ($dataMetodePengadaan as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-lg-6">
                                 <label>
@@ -140,69 +154,127 @@
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    Tempat Penyerahan:
+                                    Tempat Penyerahan
                                 </label>
-                                <input type="text" class="form-control m-input" id="tempat_penyerahan"
-                                       name="tempat_penyerahan" placeholder="Masukan Tempat Penyerahan">
+                                <select class="form-control tempat_penyerahan" id="tempat_penyerahan" name="tempat_penyerahan">
+                                    @foreach ($dataTempatPenyerahan as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                                <span class="m-form__help">`</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>
+                                    Masa Berlaku Surat
+                                </label>
+                                <select class="form-control masa_berlaku_surat" id="masa_berlaku_surat" name="masa_berlaku_surat">
+                                    @foreach ($dataMasaBerlaku as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span class="m-form__help">`</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>
+                                    Cara Pembayaran
+                                </label>
+                                <select class="form-control cara_pembayaran" id="cara_pembayaran" name="cara_pembayaran">
+                                    @foreach ($dataCaraPembayaran as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span class="m-form__help">`</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>
+                                    Jenis Perjanjian
+                                </label>
+                                <select class="form-control cara_pembayaran" id="jenis_perjanjian" name="jenis_perjanjian">
+                                    @foreach ($dataPerjanjianKontrak as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    Masa Berlaku Surat:
+                                    Sumber Dana
                                 </label>
-                                <input type="text" class="form-control m-input" id="masa_berlaku_surat"
-                                       name="masa_berlaku_surat" placeholder="Masukan  Masa Berlaku Surat">
+                                <select class="form-control sumber_dana" id="sumber_dana" name="sumber_dana">
+                                    @foreach ($dataSumberDana as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span class="m-form__help">`</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>
+                                  Masa Garansi
+                                </label>
+                                <select class="form-control masa_garansi" id="masa_garansi" name="masa_garansi">
+                                    @foreach ($dataMasaGaransi as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    Cara Pembayaran:
+                                    Syarat  Bidang
                                 </label>
-                                <input type="text" class="form-control m-input" id="cara_pembayaran"
-                                       name="cara_pembayaran" placeholder="Masukan Cara Pembayaran">
-                                <span class="m-form__help"></span>
-                            </div>
-                            <div class="col-lg-6">
-                                <label>
-                                    Jenis Perjanjian:
-                                </label>
-                                <input type="text" class="form-control m-input" id="jenis_perjanjian"
-                                       name="jenis_perjanjian" placeholder="Masukan Jenis Perjanjian">
-                                <span class="m-form__help"></span>
-                            </div>
-                            <div class="col-lg-6">
-                                <label>
-                                    Sumber Dana:
-                                </label>
-                                <input type="text" class="form-control m-input" id="sumber_dana" name="sumber_dana"
-                                       placeholder="Masukan ">
-                                <span class="m-form__help"></span>
-                            </div>
-                            <div class="col-lg-6">
-                                <label>
-                                    Masa Garansi:
-                                </label>
-                                <input type="text" class="form-control m-input" id="masa_garansi" name="masa_garansi"
-                                       placeholder="Masukan ">
-                                <span class="m-form__help"></span>
-                            </div>
-                            <div class="col-lg-6">
-                                <label>
-                                    Syarat Bidang:
-                                </label>
-                                <input type="text" class="form-control m-input" id="syarat_bidang" name="syarat_bidang"
-                                       placeholder="Masukan Syarat Bidang">
+                                <select class="form-control syarat_bidang" id="syarat_bidang" name="syarat_bidang">
+                                    @foreach ($dataSyaratBidangUsaha as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="m-form__help"></span>
                             </div>
 
+
+
+
                         </div>
+
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6">
                                 <label>
-                                    VFMC:
+                                    VFMC 1
                                 </label>
-                                <input type="text" class="form-control m-input" id="vfmc" name="vfmc"
-                                       placeholder="Masukan VFMC">
+                                <select class="form-control vfmc" id="vfmc" name="vfmc">
+                                    @foreach ($dataVfmc as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span class="m-form__help">`</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>
+                                    VFMC 1
+                                </label>
+                                <select class="form-control vfmc2" id="vfmc2" name="vfmc2">
+                                    @foreach ($dataVfmc as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
@@ -225,8 +297,7 @@
                                 <label>
                                     Pejabat Pelaksana:
                                 </label>
-                                <input type="text" class="form-control m-input" id="pejabat_pelaksana"
-                                       name="pejabat_pelaksana"
+                                <input type="text" class="form-control m-input" id="pejabat_pelaksana" name="pejabat_pelaksana"
                                        placeholder="Masukan Pejabat Pelaksana">
                                 <span class="m-form__help"></span>
                             </div>
@@ -240,10 +311,15 @@
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    Pengawas:
+                                    Pengawas
                                 </label>
-                                <input type="text" class="form-control m-input" id="pengawas" name="pengawas"
-                                       placeholder="Masukan Pengawas">
+                                <select class="form-control pengawas" id="pengawas" name="pengawas">
+                                    @foreach ($dataPengawas as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
@@ -256,10 +332,15 @@
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    PIC Pelaksana:
+                                    PIC Pelaksana
                                 </label>
-                                <input type="text" class="form-control m-input" id="pic_pelaksana" name="pic_pelaksana"
-                                       placeholder="Masukan PIC Pelaksana">
+                                <select class="form-control" id="pic_pelaksana" name="pic_pelaksana">
+                                    @foreach ($dataPicPelaksana as $key)
+                                        <option value="{{ $key->nama }}">
+                                            {{ $key->nama}}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
@@ -302,7 +383,7 @@
                                 <label>
                                     Hari:
                                 </label>
-                                <input type="text" class="form-control m-input" id="hari" name="hari"
+                                <input type="text" class="form-control m-input" readonly id="hari" name="hari"
                                        placeholder="">
                                 <span class="m-form__help"></span>
                             </div>
@@ -337,11 +418,11 @@
                             <label class="col-lg-2 col-form-label">
                                 Survei Harga Pasar:
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv1" name="nppv1" class="form-control m-input">
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv1" readonly name="nppv1" class="form-control m-input">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input survey_harga_pasar_jumlah"
                                        name="survey_harga_pasar_jumlah"
                                        value="0"
@@ -365,11 +446,11 @@
                             <label class="col-lg-2 col-form-label">
                                 HPS:
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv2" name="nppv2" class="form-control m-input">
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv2" readonly name="nppv2" class="form-control m-input">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 {{--                                <input type="hidden" class="form-control m-input hps_jumlah_temp"--}}
                                 {{--                                       name="hps_jumlah_temp"--}}
                                 {{--                                       value="0"--}}
@@ -397,11 +478,11 @@
                             <label class="col-lg-2 col-form-label">
                                 Undangan Pengadaan Langsung:
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv3" name="nppv3" class="form-control m-input">
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv3" readonly name="nppv3" class="form-control m-input">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input undangan_pengadaan_langsung_jumlah"
                                        name="undangan_pengadaan_langsung_jumlah"
                                        value="0"
@@ -423,56 +504,112 @@
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
-                                Pemasukan Dok. Penawaran:
+                                Pemasukan Dok. Penawaran Dari
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv4" name="nppv4" class="form-control m-input">
-                                <span class="m-form__help"></span>
+                            <div class="col-lg-4">
+{{--                                <input type="text" id="nppv4" readonly name="nppv4" class="form-control m-input">--}}
+{{--                                <span class="m-form__help"></span>--}}
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input"
-                                       name="pemasukan_dok_penawaran_jumlah"
+                                       name="pemasukan_dok_penawaran_jumlah_dari"
                                        value="0"
-                                       id="pemasukan_dok_penawaran_jumlah" placeholder="Jumlah">
+                                       id="pemasukan_dok_penawaran_jumlah_dari" placeholder="Jumlah">
                                 <span class="m-form__help "></span>
                             </div>
                             <div class="col-lg-2">
                                 <input
-                                    name="pemasukan_dok_penawaran_tgl"
-                                    id="pemasukan_dok_penawaran_tgl"
+                                    name="pemasukan_dok_penawaran_tgl_dari"
+                                    id="pemasukan_dok_penawaran_tgl_dari"
                                     type='text' class="form-control" readonly placeholder="Tanggal"/>
                             </div>
                             <div class="col-lg-3">
-                                <input name="pemasukan_dok_penawaran_hari"
-                                       id="pemasukan_dok_penawaran_hari"
+                                <input name="pemasukan_dok_penawaran_hari_dari"
+                                       id="pemasukan_dok_penawaran_hari_dari"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
-                                Evaluasi Dokumen:
+                                Pemasukan Dok. Penawaran Sampai Dengan
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv5" name="nppv5" class="form-control m-input">
-                                <span class="m-form__help"></span>
+                            <div class="col-lg-4">
+{{--                                <input type="text" id="nppv4" readonly name="nppv4" class="form-control m-input">--}}
+{{--                                <span class="m-form__help"></span>--}}
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input"
-                                       name="evaluasi_dokumen_jumlah"
+                                       name="pemasukan_dok_penawaran_jumlah_sd"
                                        value="0"
-                                       id="evaluasi_dokumen_jumlah" placeholder="Jumlah">
+                                       id="pemasukan_dok_penawaran_jumlah_sd" placeholder="Jumlah">
                                 <span class="m-form__help "></span>
                             </div>
                             <div class="col-lg-2">
                                 <input
-                                    name="evaluasi_dokumen_tgl"
-                                    id="evaluasi_dokumen_tgl"
+                                    name="pemasukan_dok_penawaran_tgl_sd"
+                                    id="pemasukan_dok_penawaran_tgl_sd"
                                     type='text' class="form-control" readonly placeholder="Tanggal"/>
                             </div>
                             <div class="col-lg-3">
-                                <input name="evaluasi_dokumen_hari"
-                                       id="evaluasi_dokumen_hari"
+                                <input name="pemasukan_dok_penawaran_hari_sd"
+                                       id="pemasukan_dok_penawaran_hari_sd"
+                                       type="text" class="form-control m-input" placeholder="Hari">
+                                <span class="m-form__help"></span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-2 col-form-label">
+                                Evaluasi Dokumen Dari:
+                            </label>
+                            <div class="col-lg-4">
+{{--                                <input type="text" id="nppv4" readonly name="nppv4" class="form-control m-input">--}}
+{{--                                <span class="m-form__help"></span>--}}
+                            </div>
+                            <div class="col-lg-1">
+                                <input type="text" class="form-control m-input"
+                                       name="evaluasi_dokumen_jumlah_dari"
+                                       value="0"
+                                       id="evaluasi_dokumen_jumlah_dari" placeholder="Jumlah">
+                                <span class="m-form__help "></span>
+                            </div>
+                            <div class="col-lg-2">
+                                <input
+                                    name="evaluasi_dokumen_tgl_dari"
+                                    id="evaluasi_dokumen_tgl_dari"
+                                    type='text' class="form-control" readonly placeholder="Tanggal"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <input name="evaluasi_dokumen_hari_dari"
+                                       id="evaluasi_dokumen_hari_dari"
+                                       type="text" class="form-control m-input" placeholder="Hari">
+                                <span class="m-form__help"></span>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-2 col-form-label">
+                                Evaluasi Dokumen Sampai Dengan:
+                            </label>
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv4" readonly name="nppv4" class="form-control m-input">
+                                <span class="m-form__help"></span>
+                            </div>
+                            <div class="col-lg-1">
+                                <input type="text" class="form-control m-input"
+                                       name="evaluasi_dokumen_jumlah_sd"
+                                       value="0"
+                                       id="evaluasi_dokumen_jumlah_sd" placeholder="Jumlah">
+                                <span class="m-form__help "></span>
+                            </div>
+                            <div class="col-lg-2">
+                                <input
+                                    name="evaluasi_dokumen_tgl_sd"
+                                    id="evaluasi_dokumen_tgl_sd"
+                                    type='text' class="form-control" readonly placeholder="Tanggal"/>
+                            </div>
+                            <div class="col-lg-3">
+                                <input name="evaluasi_dokumen_hari_sd"
+                                       id="evaluasi_dokumen_hari_sd"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
@@ -481,11 +618,11 @@
                             <label class="col-lg-2 col-form-label">
                                 BA Hasil Klarifikasi:
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv6" name="nppv6" class="form-control m-input">
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv6" readonly name="nppv6" class="form-control m-input">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input"
                                        name="ba_hasil_klarifikasi_jumlah"
                                        value="0"
@@ -509,15 +646,15 @@
                             <label class="col-lg-2 col-form-label">
                                 BA Hasil Pengadaan Langsung:
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv7" name="nppv7" class="form-control m-input">
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv7" readonly name="nppv7" class="form-control m-input">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input"
                                        name="ba_hasil_pengadaan_langsung_jumlah"
                                        value="0"
-                                       id="ba_hasil_pengadaan_langsung" placeholder="Jumlah">
+                                       id="ba_hasil_pengadaan_langsung_jumlah" placeholder="Jumlah">
                                 <span class="m-form__help "></span>
                             </div>
                             <div class="col-lg-2">
@@ -537,11 +674,11 @@
                             <label class="col-lg-2 col-form-label">
                                 ND Usulan Tetap Pemenang:
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv8" name="nppv8" class="form-control m-input">
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv8" readonly name="nppv8" class="form-control m-input">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input"
                                        name="nd_usulan_tetap_pemenang_jumlah"
                                        value="0"
@@ -550,9 +687,10 @@
                             </div>
                             <div class="col-lg-2">
                                 <input
+
                                     name="nd_usulan_tetap_pemenang_tgl"
                                     id="nd_usulan_tetap_pemenang_tgl"
-                                    type='text' class="form-control" readonly placeholder="Tanggal"/>
+                                    type='text' class="form-control nd_usulan_tetap_pemenang_tgl" readonly placeholder="Tanggal"/>
                             </div>
                             <div class="col-lg-3">
                                 <input name="nd_usulan_tetap_pemenang_hari"
@@ -565,11 +703,11 @@
                             <label class="col-lg-2 col-form-label">
                                 ND Penetapan Pemenang:
                             </label>
-                            <div class="col-lg-3">
-                                <input type="text" id="nppv9" name="nppv9" class="form-control m-input">
+                            <div class="col-lg-4">
+                                <input type="text" id="nppv9" readonly name="nppv9" class="form-control m-input">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-1">
                                 <input type="text" class="form-control m-input"
                                        name="nd_penetapan_pemenang_jumlah"
                                        value="0"
@@ -590,6 +728,42 @@
                             </div>
                         </div>
 
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-6">
+                            <label>
+                                Upload Dokumen Kontrak:
+                            </label>
+                            <input type="file" class="form-control m-input"
+                                   id="kontrak_file" name="kontrak_file"
+                                   placeholder="Upload Dokumen Kontrak">
+                            <span class="m-form__help"></span>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>
+                                Upload Dokumen Proses:
+                            </label>
+
+                            <input type="file" class="form-control m-input"
+                                   id="proses_file" name="proses_file"
+                                   placeholder="Upload Dokumen Proses">
+                            <span class="m-form__help"></span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <div class="col-lg-12">
+                            <label>
+                                Status
+                            </label>
+                            <select class="form-control status" id="status" name="status">
+                                @foreach ($dataStatus as $key)
+                                    <option value="{{ $key->nama }}">
+                                        {{ $key->nama}}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <span class="m-form__help">`</span>
+                        </div>
                     </div>
                     <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                         <div class="m-form__actions m-form__actions--solid">
@@ -612,11 +786,60 @@
     </div>
     <script>
         $(document).ready(function () {
+            $("#bagian").select2({
+                placeholder: "Pilih Bagian",
+            });
+            $("#fungsi_pembangkit").select2({
+                placeholder: "Pilih Fungsi Pembangkit",
+            });
+            $("#tempat_penyerahan").select2({
+                placeholder: "Pilih Tempat Penyerahan",
+            });
+            $("#metode_pengadaan").select2({
+                placeholder: "Pilih Metode Pengadaan",
+            });
+            $("#tempat_penyerahan").select2({
+                placeholder: "Pilih Tempat Penyerahan",
+            });
+            $("#masa_berlaku_surat").select2({
+                placeholder: "Pilih Masa Berlaku Surat",
+            });
+            $("#cara_pembayaran").select2({
+                placeholder: "Pilih Cara Pembayaran",
+            });
+            $("#jenis_perjanjian").select2({
+                placeholder: "Pilih Jenis Perjanjian",
+            });
+            $("#sumber_dana").select2({
+                placeholder: "Pilih Sumber Dana",
+            });
+            $("#masa_garansi").select2({
+                placeholder: "Pilih Masa Garansi",
+            });
+            $("#syarat_bidang").select2({
+                placeholder: "Pilih Syarat Bidang",
+            });
+            $("#vfmc").select2({
+                placeholder: "Pilih VFMC",
+            });
+            $("#vfmc2").select2({
+                placeholder: "Pilih VFMC",
+            });
+            $("#pengawas").select2({
+                placeholder: "Pilih Pengawas",
+            });
+            $("#pic_pelaksana").select2({
+                placeholder: "Pilih PIC Pelaksana",
+            });
+            $("#status").select2({
+                placeholder: "Pilih PIC Pelaksana",
+            });
+
 
             var hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
 
-            $("#tanggal_diterima_panitia,#tanggal,#nd_penetapan_pemenang_tgl,#nd_usulan_tetap_pemenang_tgl,#ba_hasil_pengadaan_langsung_tgl,#survey_harga_pasar_tgl, #hps_tgl, #undangan_pengadaan_langsung_tgl,#pemasukan_dok_penawaran_tgl,#evaluasi_dokumen_tgl,#ba_hasil_klarifikasi_tgl").datepicker({
+            $("#tanggal_diterima_panitia,#tanggal,#nd_penetapan_pemenang_tgl,#nd_usulan_tetap_pemenang_tgl,#ba_hasil_pengadaan_langsung_tgl,#survey_harga_pasar_tgl, #hps_tgl, #undangan_pengadaan_langsung_tgl,#pemasukan_dok_penawaran_tgl_sd,#pemasukan_dok_penawaran_tgl_dari,#evaluasi_dokumen_tgl_sd,#evaluasi_dokumen_tgl_dari,#ba_hasil_klarifikasi_tgl").datepicker({
                 format: 'yyyy-mm-dd',
                 todayHighlight: !0,
                 orientation: "bottom left",
@@ -626,42 +849,64 @@
                 },
             });
 
-            $('#nd_penetapan_pemenang_tgl,#nd_usulan_tetap_pemenang_tgl,#ba_hasil_pengadaan_langsung_tgl,#survey_harga_pasar_tgl, #hps_tgl, #undangan_pengadaan_langsung_tgl,#pemasukan_dok_penawaran_tgl,#evaluasi_dokumen_tgl,#ba_hasil_klarifikasi_tgl').change(function () {
-
-                var a = $('#survey_harga_pasar_tgl').val()
-                var b = $('#hps_tgl').val()
-                var c = $('#undangan_pengadaan_langsung_tgl').val()
-                var d = $('#pemasukan_dok_penawaran_tgl').val()
-                var e = $('#evaluasi_dokumen_tgl').val()
-                var f = $('#ba_hasil_klarifikasi_tgl').val()
-                var g = $('#ba_hasil_pengadaan_langsung_tgl').val()
-                var h = $('#nd_usulan_tetap_pemenang_tgl').val()
-                var i = $('#nd_penetapan_pemenang_tgl').val()
+            $("#tanggal_diterima_panitia").change(function () {
+                var a = $('#tanggal_diterima_panitia').val()
                 var getTanggal1 = new Date(a)
-                var getTanggal2 = new Date(b)
-                var getTanggal3 = new Date(c)
-                var getTanggal4 = new Date(d)
-                var getTanggal5 = new Date(e)
-                var getTanggal6 = new Date(f)
-                var getTanggal7 = new Date(g)
-                var getTanggal8 = new Date(h)
-                var getTanggal9 = new Date(i)
+
+                $('#survey_harga_pasar_tgl').val(a)
+                $('#hps_tgl').val(a)
+                $('#undangan_pengadaan_langsung_tgl').val(a)
+                $('#pemasukan_dok_penawaran_tgl_dari').val(a)
+                $('#evaluasi_dokumen_tgl_dari').val(a)
+                $('#pemasukan_dok_penawaran_tgl_sd').val(a)
+                $('#evaluasi_dokumen_tgl_sd').val(a)
+                $('#ba_hasil_klarifikasi_tgl').val(a)
+                $('#ba_hasil_pengadaan_langsung_tgl').val(a)
+                $('#nd_usulan_tetap_pemenang_tgl').val(a)
+                $('#nd_penetapan_pemenang_tgl').val(a)
 
                 $('#survey_harga_pasar_hari').val(hari[getTanggal1.getDay()])
-                $('#hps_hari').val(hari[getTanggal2.getDay()])
-                $('#undangan_pengadaan_langsung_hari').val(hari[getTanggal3.getDay()])
-                $('#pemasukan_dok_penawaran_hari').val(hari[getTanggal4.getDay()])
-                $('#evaluasi_dokumen_hari').val(hari[getTanggal5.getDay()])
-                $('#ba_hasil_klarifikasi_hari').val(hari[getTanggal6.getDay()])
-                $('#ba_hasil_pengadaan_langsung_hari').val(hari[getTanggal7.getDay()])
-                $('#nd_usulan_tetap_pemenang_hari').val(hari[getTanggal8.getDay()])
-                $('#nd_penetapan_pemenang_hari').val(hari[getTanggal9.getDay()])
+                $('#hps_hari').val(hari[getTanggal1.getDay()])
+                $('#undangan_pengadaan_langsung_hari').val(hari[getTanggal1.getDay()])
+                $('#pemasukan_dok_penawaran_hari_dari').val(hari[getTanggal1.getDay()])
+                $('#pemasukan_dok_penawaran_hari_sd').val(hari[getTanggal1.getDay()])
+                $('#evaluasi_dokumen_hari_dari').val(hari[getTanggal1.getDay()])
+                $('#evaluasi_dokumen_hari_sd').val(hari[getTanggal1.getDay()])
+                $('#ba_hasil_klarifikasi_hari').val(hari[getTanggal1.getDay()])
+                $('#ba_hasil_pengadaan_langsung_hari').val(hari[getTanggal1.getDay()])
+                $('#nd_usulan_tetap_pemenang_hari').val(hari[getTanggal1.getDay()])
+                $('#nd_penetapan_pemenang_hari').val(hari[getTanggal1.getDay()])
+            })
 
+            $("#tanggal").change(function () {
+                var a = $('#tanggal').val()
+                var getTanggal = new Date(a)
+
+                $('#hari').val(hari[getTanggal.getDay()])
+
+            })
+
+
+
+
+
+            var $nppv3 = $('#nppv3'), $value1 = $('.no_undang_pl');
+            $value1.on('input', function (e) {
+                var tes1 = 1;
+                $value1.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        tes1 = tes1 * parseInt(this.value, 10);
+                });
+                $nppv3.val('0'+tes1+'.UND-PL/DAN.02.01/210200/'+$('#tahun').val());
             });
 
-
-            // $( '#survey_harga_pasar_tgl').datepicker( 'setDate', tambahTanggal );
-
+            var $nppv9 = $('#nppv9')
+            var $nppv8 = $('#nppv8')
+            var $nppv7 = $('#nppv7')
+            var $nppv6 = $('#nppv6')
+            var $nppv5 = $('#nppv5')
+            var $nppv4 = $('#nppv4')
+            var $nppv2 = $('#nppv2')
             var $nppv1 = $('#nppv1'), $value = $('.no_proses_pengadaan');
             $value.on('input', function (e) {
                 var total = 1;
@@ -669,88 +914,16 @@
                     if (!Number.isNaN(parseInt(this.value, 10)))
                         total = total * parseInt(this.value, 10);
                 });
-                $nppv1.val(total);
+                $nppv1.val('0'+total+'.BASVY-PL/DAN.02.01/210200/'+$('#tahun').val());
+                $nppv2.val('0'+total+'.HPS-PL/DAN.02.01/210200/'+$('#tahun').val());
+                $nppv4.val('0'+total+'.BAEP-PL/DAN.02.01/210200/'+$('#tahun').val());
+                $nppv5.val('0'+total+'.BAEP-PL/DAN.02.01/210200/'+$('#tahun').val());
+                $nppv6.val('0'+total+'.BAHKTNH-PL/DAN.02.01/210200/'+$('#tahun').val());
+                $nppv7.val('0'+total+'.BAHPL-PL/DAN.02.01/210200/'+$('#tahun').val());
+                $nppv8.val('0'+total+'.NDUP-PL/DAN.02.01/210200/'+$('#tahun').val());
+                $nppv9.val('0'+total+'.NDPP-PL/DAN.02.01/210200/'+$('#tahun').val());
             });
 
-            var $nppv2 = $('#nppv2'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv2.val(total);
-            });
-
-            var $nppv3 = $('#nppv3'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv3.val(total);
-            });
-
-            var $nppv4 = $('#nppv4'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv4.val(total);
-            });
-
-            var $nppv5 = $('#nppv5'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv5.val(total);
-            });
-
-            var $nppv6 = $('#nppv6'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv6.val(total);
-            });
-
-            var $nppv7 = $('#nppv7'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv7.val(total);
-            });
-
-            var $nppv8 = $('#nppv8'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv8.val(total);
-            });
-
-            var $nppv9 = $('#nppv9'), $value = $('.no_proses_pengadaan');
-            $value.on('input', function (e) {
-                var total = 1;
-                $value.each(function (index, elem) {
-                    if (!Number.isNaN(parseInt(this.value, 10)))
-                        total = total * parseInt(this.value, 10);
-                });
-                $nppv9.val(total);
-            });
 
 
             // $("#hargaSatuan").inputmask("Rp 999.999.999,99", {numericInput: !0})
@@ -773,6 +946,181 @@
                 "showMethod": "fadeIn",
                 "hideMethod": "fadeOut"
             };
+
+            var $tgl1 = $('#tanggal_diterima_panitia'), $valueTgl1 = $('#survey_harga_pasar_jumlah');
+            $valueTgl1.on('input', function (e) {
+                var totaltgl1 = 1;
+                $valueTgl1.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl1 = totaltgl1 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes = $tgl1.val()
+                var getTanggal1 = new Date(getTanggalTes)
+                var getFull1 = new Date(getTanggal1.getFullYear(), getTanggal1.getMonth(), getTanggal1.getDate()+totaltgl1)
+                $('#survey_harga_pasar_tgl').datepicker('setDate', getFull1);
+                $('#survey_harga_pasar_hari').val(hari[getFull1.getDay()])
+
+            });
+
+            var $tgl2 = $('#tanggal_diterima_panitia'), $valueTgl2 = $('#hps_jumlah');
+            $valueTgl2.on('input', function (e) {
+                var totaltgl2 = 1;
+                $valueTgl2.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl2 = totaltgl2 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes1 = $tgl2.val()
+                var getTanggal2 = new Date(getTanggalTes1)
+                var getFull2 = new Date(getTanggal2.getFullYear(), getTanggal2.getMonth(), getTanggal2.getDate()+totaltgl2)
+                $('#hps_tgl').datepicker('setDate', getFull2);
+                $('#hps_hari').val(hari[getFull2.getDay()])
+
+            });
+
+            var $tgl3 = $('#tanggal_diterima_panitia'), $valueTgl3 = $('#undangan_pengadaan_langsung_jumlah');
+            $valueTgl3.on('input', function (e) {
+                var totaltgl3 = 1;
+                $valueTgl3.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl3 = totaltgl3 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes3 = $tgl3.val()
+                var getTanggal3 = new Date(getTanggalTes3)
+                var getFull3 = new Date(getTanggal3.getFullYear(), getTanggal3.getMonth(), getTanggal3.getDate()+totaltgl3)
+                $('#undangan_pengadaan_langsung_tgl').datepicker('setDate', getFull3);
+                $('#undangan_pengadaan_langsung_hari').val(hari[getFull3.getDay()])
+
+            });
+
+            var $tgl4 = $('#tanggal_diterima_panitia'), $valueTgl4 = $('#pemasukan_dok_penawaran_jumlah_dari');
+            $valueTgl4.on('input', function (e) {
+                var totaltgl4 = 1;
+                $valueTgl4.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl4 = totaltgl4 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes4 = $tgl4.val()
+                var getTanggal4 = new Date(getTanggalTes4)
+                var getFull4 = new Date(getTanggal4.getFullYear(), getTanggal4.getMonth(), getTanggal4.getDate()+totaltgl4)
+                $('#pemasukan_dok_penawaran_tgl_dari').datepicker('setDate', getFull4);
+                $('#pemasukan_dok_penawaran_hari_dari').val(hari[getFull4.getDay()])
+
+            });
+            var $tgl5 = $('#tanggal_diterima_panitia'), $valueTgl5 = $('#pemasukan_dok_penawaran_jumlah_sd');
+            $valueTgl5.on('input', function (e) {
+                var totaltgl5 = 1;
+                $valueTgl5.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl5 = totaltgl5 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes5 = $tgl5.val()
+                var getTanggal5 = new Date(getTanggalTes5)
+                var getFull5 = new Date(getTanggal5.getFullYear(), getTanggal5.getMonth(), getTanggal5.getDate()+totaltgl5)
+                $('#pemasukan_dok_penawaran_tgl_sd').datepicker('setDate', getFull5);
+                $('#pemasukan_dok_penawaran_hari_sd').val(hari[getFull5.getDay()])
+
+            });
+
+            var $tgl6 = $('#tanggal_diterima_panitia'), $valueTgl6 = $('#evaluasi_dokumen_jumlah_dari');
+            $valueTgl6.on('input', function (e) {
+                var totaltgl6 = 1;
+                $valueTgl6.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl6 = totaltgl6 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes6 = $tgl6.val()
+                var getTanggal6 = new Date(getTanggalTes6)
+                var getFull6 = new Date(getTanggal6.getFullYear(), getTanggal6.getMonth(), getTanggal6.getDate()+totaltgl6)
+                $('#evaluasi_dokumen_tgl_dari').datepicker('setDate', getFull6);
+                $('#evaluasi_dokumen_hari_dari').val(hari[getFull6.getDay()])
+
+            });
+
+            var $tgl7 = $('#tanggal_diterima_panitia'), $valueTgl7 = $('#evaluasi_dokumen_jumlah_sd');
+            $valueTgl7.on('input', function (e) {
+                var totaltgl7 = 1;
+                $valueTgl7.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl7 = totaltgl7 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes7 = $tgl7.val()
+                var getTanggal7 = new Date(getTanggalTes7)
+                var getFull7 = new Date(getTanggal7.getFullYear(), getTanggal7.getMonth(), getTanggal7.getDate()+totaltgl7)
+                $('#evaluasi_dokumen_tgl_sd').datepicker('setDate', getFull7);
+                $('#evaluasi_dokumen_hari_sd').val(hari[getFull7.getDay()])
+
+            });
+
+            var $tgl8 = $('#tanggal_diterima_panitia'), $valueTgl8 = $('#ba_hasil_klarifikasi_jumlah');
+            $valueTgl8.on('input', function (e) {
+                var totaltgl8 = 1;
+                $valueTgl8.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl8 = totaltgl8 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes8 = $tgl8.val()
+                var getTanggal8 = new Date(getTanggalTes8)
+                var getFull8 = new Date(getTanggal8.getFullYear(), getTanggal8.getMonth(), getTanggal8.getDate()+totaltgl8)
+                $('#ba_hasil_klarifikasi_tgl').datepicker('setDate', getFull8);
+                $('#ba_hasil_klarifikasi_hari').val(hari[getFull8.getDay()])
+
+            });
+
+            var $tgl9 = $('#tanggal_diterima_panitia'), $valueTgl9 = $('#ba_hasil_pengadaan_langsung_jumlah');
+            $valueTgl9.on('input', function (e) {
+                var totaltgl9 = 1;
+                $valueTgl9.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl9 = totaltgl9 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes9 = $tgl9.val()
+                var getTanggal9 = new Date(getTanggalTes9)
+                var getFull9 = new Date(getTanggal9.getFullYear(), getTanggal9.getMonth(), getTanggal9.getDate()+totaltgl9)
+                $('#ba_hasil_pengadaan_langsung_tgl').datepicker('setDate', getFull9);
+                $('#ba_hasil_pengadaan_langsung_hari').val(hari[getFull9.getDay()])
+
+            });
+
+            var $tgl10 = $('#tanggal_diterima_panitia'), $valueTgl10 = $('#nd_usulan_tetap_pemenang_jumlah');
+            $valueTgl10.on('input', function (e) {
+                var totaltgl10 = 1;
+                $valueTgl10.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl10 = totaltgl10 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes10 = $tgl10.val()
+                var getTanggal10 = new Date(getTanggalTes10)
+                var getFull10 = new Date(getTanggal10.getFullYear(), getTanggal10.getMonth(), getTanggal10.getDate()+totaltgl10)
+                $('#nd_usulan_tetap_pemenang_tgl').datepicker('setDate', getFull10);
+                $('#nd_usulan_tetap_pemenang_hari').val(hari[getFull10.getDay()])
+
+            });
+
+            var $tgl11 = $('#tanggal_diterima_panitia'), $valueTgl11 = $('#nd_penetapan_pemenang_jumlah');
+            $valueTgl11.on('input', function (e) {
+                var totaltgl11 = 1;
+                $valueTgl11.each(function (index, elem) {
+                    if (!Number.isNaN(parseInt(this.value, 10)))
+                        totaltgl11 = totaltgl11 * parseInt(this.value, 10);
+                });
+
+                var getTanggalTes11 = $tgl11.val()
+                var getTanggal11 = new Date(getTanggalTes11)
+                var getFull11 = new Date(getTanggal11.getFullYear(), getTanggal11.getMonth(), getTanggal11.getDate()+totaltgl11)
+                $('#nd_penetapan_pemenang_tgl').datepicker('setDate', getFull11);
+                $('#nd_penetapan_pemenang_hari').val(hari[getFull11.getDay()])
+
+            });
 
             $('#sample_form').on('submit', function (event) {
                 event.preventDefault();
@@ -836,8 +1184,8 @@
                 //     $('#nd_penetapan_pemenang_tgl').datepicker('setDate', getFull9);
                 //
                 //
-                // $('#survey_harga_pasar_hari').val(hari[getTanggal1.getDay()])
-                // $('#hps_hari').val(hari[getTanggal2.getDay()])
+
+                // $('#hps_hari').val(getTanggal1)
                 // $('#undangan_pengadaan_langsung_hari').val(hari[getTanggal3.getDay()])
                 // $('#pemasukan_dok_penawaran_hari').val(hari[getTanggal4.getDay()])
                 // $('#evaluasi_dokumen_hari').val(hari[getTanggal5.getDay()])

@@ -58,7 +58,7 @@
                                 <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides"
                                      style="min-height-: 286px">
                                     <img
-                                        src="{{asset('images/data-barang/'.$databaseHarga->foto)}}"
+                                        src="{{asset('data-barang/foto/'.$databaseHarga->foto)}}"
                                         alt="">
                                     <h3 class="m-widget19__title m--font-light">
 
@@ -127,15 +127,7 @@
                                                     Nama Barang
                                                 </span>
                                     <span class="m-widget13__text m-widget13__text-bolder">
-                                                    Shampoo
-                                                </span>
-                                </div>
-                                <div class="m-widget13__item">
-                                                <span class="m-widget13__desc m--align-center">
-                                                    Jenis Barang
-                                                </span>
-                                    <span class="m-widget13__text m-widget13__text-bolder">
-                                                    Pembersih
+                                                    {{$databaseHarga->nama_barang}}
                                                 </span>
                                 </div>
                                 <div class="m-widget13__item">
@@ -143,15 +135,7 @@
                                                     Satuan
                                                 </span>
                                     <span class="m-widget13__text">
-                                                    Sachet
-                                                </span>
-                                </div>
-                                <div class="m-widget13__item">
-                                                <span class="m-widget13__desc m--align-center">
-                                                    Jumlah
-                                                </span>
-                                    <span class="m-widget13__text m-widget13__text-bolder">
-                                                     {{$databaseHarga->jumlah}}
+                                                      {{$databaseHarga->satuan}}
                                                 </span>
                                 </div>
                                 <div class="m-widget13__item">
@@ -164,18 +148,10 @@
                                 </div>
                                 <div class="m-widget13__item">
                                                 <span class="m-widget13__desc m--align-center">
-                                                    Asal Usul Barang
+                                                   Spesifikasi
                                                 </span>
                                     <span class="m-widget13__text m-widget13__number-bolder m--font-brand">
-                                                     {{$databaseHarga->asal_usul_barang}}
-                                                </span>
-                                </div>
-                                <div class="m-widget13__item">
-                                                <span class="m-widget13__desc m--align-center">
-                                                    Keterangan Barang
-                                                </span>
-                                    <span class="m-widget13__text m-widget13__number-bolder m--font-brand">
-                                                     {{$databaseHarga->keterangan}}
+                                                     {{$databaseHarga->spesifikasi}}
                                                 </span>
                                 </div>
                                 <div class="m-widget13__action m--align-left">

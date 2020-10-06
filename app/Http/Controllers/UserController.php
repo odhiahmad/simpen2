@@ -96,9 +96,9 @@ class UserController extends Controller
 
 
         $form_data = array(
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'password' => $request->password
+            'name' => $request->name,
+            'username' => $request->username,
+
         );
         User::whereId($request->hidden_id)->update($form_data);
 

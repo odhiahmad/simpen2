@@ -60,31 +60,12 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    Jenis Barang
-                                </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input type="text" class="form-control m-input" value="{{$databaseHarga->jenis}}" id="jenisBarang" name="jenisBarang"
-                                           placeholder="Masukan Jenis Barang">
-                                </div>
-                            </div>
-                            <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">
                                     Satuan Barang
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
                                     <input type="text" class="form-control m-input" value="{{$databaseHarga->satuan}}" id="satuanBarang"
                                            name="satuanBarang"
                                            placeholder="Masukan Satuan Barang">
-                                </div>
-                            </div>
-                            <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">
-                                    Jumlah Barang
-                                </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input type="text" class="form-control m-input value" value="{{$databaseHarga->jumlah}}" id="jumlahBarang"
-                                           name="jumlahBarang"
-                                           placeholder="Masukan Jumlah Barang">
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
@@ -98,29 +79,37 @@
                             </div>
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    Total
+                                   Spesifikasi
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input type="text" readonly="readonly" value="{{$databaseHarga->total}}" class="form-control m-input disabled" id="total" name="total">
-                                </div>
-                            </div>
-                            <div class="form-group m-form__group row">
-                                <label class="col-form-label col-lg-3 col-sm-12">
-                                    Asal Usul Barang
-                                </label>
-                                <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input type="text" class="form-control m-input" value="{{$databaseHarga->asal_usul_barang}}" id="asalUsulBarang"
-                                           name="asalUsulBarang"
+                                    <input type="text" class="form-control m-input" value="{{$databaseHarga->spesifikasi}}" id="spesifikasi"
+                                           name="spesifikasi"
                                            placeholder="Masukan Asal Usul Barang">
                                 </div>
                             </div>
+                            <input type="hidden" class="form-control m-input" value="{{$databaseHarga->foto}}" id="foto_nama"
+                                   name="foto_nama"
+                                   placeholder="Masukan Asal Usul Barang">
+                            <input type="hidden" class="form-control m-input" value="{{$databaseHarga->sertifikat}}" id="sertifikat_nama"
+                                   name="sertifikat_nama"
+                                   placeholder="Masukan Asal Usul Barang">
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    Keterangan
+                                    Upload Sertifikat
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                            <textarea class="form-control m-input" id="keterangan" name="keterangan"
-                                      placeholder="Masukan Keterangan">{{$databaseHarga->keterangan}}</textarea>
+                                    <input type="file" class="form-control" id="sertifikat"
+                                           name="sertifikat">
+                                </div>
+                            </div>
+
+                            <div class="form-group m-form__group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">
+                                    Upload Foto Database Harga
+                                </label>
+                                <div class="col-lg-9 col-md-9 col-sm-12">
+                                    <input type="file" class="form-control" id="foto"
+                                           name="foto">
                                 </div>
                             </div>
                         </div>
@@ -194,7 +183,8 @@
                             }
                             if (data.success) {
                                 toastr.success(data.success)
-
+                                $('#foto_nama').val(data.fotoNama)
+                                $('#sertifikat_nama').val(data.sertifikatNama)
 
                             }
 

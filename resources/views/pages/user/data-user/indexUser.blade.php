@@ -160,6 +160,8 @@
                 $('.modal-title').text("Tambahkan User Baru");
                 $('#action_button').val("Tambahkan");
                 $('#action').val("Add");
+                $('#sample_form')[0].reset();
+                $('#form_result').html('');
                 $('#formModal').modal('show');
             });
 
@@ -214,7 +216,6 @@
                             }
                             if (data.success) {
                                 html = '<div class="alert alert-success">' + data.success + '</div>';
-                                $('#sample_form')[0].reset();
                                 $('#store_image').html('');
                                 $('#user_table').DataTable().ajax.reload();
                             }
@@ -231,10 +232,8 @@
                     url: "/user/user/" + id + "/edit",
                     dataType: "json",
                     success: function (html) {
-                        $('#first_name').val(html.data.first_name);
-                        $('#last_name').val(html.data.last_name);
-                        $('#store_image').html("<img src={{ URL::to('/') }}/images/" + html.data.image + " width='70' class='img-thumbnail' />");
-                        $('#store_image').append("<input type='hidden' name='hidden_image' value='" + html.data.image + "' />");
+                        $('#name').val(html.data.name);
+                        $('#username').val(html.data.username);
                         $('#hidden_id').val(html.data.id);
                         $('.modal-title').text("Edit New Record");
                         $('#action_button').val("Edit");

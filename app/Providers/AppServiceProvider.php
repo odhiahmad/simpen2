@@ -30,5 +30,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('convert', function ($money) {
             return "<?php echo number_format($money, 2); ?>";
         });
+
+        Blade::directive('convertTanggalHuruf', function ($angka) {
+
+            if($angka == 1){
+                return "<?php echo satu ?>";
+            }
+
+        });
     }
 }

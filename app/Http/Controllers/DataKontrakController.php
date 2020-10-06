@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Ajaxray\PHPWatermark\Watermark;
 use App\DatabaseHarga;
 use App\DataKontrak;
+use App\Pengadaan;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
@@ -17,6 +19,29 @@ class DataKontrakController extends Controller
     public function index()
     {
 
+        if (request()->ajax()) {
+            return DataTables::of(Pengadaan::latest()->get())
+                ->addColumn('action', function ($data) {
+                    if($data->kontrak != null && $data->proses != null) {
+                        $button = '<a href="downloadKontrak/' . $data->kontrak . '" type="button" class="detail btn btn-primary btn-sm">Kontrak</a>';
+                        $button .= '&nbsp;&nbsp;';
+                        $button .= '<a href="downloadProses/' . $data->proses . '" type="button" class="detail btn btn-primary btn-sm">Proses</a>';
+                        return $button;
+                    } else if ($data->kontrak != null){
+                        $button = '<a href="downloadKontrak/' . $data->kontrak . '" type="button" class="detail btn btn-primary btn-sm">Kontrak</a>';
+                        return $button;
+                    } else if($data->proses != null){
+                        $button = '<a href="downloadProses/' . $data->proses . '" type="button" class="detail btn btn-primary btn-sm">Proses</a>';
+                        return $button;
+                    }
+
+
+
+
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
         return view('pages/user/data-kontrak/indexKontrak');
     }
 
@@ -34,7 +59,7 @@ class DataKontrakController extends Controller
         Settings::setPdfRendererName('DomPDF');
 
         $objWriter = IOFactory::createWriter($phpWord, 'PDF');
-        $objWriter->save(public_path('data-kontrak/pdf/' . $name . '.pdf'));
+        $objWriter->save(public_path('data-kontrak/temp/' . $name . '.pdf'));
 
         return response()->json([
             'name' => $name,
@@ -58,8 +83,49 @@ class DataKontrakController extends Controller
 
     }
 
+    public function hapusTemp(Request $request){
+        $fotoNama = $request->nama_pdf;
+        unlink(public_path('data-kontrak/temp/').$fotoNama);
+    }
+
     public function surveyHargaPasar(){
 
+    }
+
+    public function downloadKontrak($id)
+    {
+        //PDF file is stored under project/public/download/info.pdf
+        $file= public_path('data-kontrak')."/kontrak/".$id;
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $id, $headers);
+    }
+
+    public function downloadProses($id)
+    {
+        //PDF file is stored under project/public/download/info.pdf
+        $file= public_path('data-kontrak')."/proses/".$id;
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $id, $headers);
+    }
+
+    public function downloadPdfWatermark($id)
+    {
+        //PDF file is stored under project/public/download/info.pdf
+        $file= public_path('data-kontrak/pdf-watermark').$id;
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $id, $headers);
     }
 
 

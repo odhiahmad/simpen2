@@ -18,3 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::resource('databaseHarga', 'DatabaseHargaController');
 Route::post('tesWord', 'InisiasiPengadaanController@tesWord');
+Route::post('tesWordBAPL', 'InisiasiPengadaanController@tesWordBAPL');
+Route::post('tesWordUPL', 'InisiasiPengadaanController@tesWordUPL');
+Route::post('tesWordUPP', 'InisiasiPengadaanController@tesWordUPP');
+Route::post('tesWordPDP', 'InisiasiPengadaanController@tesWordPDP');
+Route::get('get-box/{box_id}' , 'BoxesController@getOneBoxData');

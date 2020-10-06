@@ -66,7 +66,7 @@
                           di Inisiasi Pengadaan
                         </span>
                                     <span class="m-widget24__stats m--font-danger">
-                          567
+                          67
                         </span>
                                     <div class="m--space-10"></div>
 
@@ -84,7 +84,7 @@
                           di Inisiasi Pengadaan
                         </span>
                                     <span class="m-widget24__stats m--font-success">
-                          276
+                          76
                         </span>
                                     <div class="m--space-10"></div>
 

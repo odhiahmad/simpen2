@@ -4,10 +4,25 @@ namespace App\Http\Controllers;
 
 use App\DatabaseHarga;
 use App\HistoryHarga;
+use App\ModelsResource\DBagian;
+use App\ModelsResource\DCaraPembayaran;
+use App\ModelsResource\DFungsiPembangkit;
+use App\ModelsResource\DJenis;
+use App\ModelsResource\DMasaBerlaku;
+use App\ModelsResource\DMasaGaransi;
+use App\ModelsResource\DMetodePengadaan;
+use App\ModelsResource\DPengawas;
+use App\ModelsResource\DPerjanjianKontrak;
+use App\ModelsResource\DPicPelaksana;
+use App\ModelsResource\DSumberDana;
+use App\ModelsResource\DSyaratBidangUsaha;
+use App\ModelsResource\DTempatPenyerahan;
+use App\ModelsResource\DVfmc;
 use App\User;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -89,13 +104,11 @@ class DatabaseHargaController extends Controller
     {
         $rules = array(
             'namaBarang' => 'required',
-            'jenisBarang' => 'required',
             'satuanBarang' => 'required',
-            'jumlahBarang' => 'required|numeric',
             'hargaSatuan' => 'required|numeric',
-            'asalUsulBarang' => 'required',
-            'keterangan' => 'required',
-            'foto' => 'required|image|max:2048'
+            'spesifikasi'=>'required',
+            'sertifikat'=>'required|max:256',
+            'foto' => 'required|image|max:256'
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -107,18 +120,18 @@ class DatabaseHargaController extends Controller
         }
 
         $image = $request->file('foto');
+        $image1 = $request->file('sertifikat');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('images/data-barang'), $new_name);
+        $image->move(public_path('data-barang/foto'), $new_name);
+        $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+        $image1->move(public_path('data-barang/file'), $new_name1);
 
         $databaseHarga = new DatabaseHarga();
         $databaseHarga->nama_barang = $request->namaBarang;
-        $databaseHarga->jenis = $request->jenisBarang;
+        $databaseHarga->spesifikasi = $request->spesifikasi;
+        $databaseHarga->sertifikat = $new_name1;
         $databaseHarga->satuan = $request->satuanBarang;
-        $databaseHarga->jumlah = $request->jumlahBarang;
         $databaseHarga->harga_satuan = $request->hargaSatuan;
-        $databaseHarga->total = $request->hargaSatuan * $request->jumlahBarang;
-        $databaseHarga->asal_usul_barang = $request->asalUsulBarang;
-        $databaseHarga->keterangan = $request->keterangan;
         $databaseHarga->foto = $new_name;
         $databaseHarga->status = '1';
 
@@ -156,20 +169,80 @@ class DatabaseHargaController extends Controller
 
         $getDatabaseHarga = DatabaseHarga::where('id', $request->id)->first();
 
-        $rules = array(
-            'namaBarang' => 'required',
-            'jenisBarang' => 'required',
-            'satuanBarang' => 'required',
-            'jumlahBarang' => 'required|numeric',
-            'hargaSatuan' => 'required|numeric',
-            'asalUsulBarang' => 'required',
-        );
+        $foto = $request->file('foto');
+        $sertifikat = $request->file('sertifikat');
 
-        $error = Validator::make($request->all(), $rules);
+        $fotoNama =  $request->foto_nama;
+        $sertifikatNama = $request->sertifikat_nama;
 
-        if ($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
+        if($foto != '' && $sertifikat != ''){
+
+            $rules = array(
+                'namaBarang' => 'required',
+                'satuanBarang' => 'required',
+                'hargaSatuan' => 'required|numeric',
+                'spesifikasi'=>'required',
+                'foto' => 'required|image|max:256',
+                'sertifikat' => 'required|max:256'
+            );
+
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails())
+            {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+
+            unlink(public_path('data-barang/foto/').$fotoNama);
+            unlink(public_path('data-barang/file/').$sertifikatNama);
+
+            $fotoNama = rand() . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('data-barang/foto'), $fotoNama);
+
+            $sertifikatNama = rand() . '.' . $sertifikat->getClientOriginalExtension();
+            $sertifikat->move(public_path('data-barang/file'), $sertifikatNama);
+
+
+
+        }else if($foto != '' && $sertifikat == ''){
+            $rules = array(
+                'namaBarang' => 'required',
+                'satuanBarang' => 'required',
+                'hargaSatuan' => 'required|numeric',
+                'spesifikasi'=>'required',
+                'foto' => 'required|image|max:256',
+            );
+
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails())
+            {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+
+            unlink(public_path('data-barang/foto/').$fotoNama);
+            $fotoNama = rand() . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('data-barang/foto'), $fotoNama);
+
+
+        }else if($sertifikat != '' && $foto == ''){
+            $rules = array(
+                'namaBarang' => 'required',
+                'satuanBarang' => 'required',
+                'hargaSatuan' => 'required|numeric',
+                'spesifikasi'=>'required',
+                'sertifikat' => 'required|max:256',
+            );
+
+            $error = Validator::make($request->all(), $rules);
+            if($error->fails())
+            {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+            @unlink(public_path('data-barang/file/').$sertifikatNama);
+
+            $sertifikatNama = rand() . '.' . $sertifikat->getClientOriginalExtension();
+            $sertifikat->move(public_path('data-barang/file'), $sertifikatNama);
         }
+
 
 
         $form_data_insert = array(
@@ -182,16 +255,19 @@ class DatabaseHargaController extends Controller
 
         $form_data = array(
             'nama_barang' => $request->namaBarang,
-            'jenis' => $request->jenisBarang,
+            'spesifikasi' => $request->spesifikasi,
             'satuan' => $request->satuanBarang,
-            'jumlah' => $request->jumlahBarang,
             'harga_satuan' => $request->hargaSatuan,
-            'total' => $request->hargaSatuan * $request->jumlahBarang,
-            'asal_usul_barang' => $request->asalUsulBarang,
+            'foto' =>$fotoNama,
+            'sertifikat' => $sertifikatNama,
         );
 
-        if (DatabaseHarga::whereId($request->id)->update($form_data) && HistoryHarga::create($form_data_insert)) {
-            return response()->json(['success' => 'Data is successfully updated']);
+        if ($dataHarga = DatabaseHarga::whereId($request->id)->update($form_data) && HistoryHarga::create($form_data_insert)) {
+            return response()->json([
+                'success' => 'Data is successfully updated',
+                'fotoNama' => $fotoNama,
+                'sertifikatNama' => $sertifikatNama
+            ]);
         } else {
             return response()->json(['success' => 'Data is successfully updated']);
         }

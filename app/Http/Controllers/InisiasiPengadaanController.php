@@ -5,23 +5,47 @@ namespace App\Http\Controllers;
 use App\DatabaseHarga;
 use App\DataKontrak;
 use App\Http\Controllers\Template\BeritaAcaraPengadaanLangsung;
+use App\Http\Controllers\Template\PemasukanDokPenawaran;
+use App\Http\Controllers\Template\SurveyHargaPasar\SurveiHargaPasar1;
+use App\Http\Controllers\Template\SurveyHargaPasar\SurveyHargaPasar1;
+use App\Http\Controllers\Template\SurveyHargaPasar\SurveyHargaPasar2;
+use App\Http\Controllers\Template\UndanganPengadaanLangsung;
+use App\Http\Controllers\Template\UsulanPenetapanPemenang;
+use App\ModelsResource\DBagian;
+use App\ModelsResource\DCaraPembayaran;
+use App\ModelsResource\DFungsiPembangkit;
+use App\ModelsResource\DJenis;
+use App\ModelsResource\DMasaBerlaku;
+use App\ModelsResource\DMasaGaransi;
+use App\ModelsResource\DMetodePengadaan;
+use App\ModelsResource\DPengawas;
+use App\ModelsResource\DPerjanjianKontrak;
+use App\ModelsResource\DPicPelaksana;
+use App\ModelsResource\DStatus;
+use App\ModelsResource\DSumberDana;
+use App\ModelsResource\DSyaratBidangUsaha;
+use App\ModelsResource\DTempatPenyerahan;
+use App\ModelsResource\DVfmc;
 use App\Pengadaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Settings;
 use Yajra\DataTables\DataTables;
 
 class InisiasiPengadaanController extends Controller
 {
     public function index()
     {
+
+
         if (request()->ajax()) {
             return DataTables::of(Pengadaan::latest()->get())
                 ->addColumn('action', function ($data) {
                     $button = '<button type="button" name="detail" id="' . $data->id . '" class="detail btn btn-primary btn-sm">Detail</button>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a href="update-data/' . $data->id . '" class="detail btn btn-info btn-sm">Update</a>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="pembayaran" id="' . $data->id . '" class="pembayaran btn btn-warning btn-sm">Pembayaran</button>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -30,20 +54,99 @@ class InisiasiPengadaanController extends Controller
         return view('pages/user/inisiasi-pengadaan/indexPengadaan');
     }
 
-    public function tesWord(Request $request){
-        $surveiHarga = new SurveyHargaPasar();
-        $surveiHarga->SurveiHargaPasar($request->nama,$request->nomor,$request->judul,$request->pejabatPelaksan,$request->disusunOleh,$request->hari);
+    public function downloadShp1($id){
+        $surveiHarga = new SurveiHargaPasar1();
+        $surveiHarga->SurveyHargaPasar1($id);
+
+        $data  = Pengadaan::where('id',$id)->first();
+        $file= public_path('data-pengadaan')."/survei-harga-pasar/".$data->judul.'.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
     }
+
+    public function downloadShp2($id){
+        $surveiHarga = new SurveyHargaPasar2();
+        $surveiHarga->SurveyHargaPasar2($id);
+
+        $data  = Pengadaan::where('id',$id)->first();
+        $file= public_path('data-pengadaan')."/survei-harga-pasar/".$data->judul.'2.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadSurvey2($id){
+
+   }
+
 
     public function tesWordBAPL(Request $request){
         $surveiHarga = new BeritaAcaraPengadaanLangsung();
-        $surveiHarga->BeritaAcaraPengadaanLangsung($request->nama,$request->nomor,$request->judul,$request->pejabatPelaksan,$request->disusunOleh,$request->hari);
+        $surveiHarga->BeritaAcaraPengadaanLangsung($request->nama,$request->nomor,$request->judul,$request->pejabatPelaksan,$request->disusunOleh,$request->hari,$request->tanggal
+        ,$request->alamat,$request->namaPerusahaan,$request->npwp);
+    }
+
+    public function tesWordUPL(Request $request){
+        $surveiHarga = new UndanganPengadaanLangsung();
+        $surveiHarga->UndanganPengadaanLangsung($request->nama,$request->nomor,$request->judul,$request->namaPerusahaan, $request->alamatPerusahaan,$request->nilaiHps,$request->sumberPendanaan);
+
+    }
+
+    public function tesWordUPP(Request $request){
+        $surveiHarga = new UsulanPenetapanPemenang();
+        $surveiHarga->UsulanPenetapanPemenang($request->nama,$request->nomor,$request->judul,$request->namaPerusahaan, $request->alamatPerusahaan,$request->nilaiHps,$request->sumberPendanaan,$request->typeSurat);
+
+    }
+
+    public function tesWordPDP(Request $request){
+        $surveiHarga = new PemasukanDokPenawaran();
+        $surveiHarga->PemasukanDokPenawaran();
+
     }
 
     public function indexUpdateView(Request $request)
     {
         $dataPengadaan = Pengadaan::where('id', $request->id)->first();
-        return view('pages/user/inisiasi-pengadaan/updatePengadaan', compact('dataPengadaan'));
+        $dataBagian = DBagian::all();
+        $dataCaraPembayaran = DCaraPembayaran::all();
+        $dataFungsiPembangkit = DFungsiPembangkit::all();
+        $dataJenis = DJenis::all();
+        $dataMasaBerlaku = DMasaBerlaku::all();
+        $dataMasaGaransi = DMasaGaransi::all();
+        $dataMetodePengadaan = DMetodePengadaan::all();
+        $dataPengawas = DPengawas::all();
+        $dataPerjanjianKontrak = DPerjanjianKontrak::all();
+        $dataPicPelaksana = DPicPelaksana::all();
+        $dataSumberDana = DSumberDana::all();
+        $dataSyaratBidangUsaha = DSyaratBidangUsaha::all();
+        $dataTempatPenyerahan = DTempatPenyerahan::all();
+        $dataVfmc = DVfmc::all();
+        $dataStatus = DStatus::all();
+        return view('pages/user/inisiasi-pengadaan/updatePengadaan', compact([
+            'dataPengadaan',
+            'dataBagian',
+            'dataCaraPembayaran',
+            'dataFungsiPembangkit',
+            'dataJenis',
+            'dataMasaBerlaku',
+            'dataMasaGaransi',
+            'dataMetodePengadaan',
+            'dataPengawas',
+            'dataPerjanjianKontrak',
+            'dataPicPelaksana',
+            'dataSumberDana',
+            'dataSyaratBidangUsaha',
+            'dataTempatPenyerahan',
+            'dataVfmc',
+            'dataStatus'
+        ]));
     }
 
     public function indexPembayaran()
@@ -53,11 +156,67 @@ class InisiasiPengadaanController extends Controller
 
     public function tambahPengadaan()
     {
-        return view('pages/user/inisiasi-pengadaan/tambahPengadaan');
+        $dataBagian = DBagian::all();
+        $dataCaraPembayaran = DCaraPembayaran::all();
+        $dataFungsiPembangkit = DFungsiPembangkit::all();
+        $dataJenis = DJenis::all();
+        $dataMasaBerlaku = DMasaBerlaku::all();
+        $dataMasaGaransi = DMasaGaransi::all();
+        $dataMetodePengadaan = DMetodePengadaan::all();
+        $dataPengawas = DPengawas::all();
+        $dataPerjanjianKontrak = DPerjanjianKontrak::all();
+        $dataPicPelaksana = DPicPelaksana::all();
+        $dataSumberDana = DSumberDana::all();
+        $dataSyaratBidangUsaha = DSyaratBidangUsaha::all();
+        $dataTempatPenyerahan = DTempatPenyerahan::all();
+        $dataVfmc = DVfmc::all();
+        $dataStatus = DStatus::all();
+
+        return view('pages/user/inisiasi-pengadaan/tambahPengadaan', compact([
+            'dataBagian',
+            'dataCaraPembayaran',
+            'dataFungsiPembangkit',
+            'dataJenis',
+            'dataMasaBerlaku',
+            'dataMasaGaransi',
+            'dataMetodePengadaan',
+            'dataPengawas',
+            'dataPerjanjianKontrak',
+            'dataPicPelaksana',
+            'dataSumberDana',
+            'dataSyaratBidangUsaha',
+            'dataTempatPenyerahan',
+            'dataVfmc',
+            'dataStatus'
+        ]));
     }
 
     public function updateData(Request $request)
     {
+
+
+        $dokumenKontrak = $request->file('kontrak_file');
+        $dokumenProses = $request->file('proses_file');
+
+        $dokumenKontrakNama =  $request->kontrak;
+        $dokumenProsesNama =  $request->proses;
+
+
+        if($dokumenKontrak != ''){
+            $cekFoto = Pengadaan::where('id',$request->id)->first();
+            if($cekFoto->kontrak != null){
+                unlink(public_path('data-kontrak/kontrak/').$dokumenKontrakNama);
+            }
+        }
+
+        if($dokumenProses != ''){
+            $cekFoto = Pengadaan::where('id',$request->id)->first();
+            if($cekFoto->proses != null){
+                unlink(public_path('data-kontrak/proses/').$dokumenProsesNama);
+            }
+        }
+
+
         $rules = array(
             'judul' => 'required',
             'tahun' => 'required',
@@ -119,6 +278,7 @@ class InisiasiPengadaanController extends Controller
             'masa_garansi' => $request->masa_garansi,
             'syarat_bidang' => $request->syarat_bidang,
             'vfmc' => $request->vfmc,
+            'vfmc2' => $request->vfmc2,
             'pengguna' => $request->pengguna,
             'nip' => $request->nip,
             'pejabat_pelaksana' => $request->pejabat_pelaksana,
@@ -134,33 +294,50 @@ class InisiasiPengadaanController extends Controller
             'waktu' => $request->waktu,
             'hps' => $request->hps,
             'no_proses_pengadaan' => $request->no_proses_pengadaan,
+            'survei_harga_pasar_nomor' => $request->nppv1,
             'survei_harga_pasar_jumlah' => $request->survey_harga_pasar_jumlah,
             'survei_harga_pasar_tgl' => $request->survey_harga_pasar_tgl,
             'survei_harga_pasar_hari' => $request->survey_harga_pasar_hari,
+            'hps_nomor' => $request->nppv2,
             'hps_jumlah' => $request->hps_jumlah,
             'hps_tgl' => $request->hps_tgl,
             'hps_hari' => $request->hps_hari,
+            'undangan_pengadaan_langsung_nomor' => $request->nppv3,
             'undangan_pengadaan_langsung_jumlah' => $request->undangan_pengadaan_langsung_jumlah,
             'undangan_pengadaan_langsung_tgl' => $request->undangan_pengadaan_langsung_tgl,
             'undangan_pengadaan_langsung_hari' => $request->undangan_pengadaan_langsung_hari,
-            'pemasukan_dok_penawaran_jumlah' => $request->pemasukan_dok_penawaran_jumlah,
-            'pemasukan_dok_penawaran_tgl' => $request->pemasukan_dok_penawaran_tgl,
-            'pemasukan_dok_penawaran_hari' => $request->pemasukan_dok_penawaran_hari,
-            'evaluasi_dokumen_jumlah' => $request->evaluasi_dokumen_jumlah,
-            'evaluasi_dokumen_tgl' => $request->evaluasi_dokumen_tgl,
-            'evaluasi_dokumen_hari' => $request->evaluasi_dokumen_hari,
+            'pemasukan_dok_penawaran_jumlah_dari' => $request->pemasukan_dok_penawaran_jumlah_dari,
+            'pemasukan_dok_penawaran_tgl_dari' => $request->pemasukan_dok_penawaran_tgl_dari,
+            'pemasukan_dok_penawaran_hari_dari' => $request->pemasukan_dok_penawaran_hari_dari,
+            'pemasukan_dok_penawaran_jumlah_sd' => $request->pemasukan_dok_penawaran_jumlah_sd,
+            'pemasukan_dok_penawaran_tgl_sd' => $request->pemasukan_dok_penawaran_tgl_sd,
+            'pemasukan_dok_penawaran_hari_sd' => $request->pemasukan_dok_penawaran_hari_sd,
+            'evaluasi_dokumen_jumlah_dari' => $request->evaluasi_dokumen_jumlah_dari,
+            'evaluasi_dokumen_tgl_dari' => $request->evaluasi_dokumen_tgl_dari,
+            'evaluasi_dokumen_hari_dari' => $request->evaluasi_dokumen_hari_dari,
+            'evaluasi_dokumen_jumlah_sd' => $request->evaluasi_dokumen_jumlah_sd,
+            'evaluasi_dokumen_tgl_sd' => $request->evaluasi_dokumen_tgl_sd,
+            'evaluasi_dokumen_hari_sd' => $request->evaluasi_dokumen_hari_sd,
+            'evaluasi_dokumen_nomor' => $request->nppv4,
+            'ba_hasil_klarifikasi_nomor' => $request->nppv6,
             'ba_hasil_klarifikasi_jumlah' => $request->ba_hasil_klarifikasi_jumlah,
             'ba_hasil_klarifikasi_tgl' => $request->ba_hasil_klarifikasi_tgl,
             'ba_hasil_klarifikasi_hari' => $request->ba_hasil_klarifikasi_hari,
-            'ba_hasil_pengadaan_jumlah' => $request->ba_hasil_pengadaan_jumlah,
-            'ba_hasil_pengadaan_tgl' => $request->ba_hasil_pengadaan_tgl,
-            'ba_hasil_pengadaan_hari' => $request->ba_hasil_pengadaan_hari,
+            'ba_hasil_pengadaan_nomor' => $request->nppv7,
+            'ba_hasil_pengadaan_jumlah' => $request->ba_hasil_pengadaan_langsung_jumlah,
+            'ba_hasil_pengadaan_tgl' => $request->ba_hasil_pengadaan_langsung_tgl,
+            'ba_hasil_pengadaan_hari' => $request->ba_hasil_pengadaan_langsung_hari,
+            'nd_usulan_tetap_pemenang_nomor' => $request->nppv8,
             'nd_usulan_tetap_pemenang_jumlah' => $request->nd_usulan_tetap_pemenang_jumlah,
             'nd_usulan_tetap_pemenang_tgl' => $request->nd_usulan_tetap_pemenang_tgl,
             'nd_usulan_tetap_pemenang_hari' => $request->nd_usulan_tetap_pemenang_hari,
+            'nd_penetapan_pemenang_nomor' => $request->nppv9,
             'nd_penetapan_pemenang_jumlah' => $request->nd_penetapan_pemenang_jumlah,
             'nd_penetapan_pemenang_tgl' => $request->nd_penetapan_pemenang_tgl,
             'nd_penetapan_pemenang_hari' => $request->nd_penetapan_pemenang_hari,
+            'kontrak'=>$dokumenKontrakNama,
+            'proses'=>$dokumenProsesNama,
+            'status' => $request->status,
         );
 
         if (Pengadaan::whereId($request->id)->update($form_data)) {
@@ -172,6 +349,11 @@ class InisiasiPengadaanController extends Controller
 
     public function store(Request $request)
     {
+        $dokumenKontrak = $request->file('nama_pdf_file');
+
+        $dokumenKontrakNama =  $request->nama_pdf;
+
+
         $rules = array(
             'judul' => 'required',
             'tahun' => 'required',
@@ -206,6 +388,9 @@ class InisiasiPengadaanController extends Controller
             'waktu' => 'required',
             'hps' => 'required',
             'no_proses_pengadaan' => 'required',
+            'status'=>'required',
+            'proses_file'=>'required|max:512',
+            'kontrak_file'=>'required|max:512',
         );
 
 
@@ -232,7 +417,9 @@ class InisiasiPengadaanController extends Controller
         $pengadaan->jenis_perjanjian = $request->jenis_perjanjian;
         $pengadaan->sumber_dana = $request->sumber_dana;
         $pengadaan->syarat_bidang = $request->syarat_bidang;
+        $pengadaan->masa_garansi = $request->masa_garansi;
         $pengadaan->vfmc = $request->vfmc;
+        $pengadaan->vfmc2 = $request->vfmc2;
         $pengadaan->pengguna = $request->pengguna;
         $pengadaan->nip = $request->nip;
         $pengadaan->pejabat_pelaksana = $request->pejabat_pelaksana;
@@ -248,6 +435,16 @@ class InisiasiPengadaanController extends Controller
         $pengadaan->waktu = $request->waktu;
         $pengadaan->hps = $request->hps;
         $pengadaan->no_proses_pengadaan = $request->no_proses_pengadaan;
+        $pengadaan->survei_harga_pasar_nomor = $request->nppv1;
+        $pengadaan->hps_nomor = $request->nppv2;
+        $pengadaan->undangan_pengadaan_langsung_nomor = $request->nppv3;
+        $pengadaan->evaluasi_dokumen_nomor = $request->nppv4;
+        $pengadaan->ba_hasil_klarifikasi_nomor = $request->nppv6;
+        $pengadaan->ba_hasil_pengadaan_nomor = $request->nppv7;
+        $pengadaan->nd_usulan_tetap_pemenang_nomor = $request->nppv8;
+        $pengadaan->nd_penetapan_pemenang_nomor = $request->nppv9;
+        $pengadaan->status = $request->status;
+
 
         if ($request->survey_harga_pasar_tgl) {
             $pengadaan->survei_harga_pasar_jumlah = $request->survey_harga_pasar_jumlah;
@@ -266,16 +463,28 @@ class InisiasiPengadaanController extends Controller
             $pengadaan->undangan_pengadaan_langsung_tgl = $request->undangan_pengadaan_langsung_tgl;
             $pengadaan->undangan_pengadaan_langsung_hari = $request->undangan_pengadaan_langsung_hari;
         }
-        if ($request->pemasukan_dok_penawaran_tgl) {
-            $pengadaan->pemasukan_dok_penawaran_jumlah = $request->pemasukan_dok_penawaran_jumlah;
-            $pengadaan->pemasukan_dok_penawaran_tgl = $request->pemasukan_dok_penawaran_tgl;
-            $pengadaan->pemasukan_dok_penawaran_hari = $request->pemasukan_dok_penawaran_hari;
+        if ($request->pemasukan_dok_penawaran_tgl_dari) {
+            $pengadaan->pemasukan_dok_penawaran_jumlah_dari = $request->pemasukan_dok_penawaran_jumlah_dari;
+            $pengadaan->pemasukan_dok_penawaran_tgl_dari = $request->pemasukan_dok_penawaran_tgl_dari;
+            $pengadaan->pemasukan_dok_penawaran_hari_dari = $request->pemasukan_dok_penawaran_hari_dari;
         }
 
-        if ($request->evaluasi_dokumen_tgl) {
-            $pengadaan->evaluasi_dokumen_jumlah = $request->evaluasi_dokumen_jumlah;
-            $pengadaan->evaluasi_dokumen_tgl = $request->evaluasi_dokumen_tgl;
-            $pengadaan->evaluasi_dokumen_hari = $request->evaluasi_dokumen_hari;
+        if ($request->evaluasi_dokumen_tgl_dari) {
+            $pengadaan->evaluasi_dokumen_jumlah_dari = $request->evaluasi_dokumen_jumlah_dari;
+            $pengadaan->evaluasi_dokumen_tgl_dari = $request->evaluasi_dokumen_tgl_dari;
+            $pengadaan->evaluasi_dokumen_hari_dari = $request->evaluasi_dokumen_hari_dari;
+        }
+
+        if ($request->pemasukan_dok_penawaran_tgl_sd) {
+            $pengadaan->pemasukan_dok_penawaran_jumlah_sd = $request->pemasukan_dok_penawaran_jumlah_sd;
+            $pengadaan->pemasukan_dok_penawaran_tgl_sd = $request->pemasukan_dok_penawaran_tgl_sd;
+            $pengadaan->pemasukan_dok_penawaran_hari_sd = $request->pemasukan_dok_penawaran_hari_sd;
+        }
+
+        if ($request->evaluasi_dokumen_tgl_sd) {
+            $pengadaan->evaluasi_dokumen_jumlah_sd = $request->evaluasi_dokumen_jumlah_sd;
+            $pengadaan->evaluasi_dokumen_tgl_sd = $request->evaluasi_dokumen_tgl_sd;
+            $pengadaan->evaluasi_dokumen_hari_sd = $request->evaluasi_dokumen_hari_sd;
         }
 
         if ($request->ba_hasil_klarifikasi_tgl) {
@@ -285,9 +494,9 @@ class InisiasiPengadaanController extends Controller
         }
 
         if ($request->ba_hasil_pengadaan_tgl) {
-            $pengadaan->ba_hasil_pengadaan_jumlah = $request->ba_hasil_pengadaan_jumlah;
-            $pengadaan->ba_hasil_pengadaan_tgl = $request->ba_hasil_pengadaan_tgl;
-            $pengadaan->ba_hasil_pengadaan_hari = $request->ba_hasil_pengadaan_hari;
+            $pengadaan->ba_hasil_pengadaan_jumlah = $request->ba_hasil_pengadaan_langsung_jumlah;
+            $pengadaan->ba_hasil_pengadaan_tgl = $request->ba_hasil_pengadaan_langsung_tgl;
+            $pengadaan->ba_hasil_pengadaan_hari = $request->ba_hasil_pengadaan_langsung_hari;
         }
 
         if ($request->nd_usulan_tetap_pemenang_tgl) {
@@ -301,6 +510,16 @@ class InisiasiPengadaanController extends Controller
             $pengadaan->nd_penetapan_pemenang_tgl = $request->nd_penetapan_pemenang_tgl;
             $pengadaan->nd_penetapan_pemenang_hari = $request->nd_penetapan_pemenang_hari;
         }
+
+        $image = $request->file('kontrak_file');
+        $image1 = $request->file('proses_file');
+        $new_name = rand() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('data-kontrak/kontrak'), $new_name);
+        $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+        $image1->move(public_path('data-kontrak/proses'), $new_name1);
+
+        $pengadaan->proses = $new_name1;
+        $pengadaan->kontrak = $new_name;
 
         if ($pengadaan->save()) {
             return response()->json(['success' => 'Data Added successfully.']);

@@ -55,6 +55,8 @@
                                             <th>Judul</th>
                                             <th>Tahun</th>
                                             <th>Tanggal di Terima</th>
+                                            <th>PIC</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
                                         </thead>
@@ -87,6 +89,14 @@
                     {
                         data: 'tgl_diterima_panitia',
                         name: 'tgl_diterima_panitia',
+                    },
+                    {
+                        data: 'pic_pelaksana',
+                        name: 'pic_pelaksana',
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
                     },
                     {
                         data: 'action',

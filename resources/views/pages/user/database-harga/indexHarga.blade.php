@@ -78,7 +78,7 @@
                                             <div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides"
                                                  style="min-height-: 286px">
 
-                                                <img src="{{asset('images/data-barang/'.$data->foto)}}" alt="">
+                                                <img src="{{asset('data-barang/foto/'.$data->foto)}}" alt="">
                                                 <div class="m-widget19__shadow"></div>
                                             </div>
                                             <div class="m-widget19__content">
@@ -159,32 +159,12 @@
                                     </div>
                                     <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            Jenis Barang
-                                        </label>
-                                        <div class="col-lg-9 col-md-9 col-sm-12">
-                                            <input type="text" class="form-control m-input" id="jenisBarang"
-                                                   name="jenisBarang"
-                                                   placeholder="Masukan Jenis Barang">
-                                        </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label class="col-form-label col-lg-3 col-sm-12">
                                             Satuan Barang
                                         </label>
                                         <div class="col-lg-9 col-md-9 col-sm-12">
                                             <input type="text" class="form-control m-input" id="satuanBarang"
                                                    name="satuanBarang"
                                                    placeholder="Masukan Satuan Barang">
-                                        </div>
-                                    </div>
-                                    <div class="form-group m-form__group row">
-                                        <label class="col-form-label col-lg-3 col-sm-12">
-                                            Jumlah Barang
-                                        </label>
-                                        <div class="col-lg-9 col-md-9 col-sm-12">
-                                            <input type="text" class="form-control m-input value" id="jumlahBarang"
-                                                   name="jumlahBarang"
-                                                   placeholder="Masukan Jumlah Barang">
                                         </div>
                                     </div>
                                     <div class="form-group m-form__group row">
@@ -199,32 +179,25 @@
                                     </div>
                                     <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            Total
+                                            Spesifikasi
                                         </label>
                                         <div class="col-lg-9 col-md-9 col-sm-12">
-                                            <input type="text" readonly="readonly" class="form-control m-input disabled"
-                                                   id="total" name="total">
+                                            <input type="text" class="form-control m-input" id="spesifikasi"
+                                                   name="spesifikasi"
+                                                   placeholder="Masukan Satuan Barang">
                                         </div>
                                     </div>
+
                                     <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            Asal Usul Barang
+                                            Upload Sertifikat
                                         </label>
                                         <div class="col-lg-9 col-md-9 col-sm-12">
-                                            <input type="text" class="form-control m-input" id="asalUsulBarang"
-                                                   name="asalUsulBarang"
-                                                   placeholder="Masukan Asal Usul Barang">
+                                            <input type="file" class="form-control" id="sertifikat"
+                                                   name="sertifikat">
                                         </div>
                                     </div>
-                                    <div class="form-group m-form__group row">
-                                        <label class="col-form-label col-lg-3 col-sm-12">
-                                            Keterangan
-                                        </label>
-                                        <div class="col-lg-9 col-md-9 col-sm-12">
-                            <textarea class="form-control m-input" id="keterangan" name="keterangan"
-                                      placeholder="Masukan Keterangan"></textarea>
-                                        </div>
-                                    </div>
+
                                     <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
                                             Upload Foto Database Harga
