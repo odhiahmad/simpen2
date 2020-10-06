@@ -36,6 +36,7 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
 
     Route::group(['prefix'=>'user'],function (){
 
+        Route::get('{id}/edit', 'UserController@edit');
         Route::post('store', 'UserController@store')->name('user.store');
         Route::post('update', 'UserController@update')->name('user.update');
         Route::get('destroy/{id}', 'UserController@destroy');
@@ -47,8 +48,13 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
         Route::get('tambah', 'InisiasiPengadaanController@tambahPengadaan');
 
         Route::post('insert', 'InisiasiPengadaanController@store')->name('inisiasi-pengadaan.insert');
+
         Route::post('update', 'InisiasiPengadaanController@updateData')->name('inisiasi-pengadaan.update');
         Route::get('update-data/{id}', 'InisiasiPengadaanController@indexUpdateView');
+
+
+        Route::get('download-shp1/{id}', 'InisiasiPengadaanController@downloadShp1');
+        Route::get('download-shp2/{id}', 'InisiasiPengadaanController@downloadShp2');
     });
 
 
@@ -56,6 +62,9 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
         Route::get('index', 'DataKontrakController@index');
         Route::post('uploadDoc', 'DataKontrakController@uploadDoc')->name('dataKontrak.uploadDoc');
         Route::post('convertPdf', 'DataKontrakController@convertPdf')->name('dataKontrak.convertPdf');
+        Route::post('hapusTemp', 'DataKontrakController@hapusTemp')->name('dataKontrak.hapusTemp');
+        Route::get('downloadKontrak/{id}', 'DataKontrakController@downloadKontrak')->name('dataKontrak.downloadKontrak');
+        Route::get('downloadProses/{id}', 'DataKontrakController@downloadProses')->name('dataKontrak.downloadProses');
     });
 
     Route::group(['prefix'=>'database-harga'],function (){
