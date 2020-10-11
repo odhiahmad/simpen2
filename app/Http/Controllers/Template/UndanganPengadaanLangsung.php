@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Template;
 
 
+use App\Pengadaan;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
@@ -11,7 +12,14 @@ use PhpOffice\PhpWord\Style\Cell;
 
 class UndanganPengadaanLangsung
 {
-    public function UndanganPengadaanLangsung($nama,$nomor,$judul,$namaPerusahaan,$alamatPerusahaan,$nilaiHps,$sumberPendanaan){
+    public function UndanganPengadaanLangsung($id){
+        $data = Pengadaan::where('id',$id)->first();
+
+        $pdpdari = \Carbon\Carbon::createFromTimeStamp(strtotime($data->pemasukan_dok_penawaran_tgl_dari))->locale('id')->isoFormat('MMMM Do YYYY');
+        $pdpsampai = \Carbon\Carbon::createFromTimeStamp(strtotime($data->pemasukan_dok_penawaran_tgl_sampai))->locale('id')->isoFormat('MMMM Do YYYY');
+        $eddari = \Carbon\Carbon::createFromTimeStamp(strtotime($data->evaluasi_dokumen_tgl_dari))->locale('id')->isoFormat('MMMM Do YYYY');
+        $edsampai = \Carbon\Carbon::createFromTimeStamp(strtotime($data->evaluasi_dokumen_tgl_sampai))->locale('id')->isoFormat('MMMM Do YYYY');
+
         $phpWord = new PhpWord();
         $paragraphOptions = array(
             'spaceBefore' => 0, 'spaceAfter' => 0
@@ -27,91 +35,91 @@ class UndanganPengadaanLangsung
         $table->addRow();
         $table->addCell(2000)->addText(
             'Nomor'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
-            ':'.$nomor
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ':'.$data->undangan_pengadaan_langsung_nomor
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             'Pekanbaru'. date('Y-m-d')
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addRow();
         $table->addCell(2000)->addText(
             'Lampiran'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
            ': 1 (satu) Berkas'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addRow();
         $table->addCell(2000)->addText(
             'Sifat'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             ': Penting'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addRow();
         $table->addCell(2000)->addText(
             'Perihal'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             ': Undangan Pengadaan Langsung'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             'Kepada'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
 
         $table->addRow();
         $table->addCell(2000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
-            $namaPerusahaan
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ''
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addRow();
         $table->addCell(2000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
-            $alamatPerusahaan
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ''
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
 
         $section->addText(
-            'up. Yth. Direktur Utama '.$namaPerusahaan
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10,'underline' => 'single','bold'=> true),$paragraphOptions
+            'up. Yth. Direktur Utama '
+            ,array('name' => 'Arial', 'size' => 10,'underline' => 'single','bold'=> true),$paragraphOptions
         );
 
         $section->addText(
             'Dengan ini Saudara kami undang untuk mengikuti proses Pengadaan Langsung paket pekerjaan Pengadaan barang, sebagai berikut :'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10)
+            ,array('name' => 'Arial', 'size' => 10)
         );
 
         $multilevelNumberingStyleName = 'multilevel';
@@ -133,43 +141,43 @@ class UndanganPengadaanLangsung
         $table->addCell(500);
         $table->addCell(4000)->addText(
             'Nama Paket Pekerjaan'
-            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'name' => 'Arial', 'size' => 10),[ 'spaceBefore' => 0, 'spaceAfter' => 0]
         );
         $table->addCell(8000)->addText(
-            ':'.$judul
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ':'.$data->judul.' '.$data->tempat_penyerahan
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addRow();
         $table->addCell(500);
         $table->addCell(4000)->addText(
             'Lingkup Pekerjaan'
-            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'name' => 'Arial', 'size' => 10),[ 'spaceBefore' => 0, 'spaceAfter' => 0]
         );
         $table->addCell(8000)->addText(
-            ':'.$judul
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ':'.$data->judul.' '.$data->tempat_penyerahan
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
 
         $table->addRow();
         $table->addCell(500);
         $table->addCell(4000)->addText(
             'Nilai Total HPS'
-            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(8000)->addText(
-            ':'.$nilaiHps
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ':'
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
 
         $table->addRow();
         $table->addCell(500);
         $table->addCell(4000)->addText(
             'Sumber Pendanaan'
-            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(8000)->addText(
-            ':'.$sumberPendanaan
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
+            ':'
+            ,array('name' => 'Arial', 'size' => 10),$paragraphOptions
         );
 
 
@@ -179,16 +187,16 @@ class UndanganPengadaanLangsung
         $table->addCell(500);
         $table->addCell(4000)->addText(
             'Tempat dan Alamat'
-            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'alignment'=>'center','name' => 'Arial', 'size' => 10)
+            ,array('widowControl' => false, 'indentation' => array('left' => 360, 'right' => 120),'name' => 'Arial', 'size' => 10)
         );
         $table->addCell(8000)->addText(
             ': Kantor PT PLN (Persero) Unit Pelaksana Pengendalian Pembangkitan Pekanbaru, Jl. Tanjung Datuk No. 74, Pesisir, Kec. Lima Puluh, Kota Pekanbaru, Riau 28155'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10)
+            ,array('name' => 'Arial', 'size' => 10)
         );
 
         $section->addText(
             'Saudara diminta untuk memasukkan penawaran administrasi, teknis dan harga secara langsung sesuai dengan jadwal pelaksanaan sebagai berikut :'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::BOTH]
+            ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::BOTH]
         );
 
 
@@ -208,12 +216,12 @@ class UndanganPengadaanLangsung
         $table->addRow();
         $table->addCell(200)->addText(htmlspecialchars("a"));
         $table->addCell(4000)->addText(htmlspecialchars("Pemasukan Dokumen Penawaran "));
-        $table->addCell(4000)->addText(htmlspecialchars("Senin / 15 Juni 2020 s.d. Senin / 15 Juni 2020"));
+        $table->addCell(4000)->addText(''.$pdpdari.' s/d '.$pdpsampai);
         $table->addCell(2000)->addText(htmlspecialchars("08.00 s.d. 16.00 WIB"));
         $table->addRow();
         $table->addCell(200)->addText(htmlspecialchars("b"));
         $table->addCell(4000)->addText(htmlspecialchars("Evaluasi Dokumen Penawaran,  Klarifikasi Teknis dan Negoisasi Harga"));
-        $table->addCell(4000)->addText(htmlspecialchars("Rabu / 17 Juni 2020 s.d. Jumat / 19 Juni 2020"));
+        $table->addCell(4000)->addText(''.$eddari.' s/d '.$edsampai);
         $table->addCell(2000)->addText(htmlspecialchars("08.00 WIB s.d. Selesai "));
         $table->addRow();
         $table->addCell(200)->addText(htmlspecialchars("c"));
@@ -235,11 +243,11 @@ class UndanganPengadaanLangsung
         $table->addRow();
         $table->addCell(6000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
+            ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
         $table->addCell(6000)->addText(
             'Manager'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
+            ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
 
         $section->addText(
@@ -256,15 +264,15 @@ class UndanganPengadaanLangsung
         $table->addRow();
         $table->addCell(6000)->addText(
             ''
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
+            ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
         $table->addCell(6000)->addText(
             'Rahmat Dian Amir'
-            ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
+            ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
 
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save(public_path('data-pengadaan/undangan-pengadaan-langsung/' . $nama . '.docx'));
+        $objWriter->save(public_path('data-pengadaan/undangan-pengadaan-langsung/' . $data->judul.$data->id . '.docx'));
     }
 
 }

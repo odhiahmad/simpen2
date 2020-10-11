@@ -1,8 +1,11 @@
 <?php
 
 
-namespace App\Http\Controllers\Template;
+namespace App\Http\Controllers\Template\EvaluasiDokumen;
 
+
+use App\Http\Controllers\Template\TanggalIndo;
+use App\Pengadaan;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\SimpleType\Jc;
@@ -10,7 +13,17 @@ use PhpOffice\PhpWord\Style\Cell;
 
 class PemasukanDokPenawaran
 {
-    public function PemasukanDokPenawaran(){
+    public function PemasukanDokPenawaran($id){
+        $data = Pengadaan::where('id',$id)->first();
+
+        $tgl = \Carbon\Carbon::createFromTimeStamp(strtotime(date('Y-m-d')))->locale('id')->isoFormat('MMMM Do YYYY');
+
+        $tanggalIndo = new TanggalIndo();
+
+        $tanggal=$tanggalIndo->tgl_aja($data->pemasukan_dok_penawaran_tgl_dari);
+        $bulan=$tanggalIndo->bln_aja($data->pemasukan_dok_penawaran_tgl_dari);
+        $tahun=$tanggalIndo->thn_aja($data->pemasukan_dok_penawaran_tgl_dari);
+
         $phpWord = new PhpWord();
         $paragraphOptions = array(
             'spaceBefore' => 0, 'spaceAfter' => 0
@@ -29,7 +42,7 @@ class PemasukanDokPenawaran
         );
 
         $section->addText(
-            'Nomor : 044.BAPP-PL/DAN.02.01/210200/2020'
+            'Nomor : '.$data->evaluasi_dokumen_nomor
             ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
         $section->addText(
@@ -45,7 +58,7 @@ class PemasukanDokPenawaran
             ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
         $section->addText(
-            'Pengadaan Motor PMT Unit 3 ULPLTG Teluk Lembu'
+            $data->judul
             ,array('name' => 'Arial', 'size' => 13,'underline' => 'single','bold'=> true),['alignment' => Jc::CENTER,'spaceBefore' => 0, 'spaceAfter' => 0]
         );
         $section->addText(
@@ -63,7 +76,7 @@ class PemasukanDokPenawaran
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
-            ': 044.RKS/DAN.01.01/210200/2020'
+            ': 0'.$data->no_proses_pengadaan.'.RKS/DAN.01.01/210200/2020'
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addRow();
@@ -76,7 +89,7 @@ class PemasukanDokPenawaran
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $table->addCell(5000)->addText(
-            ': 02 Juni 2020'
+            ': '.$tgl
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),$paragraphOptions
         );
         $section->addText(
@@ -84,7 +97,10 @@ class PemasukanDokPenawaran
             ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
         $section->addText(
-            'Pada hari ini Senin tanggal Lima belas bulan Juni tahun Dua ribu dua puluh, telah diadakan rapat Pembukaan Dokumen Penawaran Pengadaan Langsung paket pekerjaan pengadaan barang untuk Pengadaan Motor PMT Unit 3 ULPLTG Teluk Lembu Nomor : 044.RKS/DAN.01.01/210200/2020 Tanggal : 02 Juni 2020 dihadiri oleh Bagian Pelaksana Pengadaan Barang/Jasa dan Penyedia Barang/Jasa dengan daftar hadir terlampir. '
+            'Pada hari ini '.$data->survei_harga_pasar_hari.' tanggal '.$tanggalIndo->terbilang($tanggal).' '.$bulan.' '.$tanggalIndo->terbilang($tahun).
+            ' telah diadakan rapat Pembukaan Dokumen Penawaran Pengadaan Langsung paket pekerjaan '.
+            'pengadaan barang untuk '.$data->judul.' Nomor : '.$data->evaluasi_dokumen_nomor.' Tanggal : '.$data->evaluasi_dokumen_tgl.
+            ' dihadiri oleh Bagian Pelaksana Pengadaan Barang/Jasa dan Penyedia Barang/Jasa dengan daftar hadir terlampir. '
             ,array('name' => 'Arial', 'size' => 10),['alignment' => Jc::BOTH]
         );
         $section->addText(
@@ -109,13 +125,33 @@ class PemasukanDokPenawaran
         $table->addCell(4000)->addText(htmlspecialchars('3'), $fontStyle,['alignment' => Jc::CENTER]);
         $table->addCell(1000)->addText(htmlspecialchars('4'), $fontStyle,['alignment' => Jc::CENTER]);
 
-        for ($i = 1; $i <= 3; $i++) {
-            $table->addRow();
-            $table->addCell(200)->addText(htmlspecialchars("{$i}"));
-            $table->addCell(4000)->addText(htmlspecialchars("Cell {$i}"));
-            $table->addCell(4000)->addText(htmlspecialchars("Cell {$i}"));
-            $table->addCell(1000)->addText(htmlspecialchars("Cell {$i}"));
-        }
+        $table->addRow();
+        $table->addCell(200)->addText('1');
+        $table->addCell(4000)->addText('Administrasi');
+        $table->addCell(4000)->addText('Surat Penawaran');
+        $table->addCell(1000)->addText('');
+        $table->addRow();
+        $table->addCell(200)->addText('');
+        $table->addCell(4000)->addText('');
+        $table->addCell(4000)->addText('Surat Kuasa (apabila dikuasakan)');
+        $table->addCell(1000)->addText('');
+        $table->addRow();
+        $table->addCell(200)->addText('2');
+        $table->addCell(4000)->addText('Teknis');
+        $table->addCell(4000)->addText('Spesifikasi Teknis barang');
+        $table->addCell(1000)->addText('');
+        $table->addRow();
+        $table->addCell(200)->addText('');
+        $table->addCell(4000)->addText('');
+        $table->addCell(4000)->addText('identitas (jenis, tipe dan merek) barang');
+        $table->addCell(1000)->addText('');
+        $table->addRow();
+        $table->addCell(200)->addText('3');
+        $table->addCell(4000)->addText('Harga');
+        $table->addCell(4000)->addText('Daftar Kuantitas dan Harga');
+        $table->addCell(1000)->addText('');
+
+
 
         $section->addText(
             'Demikian Berita Acara Pembukaan Dokumen Penawaran Pengadaan Langsung ini dibuat dengan sebenarnya untuk dapat dipergunakan sebagaimana mestinya.'
@@ -125,7 +161,7 @@ class PemasukanDokPenawaran
         $table = $section->addTable();
         $table->addRow();
         $table->addCell(6000)->addText(
-            'CV TUAH SAKTI BESTARI'
+            'CV ...............'
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
         $table->addCell(6000)->addText(
@@ -159,7 +195,7 @@ class PemasukanDokPenawaran
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
         $table->addCell(6000)->addText(
-           'Yuwana Hanif Utomo'
+            'Yuwana Hanif Utomo'
             ,array('alignment'=>'center','name' => 'Arial', 'size' => 10),['alignment' => Jc::CENTER]
         );
 
@@ -331,6 +367,6 @@ class PemasukanDokPenawaran
         }
 
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save(public_path('data-pengadaan/pemasukan-dok-penawaran/pemasukanDokPenawaran.docx'));
+        $objWriter->save(public_path('data-pengadaan/evaluasi-dokumen/'.$data->judul.$data->id.'1.docx'));
     }
 }

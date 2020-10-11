@@ -4,20 +4,17 @@
 namespace App\Http\Controllers\Template;
 
 
-
-require 'vendor/autoload.php';
+use App\Pengadaan;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class HPS
 {
-    public function HPS(){
-        $helper->log('Create new Spreadsheet object');
-        $spreadsheet = new Spreadsheet();
+    public function HPS($id){
 
-// Set document properties
-        $helper->log('Set document properties');
-        $spreadsheet->getProperties()->setCreator('Maarten Balliauw')
-            ->setLastModifiedBy('Maarten Balliauw')
+        $spreadsheet = new Spreadsheet();
+        $data = Pengadaan::where('id',$id)->first();
+        $spreadsheet->getProperties()->setCreator('PLN Pekanbaru')
+            ->setLastModifiedBy('PLN Pekanbaru')
             ->setTitle('Office 2007 XLSX Test Document')
             ->setSubject('Office 2007 XLSX Test Document')
             ->setDescription('Test document for Office 2007 XLSX, generated using PHP classes.')
@@ -25,54 +22,26 @@ class HPS
             ->setCategory('Test result file');
 
 // Add some data, we will use some formulas here
-        $helper->log('Add some data');
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('A5', 'Sum:');
 
-        $spreadsheet->getActiveSheet()->setCellValue('B1', 'Range #1')
-            ->setCellValue('B2', 3)
-            ->setCellValue('B3', 7)
-            ->setCellValue('B4', 13)
-            ->setCellValue('B5', '=SUM(B2:B4)');
-        $helper->log('Sum of Range #1 is ' . $spreadsheet->getActiveSheet()->getCell('B5')->getCalculatedValue());
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->mergeCells('A7:I7')
+            ->setCellValue('A7', 'HARGA PERKIRAAN SENDIRI (HPS)')->getStyle('A7')->getAlignment()->applyFromArray([
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'wrapText' => true,
+            ]);
 
-        $spreadsheet->getActiveSheet()->setCellValue('C1', 'Range #2')
-            ->setCellValue('C2', 5)
-            ->setCellValue('C3', 11)
-            ->setCellValue('C4', 17)
-            ->setCellValue('C5', '=SUM(C2:C4)');
-        $helper->log('Sum of Range #2 is ' . $spreadsheet->getActiveSheet()->getCell('C5')->getCalculatedValue());
+        $sheet->mergeCells('A8:I8')
+            ->setCellValue('A8', 'HARGA PERKIRAAN SENDIRI (HPS)')->getStyle('A8')->getAlignment()->applyFromArray([
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'wrapText' => true,
+            ]);
 
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('A7', 'Total of both ranges:');
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('B7', '=SUM(B5:C5)');
-        $helper->log('Sum of both Ranges is ' . $spreadsheet->getActiveSheet()->getCell('B7')->getCalculatedValue());
-
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('A8', 'Minimum of both ranges:');
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('B8', '=MIN(B2:C4)');
-        $helper->log('Minimum value in either Range is ' . $spreadsheet->getActiveSheet()->getCell('B8')->getCalculatedValue());
-
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('A9', 'Maximum of both ranges:');
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('B9', '=MAX(B2:C4)');
-        $helper->log('Maximum value in either Range is ' . $spreadsheet->getActiveSheet()->getCell('B9')->getCalculatedValue());
-
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('A10', 'Average of both ranges:');
-        $spreadsheet->getActiveSheet()
-            ->setCellValue('B10', '=AVERAGE(B2:C4)');
-        $helper->log('Average value of both Ranges is ' . $spreadsheet->getActiveSheet()->getCell('B10')->getCalculatedValue());
-        $spreadsheet->getActiveSheet()
-            ->getColumnDimension('A')
-            ->setAutoSize(true);
 
 // Rename worksheet
-        $helper->log('Rename worksheet');
-        $spreadsheet->getActiveSheet()
-            ->setTitle('Formulas');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save(public_path('data-pengadaan/hps/' . $data->judul . '.xlsx'));
     }
 }

@@ -55,7 +55,26 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
 
         Route::get('download-shp1/{id}', 'InisiasiPengadaanController@downloadShp1');
         Route::get('download-shp2/{id}', 'InisiasiPengadaanController@downloadShp2');
+
+        Route::get('download-hps/{id}', 'InisiasiPengadaanController@downloadHps');
+
+        Route::get('download-uplh/{id}', 'InisiasiPengadaanController@downloadUplh');
+
+        Route::get('evaluasiDokumen1/{id}', 'InisiasiPengadaanController@downloadEvaluasiDokumen1');
+        Route::get('evaluasiDokumen2/{id}', 'InisiasiPengadaanController@downloadEvaluasiDokumen2');
+        Route::get('evaluasiDokumen3/{id}', 'InisiasiPengadaanController@downloadEvaluasiDokumen3');
+
+        Route::get('download-ndPenetapan/{id}', 'InisiasiPengadaanController@downloadNdPenetapan');
+
+        Route::get('download-hasilPengadaan1/{id}', 'InisiasiPengadaanController@downloadHasilPengadaan1');
+        Route::get('download-hasilPengadaan2/{id}', 'InisiasiPengadaanController@downloadHasilPengadaan2');
+
+        Route::get('download-hasilKlarifikasi1/{id}', 'InisiasiPengadaanController@downloadHasilKlarifikasi1');
+        Route::get('download-hasilKlarifikasi2/{id}', 'InisiasiPengadaanController@downloadHasilKlarifikasi2');
+        Route::get('download-hasilKlarifikasi3/{id}', 'InisiasiPengadaanController@downloadHasilKlarifikasi3');
+        Route::get('download-hasilKlarifikasi4/{id}', 'InisiasiPengadaanController@downloadHasilKlarifikasi4');
     });
+
 
 
     Route::group(['prefix'=>'data-kontrak'],function (){

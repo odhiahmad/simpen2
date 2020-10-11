@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\DatabaseHarga;
-use App\DataKontrak;
 use App\Http\Controllers\Template\BeritaAcaraPengadaanLangsung;
-use App\Http\Controllers\Template\PemasukanDokPenawaran;
+use App\Http\Controllers\Template\EvaluasiDokumen\DaftarHadirDokPenawaran;
+use App\Http\Controllers\Template\EvaluasiDokumen\EvaluasiDokumenPenawaran;
+use App\Http\Controllers\Template\EvaluasiDokumen\PemasukanDokPenawaran;
+use App\Http\Controllers\Template\HasilKlarifikasi\DaftarHadirNego;
+use App\Http\Controllers\Template\HasilKlarifikasi\DaftarHadirPembuktianKualifikasi;
+use App\Http\Controllers\Template\HasilKlarifikasi\EvaluasiPembuktianKualifikasi;
+use App\Http\Controllers\Template\HasilPengadaan\DaftarHadirPengadaanLangsung;
+use App\Http\Controllers\Template\HasilPengadaan\HasilPengadaanLangsung;
+use App\Http\Controllers\Template\HPS;
 use App\Http\Controllers\Template\SurveyHargaPasar\SurveiHargaPasar1;
 use App\Http\Controllers\Template\SurveyHargaPasar\SurveyHargaPasar1;
-use App\Http\Controllers\Template\SurveyHargaPasar\SurveyHargaPasar2;
 use App\Http\Controllers\Template\UndanganPengadaanLangsung;
 use App\Http\Controllers\Template\UsulanPenetapanPemenang;
 use App\ModelsResource\DBagian;
@@ -30,8 +35,6 @@ use App\Pengadaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\Settings;
 use Yajra\DataTables\DataTables;
 
 class InisiasiPengadaanController extends Controller
@@ -54,12 +57,13 @@ class InisiasiPengadaanController extends Controller
         return view('pages/user/inisiasi-pengadaan/indexPengadaan');
     }
 
-    public function downloadShp1($id){
+    public function downloadShp1($id)
+    {
         $surveiHarga = new SurveiHargaPasar1();
         $surveiHarga->SurveyHargaPasar1($id);
 
-        $data  = Pengadaan::where('id',$id)->first();
-        $file= public_path('data-pengadaan')."/survei-harga-pasar/".$data->judul.'.docx';
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/survei-harga-pasar/" . $data->judul . '.docx';
 
         $headers = array(
             'Content-Type: application/pdf',
@@ -68,12 +72,13 @@ class InisiasiPengadaanController extends Controller
         return Response::download($file, $data->judul, $headers);
     }
 
-    public function downloadShp2($id){
-        $surveiHarga = new SurveyHargaPasar2();
+    public function downloadShp2($id)
+    {
+        $surveiHarga = new SurveiHargaPasar1();
         $surveiHarga->SurveyHargaPasar2($id);
 
-        $data  = Pengadaan::where('id',$id)->first();
-        $file= public_path('data-pengadaan')."/survei-harga-pasar/".$data->judul.'2.docx';
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/survei-harga-pasar/" . $data->judul . '2.docx';
 
         $headers = array(
             'Content-Type: application/pdf',
@@ -82,34 +87,182 @@ class InisiasiPengadaanController extends Controller
         return Response::download($file, $data->judul, $headers);
     }
 
-    public function downloadSurvey2($id){
+    public function downloadHps($id)
+    {
+        $surveiHarga = new HPS();
+        $surveiHarga->HPS($id);
 
-   }
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/hps/" . $data->judul . '.xlsx';
 
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
 
-    public function tesWordBAPL(Request $request){
-        $surveiHarga = new BeritaAcaraPengadaanLangsung();
-        $surveiHarga->BeritaAcaraPengadaanLangsung($request->nama,$request->nomor,$request->judul,$request->pejabatPelaksan,$request->disusunOleh,$request->hari,$request->tanggal
-        ,$request->alamat,$request->namaPerusahaan,$request->npwp);
+        return Response::download($file, $data->judul, $headers);
     }
 
-    public function tesWordUPL(Request $request){
+    public function downloadUplh($id)
+    {
         $surveiHarga = new UndanganPengadaanLangsung();
-        $surveiHarga->UndanganPengadaanLangsung($request->nama,$request->nomor,$request->judul,$request->namaPerusahaan, $request->alamatPerusahaan,$request->nilaiHps,$request->sumberPendanaan);
+        $surveiHarga->UndanganPengadaanLangsung($id);
 
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/undangan-pengadaan-langsung/" . $data->judul . $data->id . '.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
     }
 
-    public function tesWordUPP(Request $request){
-        $surveiHarga = new UsulanPenetapanPemenang();
-        $surveiHarga->UsulanPenetapanPemenang($request->nama,$request->nomor,$request->judul,$request->namaPerusahaan, $request->alamatPerusahaan,$request->nilaiHps,$request->sumberPendanaan,$request->typeSurat);
-
-    }
-
-    public function tesWordPDP(Request $request){
+    public function downloadEvaluasiDokumen1($id)
+    {
         $surveiHarga = new PemasukanDokPenawaran();
-        $surveiHarga->PemasukanDokPenawaran();
+        $surveiHarga->PemasukanDokPenawaran($id);
 
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/evaluasi-dokumen/" . $data->judul . $data->id . '1.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
     }
+
+    public function downloadEvaluasiDokumen2($id)
+    {
+        $surveiHarga = new EvaluasiDokumenPenawaran();
+        $surveiHarga->EvaluasiDokumenPenawaran($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/evaluasi-dokumen/" . $data->judul . $data->id . '2.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadEvaluasiDokumen3($id)
+    {
+        $surveiHarga = new DaftarHadirDokPenawaran();
+        $surveiHarga->DaftarHadirDokPenawaran($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/evaluasi-dokumen/" . $data->judul . $data->id . '3.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadNdPenetapan($id){
+        $surveiHarga = new UsulanPenetapanPemenang();
+        $surveiHarga->UsulanPenetapanPemenang($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/usulan-penetapan-pemenang/" . $data->judul . '.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadHasilPengadaan1($id){
+        $surveiHarga = new HasilPengadaanLangsung();
+        $surveiHarga->HasilPengadaanLangsung($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/hasil-pengadaan-langsung/" . $data->judul . 'hasil-pengadaan-langsung.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadHasilPengadaan2($id){
+        $surveiHarga = new DaftarHadirPengadaanLangsung();
+        $surveiHarga->DaftarHadir($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/hasil-pengadaan-langsung/" . $data->judul.'.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadHasilKlarifikasi1($id){
+        $surveiHarga = new EvaluasiPembuktianKualifikasi();
+        $surveiHarga->EvaluasiPembuktianKualifikasi($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'1.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadHasilKlarifikasi2($id){
+        $surveiHarga = new DaftarHadirPembuktianKualifikasi();
+        $surveiHarga->DaftarHadirPembuktianKualifikasi($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'2.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadHasilKlarifikasi3($id){
+        $surveiHarga = new DaftarHadirPengadaanLangsung();
+        $surveiHarga->DaftarHadir($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'3.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+    public function downloadHasilKlarifikasi4($id){
+        $surveiHarga = new DaftarHadirNego();
+        $surveiHarga->DaftarHadirNego($id);
+
+        $data = Pengadaan::where('id', $id)->first();
+        $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'4.docx';
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return Response::download($file, $data->judul, $headers);
+    }
+
+
+
+
 
     public function indexUpdateView(Request $request)
     {
@@ -198,21 +351,21 @@ class InisiasiPengadaanController extends Controller
         $dokumenKontrak = $request->file('kontrak_file');
         $dokumenProses = $request->file('proses_file');
 
-        $dokumenKontrakNama =  $request->kontrak;
-        $dokumenProsesNama =  $request->proses;
+        $dokumenKontrakNama = $request->kontrak;
+        $dokumenProsesNama = $request->proses;
 
 
-        if($dokumenKontrak != ''){
-            $cekFoto = Pengadaan::where('id',$request->id)->first();
-            if($cekFoto->kontrak != null){
-                unlink(public_path('data-kontrak/kontrak/').$dokumenKontrakNama);
+        if ($dokumenKontrak != '') {
+            $cekFoto = Pengadaan::where('id', $request->id)->first();
+            if ($cekFoto->kontrak != null) {
+                unlink(public_path('data-kontrak/kontrak/') . $dokumenKontrakNama);
             }
         }
 
-        if($dokumenProses != ''){
-            $cekFoto = Pengadaan::where('id',$request->id)->first();
-            if($cekFoto->proses != null){
-                unlink(public_path('data-kontrak/proses/').$dokumenProsesNama);
+        if ($dokumenProses != '') {
+            $cekFoto = Pengadaan::where('id', $request->id)->first();
+            if ($cekFoto->proses != null) {
+                unlink(public_path('data-kontrak/proses/') . $dokumenProsesNama);
             }
         }
 
@@ -335,8 +488,8 @@ class InisiasiPengadaanController extends Controller
             'nd_penetapan_pemenang_jumlah' => $request->nd_penetapan_pemenang_jumlah,
             'nd_penetapan_pemenang_tgl' => $request->nd_penetapan_pemenang_tgl,
             'nd_penetapan_pemenang_hari' => $request->nd_penetapan_pemenang_hari,
-            'kontrak'=>$dokumenKontrakNama,
-            'proses'=>$dokumenProsesNama,
+            'kontrak' => $dokumenKontrakNama,
+            'proses' => $dokumenProsesNama,
             'status' => $request->status,
         );
 
@@ -351,7 +504,7 @@ class InisiasiPengadaanController extends Controller
     {
         $dokumenKontrak = $request->file('nama_pdf_file');
 
-        $dokumenKontrakNama =  $request->nama_pdf;
+        $dokumenKontrakNama = $request->nama_pdf;
 
 
         $rules = array(
@@ -388,9 +541,9 @@ class InisiasiPengadaanController extends Controller
             'waktu' => 'required',
             'hps' => 'required',
             'no_proses_pengadaan' => 'required',
-            'status'=>'required',
-            'proses_file'=>'required|max:512',
-            'kontrak_file'=>'required|max:512',
+            'status' => 'required',
+            'proses_file' => 'required|max:512',
+            'kontrak_file' => 'required|max:512',
         );
 
 

@@ -486,24 +486,29 @@
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
+                            @if($dataPengadaan->survei_harga_pasar_tgl != null)
+                                <div class="col-lg-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-brand dropdown-toggle btn-sm" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Download
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                            <div class="col-lg-1">
-                                <div class="dropdown">
-                                    <button class="btn btn-brand dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Download
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a href="{!!url('user/inisiasi-pengadaan/download-shp1/' . $dataPengadaan->id )!!}" class="dropdown-item">
-                                            Survey Harga Pasar
-                                        </a>
-                                        <a href="{!!url('user/inisiasi-pengadaan/download-shp2/' . $dataPengadaan->id )!!}" class="dropdown-item" >
-                                            Form Daftar Hadir
-                                        </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-shp1/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Survey Harga Pasar
+                                            </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-shp2/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Form Daftar Hadir
+                                            </a>
+
+                                        </div>
                                     </div>
+                                    @endif
                                 </div>
-{{--                                <a href="{{!!url('downloadPdf/' . $dataPengadaan->kontrak )!!}}" type="button"--}}
-{{--                                   class="detail btn btn-primary btn-sm">Download</a>--}}
-                            </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
@@ -515,10 +520,6 @@
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-1">
-                                {{--                                <input type="hidden" class="form-control m-input hps_jumlah_temp"--}}
-                                {{--                                       name="hps_jumlah_temp"--}}
-                                {{--                                       value="0"--}}
-                                {{--                                       id="hps_jumlah_temp" placeholder="Jumlah">--}}
                                 <input type="text" value="{{$dataPengadaan->hps_jumlah}}"
                                        class="form-control m-input hps_jumlah"
                                        name="hps_jumlah"
@@ -532,11 +533,17 @@
                                     id="hps_tgl"
                                     type="text" class="form-control" readonly placeholder="Tanggal"/>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-1">
                                 <input value="{{$dataPengadaan->hps_hari}}" name="hps_hari"
                                        id="hps_hari"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
+                            </div>
+                            <div class="col-lg-2">
+                                <a href="{!!url('user/inisiasi-pengadaan/download-hps/' . $dataPengadaan->id )!!}"
+                                   class="btn btn-brand btn-sm">
+                                    Download
+                                </a>
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
@@ -562,13 +569,21 @@
                                     id="undangan_pengadaan_langsung_tgl"
                                     type="text" class="form-control" readonly placeholder="Tanggal"/>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-1">
                                 <input value="{{$dataPengadaan->undangan_pengadaan_langsung_hari}}"
                                        name="undangan_pengadaan_langsung_hari"
                                        id="undangan_pengadaan_langsung_hari"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
+                            @if($dataPengadaan->survei_harga_pasar_tgl != null)
+                                <div class="col-lg-2">
+                                    <a href="{!!url('user/inisiasi-pengadaan/download-uplh/' . $dataPengadaan->id )!!}"
+                                       class="btn btn-brand btn-sm">
+                                        Download
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
@@ -683,13 +698,40 @@
                                     id="evaluasi_dokumen_tgl_sd"
                                     type="text" class="form-control" readonly placeholder="Tanggal"/>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-1">
                                 <input value="{{$dataPengadaan->evaluasi_dokumen_hari_sd}}"
                                        name="evaluasi_dokumen_hari_sd"
                                        id="evaluasi_dokumen_hari_sd"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
+                            @if($dataPengadaan->evaluasi_dokumen_tgl_sd != null)
+                                <div class="col-lg-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-brand dropdown-toggle btn-sm" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Download
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                            <a href="{!!url('user/inisiasi-pengadaan/evaluasiDokumen1/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Pemasukan Dok Penawaran
+                                            </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/evaluasiDokumen2/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Evaluasi Dok Penawaran
+                                            </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/evaluasiDokumen3/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Daftar Hadir
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
@@ -714,13 +756,43 @@
                                     id="ba_hasil_klarifikasi_tgl"
                                     type="text" class="form-control" readonly placeholder="Tanggal"/>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-1">
                                 <input value="{{$dataPengadaan->ba_hasil_klarifikasi_hari}}"
                                        name="ba_hasil_klarifikasi_hari"
                                        id="ba_hasil_klarifikasi_hari"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
+                            @if($dataPengadaan->ba_hasil_klarifikasi_tgl != null)
+                                <div class="col-lg-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-brand dropdown-toggle btn-sm" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Download
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-hasilKlarifikasi1/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                               Evaluasi dan Pembuktian Kualifikasi
+                                            </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-hasilKlarifikasi2/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Daftar Hadir Pembuktian Kualifikasi
+                                            </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-hasilKlarifikasi3/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Evaluasi Nego
+                                            </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-hasilKlarifikasi4/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Daftar Hadir Evaluasi Nego
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
@@ -745,13 +817,35 @@
                                     id="ba_hasil_pengadaan_langsung_tgl"
                                     type="text" class="form-control" readonly placeholder="Tanggal"/>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-1">
                                 <input value="{{$dataPengadaan->ba_hasil_pengadaan_hari}}"
                                        name="ba_hasil_pengadaan_langsung_hari"
                                        id="ba_hasil_pengadaan_langsung_hari"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
+                            @if($dataPengadaan->ba_hasil_pengadaan_tgl != null)
+                                <div class="col-lg-2">
+                                    <div class="dropdown">
+                                        <button class="btn btn-brand dropdown-toggle btn-sm" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                            Download
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-hasilPengadaan1/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Hasil Pengadaan Langsung
+                                            </a>
+                                            <a href="{!!url('user/inisiasi-pengadaan/download-hasilPengadaan2/' . $dataPengadaan->id )!!}"
+                                               class="dropdown-item">
+                                                Daftar Hadir Hasil Pengadaan Langsung
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
@@ -777,13 +871,21 @@
                                     type="text" class="form-control nd_usulan_tetap_pemenang_tgl" readonly
                                     placeholder="Tanggal"/>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-1">
                                 <input value="{{$dataPengadaan->nd_usulan_tetap_pemenang_hari}}"
                                        name="nd_usulan_tetap_pemenang_hari"
                                        id="nd_usulan_tetap_pemenang_hari"
                                        type="text" class="form-control m-input" placeholder="Hari">
                                 <span class="m-form__help"></span>
                             </div>
+                            @if($dataPengadaan->survei_harga_pasar_tgl != null)
+                                <div class="col-lg-2">
+                                    <a href="{!!url('user/inisiasi-pengadaan/download-ndPenetapan/' . $dataPengadaan->id )!!}"
+                                       class="btn btn-brand btn-sm">
+                                        Download
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                         <div class="form-group m-form__group row">
                             <label class="col-lg-2 col-form-label">
