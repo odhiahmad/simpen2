@@ -67,10 +67,50 @@
                     </div>
                 </div>
             </div>
+            <div id="hapus" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Konfirmasi</h2>
+                        </div>
+                        <div class="modal-body">
+                            <h4 align="center" style="margin:0;">Apakah anda yakin ingin menghapus data pengadaan ini ?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
         $(document).ready(function () {
+            var user_id;
+
+            $(document).on('click', '.hapus', function () {
+                user_id = $(this).attr('id');
+                $('#hapus').modal('show');
+            });
+
+            $('#ok_button').click(function () {
+                $.ajax({
+                    url: "/user/inisiasi-pengadaan/destroy/" + user_id,
+                    beforeSend: function () {
+                        $('#ok_button').text('Deleting...');
+                    },
+                    success: function (data) {
+                        setTimeout(function () {
+                            $('#ok_button').text('Delete');
+                            $('#hapus').modal('hide');
+                            $('#user_table').DataTable().ajax.reload();
+                        }, 2000);
+                    }
+                })
+            });
+
+
             $('#user_table').DataTable({
                 processing: true,
                 serverSide: true,

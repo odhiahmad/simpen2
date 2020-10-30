@@ -90,15 +90,12 @@
                             <input type="hidden" class="form-control m-input" value="{{$databaseHarga->foto}}" id="foto_nama"
                                    name="foto_nama"
                                    placeholder="Masukan Asal Usul Barang">
-                            <input type="hidden" class="form-control m-input" value="{{$databaseHarga->sertifikat}}" id="sertifikat_nama"
-                                   name="sertifikat_nama"
-                                   placeholder="Masukan Asal Usul Barang">
                             <div class="form-group m-form__group row">
                                 <label class="col-form-label col-lg-3 col-sm-12">
-                                    Upload Sertifikat
+                                    Sertifikat
                                 </label>
                                 <div class="col-lg-9 col-md-9 col-sm-12">
-                                    <input type="file" class="form-control" id="sertifikat"
+                                    <input type="text" value="{{$databaseHarga->sertifikat}}" class="form-control" id="sertifikat"
                                            name="sertifikat">
                                 </div>
                             </div>

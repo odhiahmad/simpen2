@@ -190,10 +190,10 @@
 
                                     <div class="form-group m-form__group row">
                                         <label class="col-form-label col-lg-3 col-sm-12">
-                                            Upload Sertifikat
+                                            Sertifikat
                                         </label>
                                         <div class="col-lg-9 col-md-9 col-sm-12">
-                                            <input type="file" class="form-control" id="sertifikat"
+                                            <input type="text" class="form-control" id="sertifikat"
                                                    name="sertifikat">
                                         </div>
                                     </div>

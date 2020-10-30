@@ -154,6 +154,14 @@
                                                      {{$databaseHarga->spesifikasi}}
                                                 </span>
                                 </div>
+                                <div class="m-widget13__item">
+                                                <span class="m-widget13__desc m--align-center">
+                                                   Sertifikat
+                                                </span>
+                                    <span class="m-widget13__text m-widget13__number-bolder m--font-brand">
+                                                     {{$databaseHarga->sertifikat}}
+                                                </span>
+                                </div>
                                 <div class="m-widget13__action m--align-left">
                                     <div class="m-section">
                                         <h3 class="m-section__heading">

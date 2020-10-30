@@ -36,9 +36,12 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+
+
         $rules = array(
             'name' => 'required',
             'username' => 'required',
+            'password' => 'required'
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -51,7 +54,7 @@ class UserController extends Controller
         $form_data = array(
             'name' => $request->name,
             'username' => $request->username,
-            'password' => Hash::make('admin123'),
+            'password' => Hash::make($request->password),
             'role' => 'user'
         );
 
@@ -83,24 +86,49 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-        $rules = array(
-            'name' => 'required',
-            'username' => 'required',
-        );
+        if($request->password != ''){
+            $rules = array(
+                'name' => 'required',
+                'username' => 'required',
+                'password' => 'required'
+            );
 
-        $error = Validator::make($request->all(), $rules);
+            $error = Validator::make($request->all(), $rules);
 
-        if ($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
+            if ($error->fails()) {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+
+
+            $form_data = array(
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+
+            );
+            User::whereId($request->hidden_id)->update($form_data);
+        }else{
+            $rules = array(
+                'name' => 'required',
+                'username' => 'required',
+            );
+
+            $error = Validator::make($request->all(), $rules);
+
+            if ($error->fails()) {
+                return response()->json(['errors' => $error->errors()->all()]);
+            }
+
+
+            $form_data = array(
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => Hash::make('admin123'),
+
+            );
+            User::whereId($request->hidden_id)->update($form_data);
         }
 
-
-        $form_data = array(
-            'name' => $request->name,
-            'username' => $request->username,
-
-        );
-        User::whereId($request->hidden_id)->update($form_data);
 
         return response()->json(['success' => 'Data is successfully updated']);
     }

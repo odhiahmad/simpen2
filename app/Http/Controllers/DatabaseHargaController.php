@@ -107,8 +107,8 @@ class DatabaseHargaController extends Controller
             'satuanBarang' => 'required',
             'hargaSatuan' => 'required|numeric',
             'spesifikasi'=>'required',
-            'sertifikat'=>'required|max:256',
-            'foto' => 'required|image|max:256'
+            'sertifikat'=>'required',
+            'foto' => 'required|image|max:512'
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -120,16 +120,14 @@ class DatabaseHargaController extends Controller
         }
 
         $image = $request->file('foto');
-        $image1 = $request->file('sertifikat');
         $new_name = rand() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('data-barang/foto'), $new_name);
-        $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
-        $image1->move(public_path('data-barang/file'), $new_name1);
+
 
         $databaseHarga = new DatabaseHarga();
         $databaseHarga->nama_barang = $request->namaBarang;
         $databaseHarga->spesifikasi = $request->spesifikasi;
-        $databaseHarga->sertifikat = $new_name1;
+        $databaseHarga->sertifikat = $request->sertifikat;
         $databaseHarga->satuan = $request->satuanBarang;
         $databaseHarga->harga_satuan = $request->hargaSatuan;
         $databaseHarga->foto = $new_name;
@@ -170,45 +168,16 @@ class DatabaseHargaController extends Controller
         $getDatabaseHarga = DatabaseHarga::where('id', $request->id)->first();
 
         $foto = $request->file('foto');
-        $sertifikat = $request->file('sertifikat');
-
         $fotoNama =  $request->foto_nama;
-        $sertifikatNama = $request->sertifikat_nama;
 
-        if($foto != '' && $sertifikat != ''){
 
+        if($foto != ''){
             $rules = array(
                 'namaBarang' => 'required',
                 'satuanBarang' => 'required',
                 'hargaSatuan' => 'required|numeric',
                 'spesifikasi'=>'required',
-                'foto' => 'required|image|max:256',
-                'sertifikat' => 'required|max:256'
-            );
-
-            $error = Validator::make($request->all(), $rules);
-            if($error->fails())
-            {
-                return response()->json(['errors' => $error->errors()->all()]);
-            }
-
-            unlink(public_path('data-barang/foto/').$fotoNama);
-            unlink(public_path('data-barang/file/').$sertifikatNama);
-
-            $fotoNama = rand() . '.' . $foto->getClientOriginalExtension();
-            $foto->move(public_path('data-barang/foto'), $fotoNama);
-
-            $sertifikatNama = rand() . '.' . $sertifikat->getClientOriginalExtension();
-            $sertifikat->move(public_path('data-barang/file'), $sertifikatNama);
-
-
-
-        }else if($foto != '' && $sertifikat == ''){
-            $rules = array(
-                'namaBarang' => 'required',
-                'satuanBarang' => 'required',
-                'hargaSatuan' => 'required|numeric',
-                'spesifikasi'=>'required',
+                'sertifikat'=>'required',
                 'foto' => 'required|image|max:256',
             );
 
@@ -223,27 +192,7 @@ class DatabaseHargaController extends Controller
             $foto->move(public_path('data-barang/foto'), $fotoNama);
 
 
-        }else if($sertifikat != '' && $foto == ''){
-            $rules = array(
-                'namaBarang' => 'required',
-                'satuanBarang' => 'required',
-                'hargaSatuan' => 'required|numeric',
-                'spesifikasi'=>'required',
-                'sertifikat' => 'required|max:256',
-            );
-
-            $error = Validator::make($request->all(), $rules);
-            if($error->fails())
-            {
-                return response()->json(['errors' => $error->errors()->all()]);
-            }
-            @unlink(public_path('data-barang/file/').$sertifikatNama);
-
-            $sertifikatNama = rand() . '.' . $sertifikat->getClientOriginalExtension();
-            $sertifikat->move(public_path('data-barang/file'), $sertifikatNama);
         }
-
-
 
         $form_data_insert = array(
             'id_database_harga' => $request->id,
@@ -259,14 +208,16 @@ class DatabaseHargaController extends Controller
             'satuan' => $request->satuanBarang,
             'harga_satuan' => $request->hargaSatuan,
             'foto' =>$fotoNama,
-            'sertifikat' => $sertifikatNama,
+            'sertifikat' => $request->sertifikat,
         );
 
-        if ($dataHarga = DatabaseHarga::whereId($request->id)->update($form_data) && HistoryHarga::create($form_data_insert)) {
+        if ($dataHarga = DatabaseHarga::whereId($request->id)->update($form_data) ) {
+
+            if($getDatabaseHarga->harga_satuan != $request->hargaSatuan){
+                HistoryHarga::create($form_data_insert);
+            }
             return response()->json([
                 'success' => 'Data is successfully updated',
-                'fotoNama' => $fotoNama,
-                'sertifikatNama' => $sertifikatNama
             ]);
         } else {
             return response()->json(['success' => 'Data is successfully updated']);

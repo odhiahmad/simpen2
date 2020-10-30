@@ -8,6 +8,7 @@ use App\Http\Controllers\Template\EvaluasiDokumen\EvaluasiDokumenPenawaran;
 use App\Http\Controllers\Template\EvaluasiDokumen\PemasukanDokPenawaran;
 use App\Http\Controllers\Template\HasilKlarifikasi\DaftarHadirNego;
 use App\Http\Controllers\Template\HasilKlarifikasi\DaftarHadirPembuktianKualifikasi;
+use App\Http\Controllers\Template\HasilKlarifikasi\EvaluasiNego;
 use App\Http\Controllers\Template\HasilKlarifikasi\EvaluasiPembuktianKualifikasi;
 use App\Http\Controllers\Template\HasilPengadaan\DaftarHadirPengadaanLangsung;
 use App\Http\Controllers\Template\HasilPengadaan\HasilPengadaanLangsung;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Template\UsulanPenetapanPemenang;
 use App\ModelsResource\DBagian;
 use App\ModelsResource\DCaraPembayaran;
 use App\ModelsResource\DFungsiPembangkit;
+use App\ModelsResource\DJabatanPengawas;
 use App\ModelsResource\DJenis;
 use App\ModelsResource\DMasaBerlaku;
 use App\ModelsResource\DMasaGaransi;
@@ -32,6 +34,7 @@ use App\ModelsResource\DSyaratBidangUsaha;
 use App\ModelsResource\DTempatPenyerahan;
 use App\ModelsResource\DVfmc;
 use App\Pengadaan;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -41,14 +44,13 @@ class InisiasiPengadaanController extends Controller
 {
     public function index()
     {
-
-
         if (request()->ajax()) {
             return DataTables::of(Pengadaan::latest()->get())
                 ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="detail" id="' . $data->id . '" class="detail btn btn-primary btn-sm">Detail</button>';
+                    $button = '<a href="update-data/' . $data->id . '" class="detail btn btn-info btn-sm">Update</a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a href="update-data/' . $data->id . '" class="detail btn btn-info btn-sm">Update</a>';
+                    $button .= '<button type="button" name="hapus" id="' . $data->id . '" class="hapus btn btn-danger btn-sm">Hapus</button>';
+
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -66,10 +68,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/survei-harga-pasar/" . $data->judul . '.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Survey Harga Pasar.docx', $headers);
     }
 
     public function downloadShp2($id)
@@ -81,10 +83,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/survei-harga-pasar/" . $data->judul . '2.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Form Survey Harga Pasar.docx', $headers);
     }
 
     public function downloadHps($id)
@@ -96,10 +98,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/hps/" . $data->judul . '.xlsx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/xlsx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' HPS.xlsx', $headers);
     }
 
     public function downloadUplh($id)
@@ -111,10 +113,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/undangan-pengadaan-langsung/" . $data->judul . $data->id . '.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Undangan Pengadaan Langsung.docx', $headers);
     }
 
     public function downloadEvaluasiDokumen1($id)
@@ -126,10 +128,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/evaluasi-dokumen/" . $data->judul . $data->id . '1.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Evaluasi Dokumen Pembukaan Dok Penawaran.docx', $headers);
     }
 
     public function downloadEvaluasiDokumen2($id)
@@ -141,10 +143,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/evaluasi-dokumen/" . $data->judul . $data->id . '2.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Evaluasi Dok Penawaran.docx', $headers);
     }
 
     public function downloadEvaluasiDokumen3($id)
@@ -156,10 +158,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/evaluasi-dokumen/" . $data->judul . $data->id . '3.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Daftar Hadir Dok Penawaran.docx', $headers);
     }
 
     public function downloadNdPenetapan($id){
@@ -170,10 +172,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/usulan-penetapan-pemenang/" . $data->judul . '.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' usulan penetapan pemenang.docx', $headers);
     }
 
     public function downloadHasilPengadaan1($id){
@@ -184,10 +186,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/hasil-pengadaan-langsung/" . $data->judul . 'hasil-pengadaan-langsung.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' hasil pengadaan lansung.docx', $headers);
     }
 
     public function downloadHasilPengadaan2($id){
@@ -198,10 +200,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/hasil-pengadaan-langsung/" . $data->judul.'.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' daftar hadir hasil pengadaan lansung.docx', $headers);
     }
 
     public function downloadHasilKlarifikasi1($id){
@@ -212,10 +214,10 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'1.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Pembuktian Kualifikasi.docx', $headers);
     }
 
     public function downloadHasilKlarifikasi2($id){
@@ -226,24 +228,24 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'2.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Daftar Hadir Pembuktian Kualifikasi.docx', $headers);
     }
 
     public function downloadHasilKlarifikasi3($id){
-        $surveiHarga = new DaftarHadirPengadaanLangsung();
-        $surveiHarga->DaftarHadir($id);
+        $surveiHarga = new EvaluasiNego();
+        $surveiHarga->EvaluasiNego($id);
 
         $data = Pengadaan::where('id', $id)->first();
-        $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'3.docx';
+        $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'3.xlsx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Evaluasi Nego.xlsx', $headers);
     }
 
     public function downloadHasilKlarifikasi4($id){
@@ -254,10 +256,33 @@ class InisiasiPengadaanController extends Controller
         $file = public_path('data-pengadaan') . "/hasil-klarifikasi/" . $data->judul.'4.docx';
 
         $headers = array(
-            'Content-Type: application/pdf',
+            'Content-Type: application/docx',
         );
 
-        return Response::download($file, $data->judul, $headers);
+        return Response::download($file, $data->judul.' Daftar Hadir Nego.docx', $headers);
+    }
+
+
+    public function downloadSpkBarang(){
+
+        $file = public_path('spk')."/". 'spk-barang.doc';
+
+        $headers = array(
+            'Content-Type: application/docx',
+        );
+
+        return Response::download($file,'SPK Barang', $headers);
+    }
+
+    public function downloadDaftarKuantitas(){
+
+        $file = public_path('spk'). '/daftar-kuantitas.xlsx';
+
+        $headers = array(
+            'Content-Type: application/xlsx',
+        );
+
+        return Response::download($file,'Daftar Kuantitas', $headers);
     }
 
 
@@ -282,6 +307,7 @@ class InisiasiPengadaanController extends Controller
         $dataTempatPenyerahan = DTempatPenyerahan::all();
         $dataVfmc = DVfmc::all();
         $dataStatus = DStatus::all();
+        $dataJabatanPengawas = DJabatanPengawas::all();
         return view('pages/user/inisiasi-pengadaan/updatePengadaan', compact([
             'dataPengadaan',
             'dataBagian',
@@ -298,7 +324,8 @@ class InisiasiPengadaanController extends Controller
             'dataSyaratBidangUsaha',
             'dataTempatPenyerahan',
             'dataVfmc',
-            'dataStatus'
+            'dataStatus',
+            'dataJabatanPengawas'
         ]));
     }
 
@@ -324,8 +351,10 @@ class InisiasiPengadaanController extends Controller
         $dataTempatPenyerahan = DTempatPenyerahan::all();
         $dataVfmc = DVfmc::all();
         $dataStatus = DStatus::all();
+        $dataJabatanPengawas = DJabatanPengawas::all();
 
         return view('pages/user/inisiasi-pengadaan/tambahPengadaan', compact([
+            'dataJabatanPengawas',
             'dataBagian',
             'dataCaraPembayaran',
             'dataFungsiPembangkit',
@@ -354,12 +383,19 @@ class InisiasiPengadaanController extends Controller
         $dokumenKontrakNama = $request->kontrak;
         $dokumenProsesNama = $request->proses;
 
+        $new_name=$request->kontrak;
+        $new_name1=$request->proses;
 
         if ($dokumenKontrak != '') {
             $cekFoto = Pengadaan::where('id', $request->id)->first();
             if ($cekFoto->kontrak != null) {
                 unlink(public_path('data-kontrak/kontrak/') . $dokumenKontrakNama);
             }
+
+            $image = $request->file('kontrak_file');
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('data-kontrak/kontrak'), $new_name);
+
         }
 
         if ($dokumenProses != '') {
@@ -367,6 +403,11 @@ class InisiasiPengadaanController extends Controller
             if ($cekFoto->proses != null) {
                 unlink(public_path('data-kontrak/proses/') . $dokumenProsesNama);
             }
+
+            $image1 = $request->file('proses_file');
+
+            $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
+            $image1->move(public_path('data-kontrak/proses'), $new_name1);
         }
 
 
@@ -379,7 +420,6 @@ class InisiasiPengadaanController extends Controller
             'no_undang_pl' => 'required',
             'lingkup_pekerjaan' => 'required',
             'metode_pengadaan' => 'required',
-            'jenis_kontrak' => 'required',
             'rencana' => 'required',
             'tempat_penyerahan' => 'required',
             'masa_berlaku_surat' => 'required',
@@ -396,14 +436,9 @@ class InisiasiPengadaanController extends Controller
             'pengawas' => 'required',
             'ketua_tim' => 'required',
             'pic_pelaksana' => 'required',
-            'proses_dokumen' => 'required',
-            'nomor' => 'required',
-            'jumlah_hari' => 'required',
-            'tanggal' => 'required',
-            'hari' => 'required',
-            'waktu' => 'required',
             'hps' => 'required',
             'no_proses_pengadaan' => 'required',
+            'jabatan_pengawas' => 'required'
         );
 
 
@@ -421,7 +456,6 @@ class InisiasiPengadaanController extends Controller
             'no_undang_pl' => $request->no_undang_pl,
             'lingkup_pekerjaan' => $request->lingkup_pekerjaan,
             'metode_pengadaan' => $request->metode_pengadaan,
-            'jenis_kontrak' => $request->jenis_kontrak,
             'rencana' => $request->rencana,
             'tempat_penyerahan' => $request->tempat_penyerahan,
             'masa_berlaku_surat' => $request->masa_berlaku_surat,
@@ -437,14 +471,9 @@ class InisiasiPengadaanController extends Controller
             'pejabat_pelaksana' => $request->pejabat_pelaksana,
             'direksi' => $request->direksi,
             'pengawas' => $request->pengawas,
+            'jabatan_pengawas' => $request->jabatan_pengawas,
             'ketua_tim' => $request->ketua_tim,
             'pic_pelaksana' => $request->pic_pelaksana,
-            'proses_dokumen' => $request->proses_dokumen,
-            'nomor' => $request->nomor,
-            'jumlah_hari' => $request->jumlah_hari,
-            'tanggal' => $request->tanggal,
-            'hari' => $request->hari,
-            'waktu' => $request->waktu,
             'hps' => $request->hps,
             'no_proses_pengadaan' => $request->no_proses_pengadaan,
             'survei_harga_pasar_nomor' => $request->nppv1,
@@ -488,8 +517,16 @@ class InisiasiPengadaanController extends Controller
             'nd_penetapan_pemenang_jumlah' => $request->nd_penetapan_pemenang_jumlah,
             'nd_penetapan_pemenang_tgl' => $request->nd_penetapan_pemenang_tgl,
             'nd_penetapan_pemenang_hari' => $request->nd_penetapan_pemenang_hari,
-            'kontrak' => $dokumenKontrakNama,
-            'proses' => $dokumenProsesNama,
+            'spk_nomor'=>$request->nppv10,
+            'spk_jumlah'=>$request->spk_jumlah,
+            'spk_tgl'=>$request->spk_tgl,
+            'spk_hari'=>$request->spk_hari,
+            'rks_nomor'=>$request->nppv11,
+            'rks_jumlah'=>$request->rks_jumlah,
+            'rks_tgl'=>$request->rks_tgl,
+            'rks_hari'=>$request->rks_hari,
+            'kontrak' => $new_name,
+            'proses' => $new_name1,
             'status' => $request->status,
         );
 
@@ -516,7 +553,6 @@ class InisiasiPengadaanController extends Controller
             'no_undang_pl' => 'required',
             'lingkup_pekerjaan' => 'required',
             'metode_pengadaan' => 'required',
-            'jenis_kontrak' => 'required',
             'rencana' => 'required',
             'tempat_penyerahan' => 'required',
             'masa_berlaku_surat' => 'required',
@@ -533,17 +569,12 @@ class InisiasiPengadaanController extends Controller
             'pengawas' => 'required',
             'ketua_tim' => 'required',
             'pic_pelaksana' => 'required',
-            'proses_dokumen' => 'required',
-            'nomor' => 'required',
-            'jumlah_hari' => 'required',
-            'tanggal' => 'required',
-            'hari' => 'required',
-            'waktu' => 'required',
             'hps' => 'required',
             'no_proses_pengadaan' => 'required',
             'status' => 'required',
             'proses_file' => 'required|max:512',
             'kontrak_file' => 'required|max:512',
+            'jabatan_pengawas' => 'required'
         );
 
 
@@ -562,7 +593,6 @@ class InisiasiPengadaanController extends Controller
         $pengadaan->no_undang_pl = $request->no_undang_pl;
         $pengadaan->lingkup_pekerjaan = $request->lingkup_pekerjaan;
         $pengadaan->metode_pengadaan = $request->metode_pengadaan;
-        $pengadaan->jenis_kontrak = $request->jenis_kontrak;
         $pengadaan->rencana = $request->rencana;
         $pengadaan->tempat_penyerahan = $request->tempat_penyerahan;
         $pengadaan->masa_berlaku_surat = $request->masa_berlaku_surat;
@@ -578,14 +608,12 @@ class InisiasiPengadaanController extends Controller
         $pengadaan->pejabat_pelaksana = $request->pejabat_pelaksana;
         $pengadaan->direksi = $request->direksi;
         $pengadaan->pengawas = $request->pengawas;
+        $pengadaan->jabatan_pengawas = $request->jabatan_pengawas;
         $pengadaan->ketua_tim = $request->ketua_tim;
         $pengadaan->pic_pelaksana = $request->pic_pelaksana;
-        $pengadaan->proses_dokumen = $request->proses_dokumen;
-        $pengadaan->nomor = $request->nomor;
-        $pengadaan->jumlah_hari = $request->jumlah_hari;
-        $pengadaan->tanggal = $request->tanggal;
-        $pengadaan->hari = $request->hari;
-        $pengadaan->waktu = $request->waktu;
+
+
+
         $pengadaan->hps = $request->hps;
         $pengadaan->no_proses_pengadaan = $request->no_proses_pengadaan;
         $pengadaan->survei_harga_pasar_nomor = $request->nppv1;
@@ -596,7 +624,23 @@ class InisiasiPengadaanController extends Controller
         $pengadaan->ba_hasil_pengadaan_nomor = $request->nppv7;
         $pengadaan->nd_usulan_tetap_pemenang_nomor = $request->nppv8;
         $pengadaan->nd_penetapan_pemenang_nomor = $request->nppv9;
+        $pengadaan->spk_nomor = $request->nppv10;
+        $pengadaan->rks_nomor = $request->nppv11;
         $pengadaan->status = $request->status;
+
+
+
+        if ($request->rks_tgl) {
+            $pengadaan->rks_jumlah = $request->rks_jumlah;
+            $pengadaan->rks_tgl = $request->rks_tgl;
+            $pengadaan->rks_hari = $request->rks_hari;
+        }
+
+        if ($request->spk_tgl) {
+            $pengadaan->spk_jumlah = $request->spk_jumlah;
+            $pengadaan->spk_tgl = $request->spk_tgl;
+            $pengadaan->spk_hari = $request->spk_hari;
+        }
 
 
         if ($request->survey_harga_pasar_tgl) {
@@ -646,7 +690,7 @@ class InisiasiPengadaanController extends Controller
             $pengadaan->ba_hasil_klarifikasi_hari = $request->ba_hasil_klarifikasi_hari;
         }
 
-        if ($request->ba_hasil_pengadaan_tgl) {
+        if ($request->ba_hasil_pengadaan_langsung_tgl) {
             $pengadaan->ba_hasil_pengadaan_jumlah = $request->ba_hasil_pengadaan_langsung_jumlah;
             $pengadaan->ba_hasil_pengadaan_tgl = $request->ba_hasil_pengadaan_langsung_tgl;
             $pengadaan->ba_hasil_pengadaan_hari = $request->ba_hasil_pengadaan_langsung_hari;
@@ -681,5 +725,11 @@ class InisiasiPengadaanController extends Controller
         }
 
 
+    }
+
+    public function destroy($id)
+    {
+        $data = Pengadaan::findOrFail($id);
+        $data->delete();
     }
 }
