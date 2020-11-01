@@ -69,41 +69,47 @@
                 </div>
             </div>
         </div>
-{{--        <div id="aturUserModal" class="modal fade" role="dialog">--}}
-{{--            <div class="modal-dialog">--}}
-{{--                <div class="modal-content">--}}
-{{--                    <div class="modal-header">--}}
-{{--                        <h2 class="modal-title">Atur User</h2>--}}
-{{--                    </div>--}}
-{{--                    <div class="modal-body">--}}
-{{--                        <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">--}}
-{{--                            @csrf--}}
-{{--                            <div class="form-group m-form__group row">--}}
-{{--                                <input type="hidden" name="id_pengadaan" id="id_pengadaan">--}}
-{{--                                <div class="col-lg-12">--}}
-{{--                                    <label class="col-form-label col-lg-3 col-sm-12">--}}
-{{--                                        Pilih User--}}
-{{--                                    </label>--}}
-{{--                                    <select class="col-lg-8 col-md-9 col-sm-12" multiple="multiple" id="user"--}}
-{{--                                            name="user[]">--}}
-{{--                                        @foreach ($dataUser as $key)--}}
-{{--                                            <option value="{{ $key->id }}">--}}
-{{--                                                {{ $key->name}}  {{($dataUser->id == $key->id) ?"selected":''}}--}}
-{{--                                            </option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <input type="hidden" name="action" id="action"/>--}}
-{{--                            <input type="submit" name="action_button" id="action_button" class="btn btn-warning"--}}
-{{--                                   value="Submit"/>--}}
-{{--                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>--}}
-
-{{--                        </form>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        <div id="aturUserDireksiModal" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Atur User</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-section__content">
+                            <h4>Direksi</h4>
+                            <br>
+                            <table class="table" id="aturUserTable" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Role</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="m-section__content">
+                            <h4>Akses Diberikan ke Direksi</h4>
+                            <br>
+                            <table class="table" id="aturUserTableAkses" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
         $(document).ready(function () {
@@ -154,25 +160,84 @@
             });
 
             var idKontrak;
+            var role;
             $(document).on('click', '.aturUser', function () {
+                $('#aturUserDireksiModal').modal('show');
                 idKontrak = $(this).attr('id');
-                $('#form_result').html('');
+                role = $(this).attr('idRole');
+                console.log(idKontrak)
+                $('#aturUserTable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    paging: false,
+                    destroy: true,
+                    ajax: {
+                        url: "/user/monitoring-kontrak/spk/aturUserDireksiView/"+role,
+                    },
+                    columns: [
+                        {
+                            data: 'name',
+                            name: 'name'
+                        },
+                        {
+                            data: 'role',
+                            name: 'role',
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            order: false
+                        },
+                    ]
+                });
+
+                $('#aturUserTableAkses').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    paging: false,
+                    search: false,
+                    destroy: true,
+                    ajax: {
+                        url: "/user/monitoring-kontrak/spk/aturUserDireksiViewAkses/" + idKontrak+"/"+role,
+                    },
+                    columns: [
+                        {
+                            data: 'getuseraturuser.name',
+                            name: 'getuseraturuser.name',
+                        },
+                        {
+                            data: 'action',
+                            name: 'action',
+                            order: false
+                        },
+                    ]
+                });
+
+
+            });
+
+
+            $(document).on('click', '.tambahkanUserAksesDireksi', function () {
+                var idUserAkses = $(this).attr('id');
+
                 $.ajax({
-                    url: "/user/monitoring-kontrak/spk/" + idKontrak + "/aturUserEdit",
+                    url: "/user/monitoring-kontrak/spk/tambahkanUserAksesDireksi/" + idUserAkses + "/" + idKontrak,
                     dataType: "json",
-                    success: function (html) {
-                        $('#id_pengadaan').val(idKontrak);
-                        for (let i = 0; i < html.data.length; i++) {
-                            $('#user').val(html.data[i].id_user);
-                        }
-                        $('#action').val('Add')
-                        $('#aturUserModal').modal('show');
+                    success: function () {
+                        $('#aturUserTableAkses').DataTable().ajax.reload();
                     }
                 })
+            });
 
-
-
-
+            $(document).on('click', '.hapusUserAksesDireksi', function () {
+                var idUserHapus = $(this).attr('id');
+                $.ajax({
+                    url: "/user/monitoring-kontrak/spk/hapusUserAksesDireksi/" + idUserHapus,
+                    dataType: "json",
+                    success: function () {
+                        $('#aturUserTableAkses').DataTable().ajax.reload();
+                    }
+                })
             });
 
             $('#user_table').DataTable({
@@ -204,7 +269,7 @@
                     },
                     {
                         data: 'nilai_kontrak',
-                        name: 'nilai_kontrak',  render: $.fn.dataTable.render.number( ',', '.', 3, 'Rp' )
+                        name: 'nilai_kontrak', render: $.fn.dataTable.render.number(',', '.', 3, 'Rp')
                     },
                     {
                         data: 'upload',

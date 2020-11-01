@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ModelsResource\DRole;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,7 @@ class UserController extends Controller
 
     public function index()
     {
+        $dataRole = DRole::all();
         if (request()->ajax()) {
             return DataTables::of(User::latest()->get())
                 ->addColumn('action', function ($data) {
@@ -26,7 +28,9 @@ class UserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages/user/data-user/indexUser');
+        return view('pages/user/data-user/indexUser',compact([
+            'dataRole'
+        ]));
     }
 
     public function create()
@@ -41,7 +45,8 @@ class UserController extends Controller
         $rules = array(
             'name' => 'required',
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'role' => 'required'
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -55,7 +60,7 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'role' => 'user'
+            'role' => $request->role
         );
 
 
@@ -171,12 +176,7 @@ class UserController extends Controller
             return redirect()->to('/');
         }
 
-        if (auth()->user()->role == 'admin') {
-            return redirect()->to('/admin/beranda');
-        } else if (auth()->user()->role == 'user') {
-            return redirect()->to('/user/beranda');
-        }
 
-        return redirect()->to('/');
+        return redirect()->to('/user/beranda');
     }
 }

@@ -15,4 +15,8 @@ class AturUser extends Model
         'id_user'
     ];
 
+    public function getuseraturuser() {
+        return $this->hasOne('App\User',"id","id_user");
+    }
+
 }

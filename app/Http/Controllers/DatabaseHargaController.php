@@ -51,9 +51,7 @@ class DatabaseHargaController extends Controller
             if ($request->ajax()) {
                 $query = $request->q;
                 $data = DatabaseHarga::where('nama_barang', 'like', '%' . $query . '%')
-                    ->orWhere('jenis', 'like', '%' . $query . '%')
                     ->orWhere('satuan', 'like', '%' . $query . '%')
-                    ->orWhere('jumlah', 'like', '%' . $query . '%')
                     ->orWhere('harga_satuan', 'like', '%' . $query . '%')->orderBy('id', 'DESC')->paginate(6);
 
                 return response()->json($data);

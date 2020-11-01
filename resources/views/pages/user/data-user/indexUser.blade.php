@@ -17,7 +17,7 @@
                     </ul>
                 </div>
                 <div>
-                    <button type="button" data-toggle="modal"  name="create_record"
+                    <button type="button" data-toggle="modal" name="create_record"
                             id="create_record" class="btn btn-outline-warning m-btn m-btn--custom">Create Record
                     </button>
 
@@ -55,22 +55,6 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="gantiPasswordModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title">Ganti Password</h2>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -129,10 +113,27 @@
                                 </div>
                                 <div class="form-group m-form__group row">
                                     <label class="col-form-label col-lg-3 col-sm-12">
+                                        Role
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <select class="form-control role" id="role"
+                                                name="role">
+                                            @foreach ($dataRole as $key)
+                                                <option value="{{ $key->nama }}">
+                                                    {{ $key->nama}}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
                                         Password
                                     </label>
                                     <div class="col-lg-8 col-md-9 col-sm-12">
-                                        <input type="password" class="form-control m-input" id="password" name="password"
+                                        <input type="password" class="form-control m-input" id="password"
+                                               name="password"
                                                placeholder="Masukan Password Baru">
                                     </div>
                                 </div>
@@ -153,7 +154,9 @@
     </div>
     <script>
         $(document).ready(function () {
-
+            $("#role").select2({
+                placeholder: "Pilih Role",
+            });
             $('#user_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -176,7 +179,7 @@
                     {
                         data: 'action',
                         name: 'action',
-                        order:false
+                        order: false
                     },
                 ]
             });
@@ -273,11 +276,6 @@
             $(document).on('click', '.delete', function () {
                 user_id = $(this).attr('id');
                 $('#confirmModal').modal('show');
-            });
-
-            $(document).on('click', '.ganti', function () {
-                user_id = $(this).attr('id');
-                $('#gantiPasswordModal').modal('show');
             });
 
 

@@ -97,7 +97,7 @@
                                         {{$data->jumlah }}
                                     </span>
                                                         <span class="m-widget19__comment">
-                                        Stok
+                                        
                                     </span>
                                                     </div>
                                                 </div>

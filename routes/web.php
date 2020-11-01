@@ -55,7 +55,6 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
     });
 
     Route::group(['prefix'=>'job-card'],function (){
-
         Route::group(['prefix'=>'spk'],function (){
             Route::group(['prefix'=>'barang'],function (){
                 Route::get('destroy/{id}', [SpkBarangController::class, 'destroy']);
@@ -186,7 +185,6 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
                 Route::get('download-daftarKuantitas', [SpkJasaLainnyaController::class, 'downloadDaftarKuantitas']);
             });
         });
-
         Route::group(['prefix'=>'spbj'],function (){
             Route::group(['prefix'=>'barang'],function (){
                 Route::get('destroy/{id}', [SpbjBarangController::class, 'destroy']);
@@ -318,7 +316,6 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
             });
         });
         Route::group(['prefix'=>'pj'],function (){
-
         });
     });
 
@@ -332,6 +329,7 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
 
     Route::group(['prefix'=>'monitoring-kontrak'],function (){
         Route::group(['prefix'=>'pj'],function (){
+            Route::get('aturUserDireksiView/{id}', [MkPjController::class,'aturUserDireksiView']);
             Route::get('{id}/aturUserEdit', [MkPjController::class,'aturUserEdit']);
             Route::get('index', [MkPjController::class,'index']);
             Route::post('uploadDoc', [MkPjController::class,'uploadDoc'])->name('monitoringKontrak.pj.uploadDoc');
@@ -342,6 +340,12 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
             Route::get('downloadProses/{id}', [MkPjController::class,'downloadProses'])->name('monitoringKontrak.pj.downloadProses');
         });
         Route::group(['prefix'=>'spk'],function (){
+            Route::get('aturUserDireksiView/{role}', [MkSpkController::class,'aturUserDireksiView']);
+            Route::get('aturUserDireksiViewAkses/{id}/{role}', [MkSpkController::class,'aturUserDireksiViewAkses']);
+            Route::get('tambahkanUserAksesDireksi/{id}/{idP}', [MkSpkController::class,'tambahkanUserAksesDireksi']);
+            Route::get('hapusUserAksesDireksi/{id}', [MkSpkController::class,'hapusUserAksesDireksi']);
+
+
             Route::get('{id}/aturUserEdit', [MkSpkController::class,'aturUserEdit']);
             Route::get('index', [MkSpkController::class,'index']);
             Route::post('uploadDoc', [MkSpkController::class,'uploadDoc'])->name('monitoringKontrak.spk.uploadDoc');

@@ -11,7 +11,6 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
 use setasign\Fpdi\Fpdi;
 use Yajra\DataTables\DataTables;
 
@@ -19,20 +18,29 @@ class MkSpkController extends Controller
 {
     public function index()
     {
+
         $dataUser = User::all();
         if (request()->ajax()) {
-            return DataTables::of(Pengadaan::with('getperusahaan')->where('id_mp1',2)->latest()->get())
+            return DataTables::of(Pengadaan::with('getperusahaan')->where('id_mp1', 2)->latest()->get())
                 ->addColumn('upload', function ($data) {
                     if ($data->kontrak != null && $data->proses != null) {
+                        $getAksesDownload = AturUser::where(['id_user'=>Auth::user()->id,'id_pengadaan'=>$data->id])->count();
+
+
                         $button = '<div class="dropdown"><button class="btn btn-brand dropdown-toggle btn-sm" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
                                         Download
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a href="downloadProses/' . $data->proses . '"  class="detail dropdown-item">Proses</a>
-                                    <a href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>
-                                    </div></div>';
+                                    <a href="downloadProses/' . $data->proses . '"  class="detail dropdown-item">Proses</a>';
+
+                        if($getAksesDownload === 1) {
+                            $button .= '<a href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
+                        }elseif (Auth::user()->role='Admin'){
+                            $button .= '<a href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
+                        }
+                          $button .='</div></div>';
                         return $button;
                     } else if ($data->kontrak != null) {
                         $button = '<a href="downloadKontrak/' . $data->kontrak . '" type="button" class="detail btn btn-primary btn-sm">Kontrak</a>';
@@ -45,10 +53,27 @@ class MkSpkController extends Controller
                     }
                 })
                 ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="aturUser" id="' . $data->id . '" class="aturUser btn btn-warning btn-sm">Atur User</button>';
-                    return $button;
+                    if(Auth::user()->role === 'Admin') {
+                        $button = '<div class="dropdown"><button class="btn btn-warning dropdown-toggle btn-sm" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        Atur User
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button id="' . $data->id . '" idRole="Direksi" class="aturUser dropdown-item">Direksi</button>
+                                    <button id="' . $data->id . '" idRole="Pengawas" class="aturUser dropdown-item">Pengawas</button>
+                                    <button id="' . $data->id . '" idRole="TimMutu" class="aturUser dropdown-item">Tim Mutu</button>
+                                    <button id="' . $data->id . '" idRole="Logistik" class="aturUser dropdown-item">Logistik</button>
+                                    <button id="' . $data->id . '" idRole="Keuangan" class="aturUser dropdown-item">Keuangan</button>
+                                    </div>
+                                   </div>';
+                        return $button;
+                    }else{
+                        $button = '';
+                        return $button;
+                    }
                 })
-                ->rawColumns(['upload','action'])
+                ->rawColumns(['upload', 'action'])
                 ->make(true);
         }
         return view('pages/user/monitoring-kontrak/spk/indexMonitoring', compact([
@@ -56,44 +81,83 @@ class MkSpkController extends Controller
         ]));
     }
 
+    public function aturUserDireksiView($role)
+    {
+
+
+        if (request()->ajax()) {
+            return DataTables::of(User::where('role', $role)->latest()->get())
+                ->addColumn('action', function ($data) {
+                    $button = '<button id="' . $data->id . '" class="tambahkanUserAksesDireksi btn btn-primary btn-sm">Tambahkan Akses</button>';
+
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+    }
+
+    public function aturUserDireksiViewAkses($id,$role)
+    {
+
+        if (request()->ajax()) {
+            return DataTables::of(AturUser::with('getuseraturuser')->where(['id_pengadaan' => $id, 'role' => $role])->latest()->get())
+                ->addColumn('action', function ($data) {
+                    $button = '<button id="' . $data->id . '" class="hapusUserAksesDireksi detail btn btn-danger btn-sm">Hapus Akses</button>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+    }
+
+    public function tambahkanUserAksesDireksi($id, $idP)
+    {
+
+        $cek = AturUser::where(['id_user' => $id, 'id_pengadaan' => $idP])->count();
+        $getUser = User::where(['id' => $id])->first();
+        if ($cek === 0) {
+
+            $aturUser = new AturUser();
+
+            $aturUser->id_user = $id;
+            $aturUser->id_pengadaan = $idP;
+            $aturUser->role = $getUser->role;
+
+
+            if ($aturUser->save()) {
+                return response()->json(['success' => 'Data Added successfully.']);
+            } else {
+                return response()->json(['success' => 'Gagal']);
+            }
+        } else {
+            return response()->json(['success' => 'User Sudah Ada di Akses Ini']);
+        }
+
+
+    }
+
+    public function hapusUserAksesDireksi($id)
+    {
+
+        $data = AturUser::findOrFail($id);
+
+        if ( $data->delete()) {
+            return response()->json(['success' => 'Data Added successfully.']);
+        } else {
+            return response()->json(['success' => 'Gagal']);
+        }
+
+    }
+
+
     public function aturUserEdit($id)
     {
         if (request()->ajax()) {
-            $data = AturUser::where('id_pengadaan',$id)->get();
+            $data = AturUser::where('id_pengadaan', $id)->get();
             return response()->json(['data' => $data]);
-        }
-    }
-
-    public function aturUser(Request $request)
-    {
-        $rules = array(
-            'user' => 'required',
-        );
-
-        $error = Validator::make($request->all(), $rules);
-
-        if ($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }
-
-        $data = [];
-        for ($i = 0; $i < count($request->user); $i++) {
-            $data[$i] = [
-                'id_pengadaan' => $request->id_pengadaan,
-                'id_user' => $request->user[$i]
-            ];
-        }
-
-        $form_data = array(
-            'id_pengadaan' => $request->id_pengadaan,
-            'id_user' => $request->id_user,
-        );
-
-
-        if (AturUser::insert($data)) {
-            return response()->json(['success' => 'Data Added successfully.']);
-        } else {
-            return response()->json(['success' => 'Gagal Tambahkan User']);
         }
     }
 
@@ -157,7 +221,6 @@ class MkSpkController extends Controller
 
         return Response::download($file, $id, $headers);
     }
-
 
 
 }
