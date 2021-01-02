@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Template\SurveyHargaPasar;
 use App\Pengadaan;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\Style\Cell;
 
@@ -20,11 +21,21 @@ class SurveyHargaPasar2
         );
         $section = $phpWord->addSection();
         $header = $section->addHeader();
-        $table = $section->addTable();
-//        $header->addImage(public_path('logo_pln.png'), array('width'=>40,'marginTop' => round(Converter::cmToPixel(2)),'marginLeft' => round(Converter::cmToPixel(2))));
-        $header->addText('PT PLN (Persero)',array('marginLeft'=>40),$paragraphOptions);
-        $header->addText('Unit Induk Pembangkitan Sumatera Bagian Utara',array('marginLeft'=>40),$paragraphOptions);
-        $header->addText('Unit Pelaksana Pengendalian Pembangkitan Pekanbaru',array('marginLeft'=>40));
+        $header = $section->addHeader();
+        $table = $header->addTable();
+        $cellRowSpan = array('vMerge' => 'restart', 'valign' => 'center');
+        $cellRowContinue = array('vMerge' => 'continue');
+
+        $table->addRow();
+        $table->addCell(1000,$cellRowSpan)->addImage(public_path('logo_pln.png'), array('width'=>40,'marginTop' => round(Converter::cmToPixel(2)),'marginLeft' => round(Converter::cmToPixel(2))));
+        $table->addCell(8000)->addText('PT PLN (Persero)',array('marginLeft'=>40),$paragraphOptions);
+        $table->addRow();
+        $table->addCell(null,$cellRowContinue)->addText('');
+        $table->addCell(8000)->addText('Unit Induk Pembangkitan Sumatera Bagian Utara',array('marginLeft'=>40),$paragraphOptions);
+        $table->addRow();
+        $table->addCell(null,$cellRowContinue)->addText('');
+        $table->addCell(8000)->addText('Unit Pelaksana Pengendalian Pembangkitan Pekanbaru',array('marginLeft'=>40));
+
         $table = $section->addTable();
         $table->addRow();
         $table->addCell(2000)->addText(

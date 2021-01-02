@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Template\HasilKlarifikasi;
 use App\Pengadaan;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class EvaluasiNego
@@ -24,8 +25,8 @@ class EvaluasiNego
         $styleArray = array(
             'borders' => array(
                 'outline' => array(
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                    'color' => array('argb' => 'FFFF0000'),
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => array('argb' => '0000000'),
                 ),
             ),
         );
@@ -83,6 +84,11 @@ class EvaluasiNego
         $sheet->getStyle('A7')->getFont()->setName('Arial')->setSize(12)->setBold(true);
         $sheet->getStyle('A8')->getFont()->setName('Arial')->setSize(10)->setBold(true);
         $sheet->getStyle('A9')->getFont()->setName('Arial')->setSize(10)->setBold(true);
+        $sheet->getStyle('A12:H14')->applyFromArray($styleArray);
+        $sheet->getStyle('A12:H20')->applyFromArray($styleArray);
+        $sheet->getStyle('B12:D14')->applyFromArray($styleArray);
+        $sheet->getStyle('E12:H13')->applyFromArray($styleArray);
+        $sheet->getStyle('E14:H14')->applyFromArray($styleArray);
 
 // Rename worksheet
 

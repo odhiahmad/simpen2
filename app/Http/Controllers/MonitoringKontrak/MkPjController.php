@@ -6,6 +6,7 @@ namespace App\Http\Controllers\MonitoringKontrak;
 
 use App\AturUser;
 use App\Http\Controllers\Controller;
+use App\ModelsResource\DRole;
 use App\Pengadaan;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,42 +16,77 @@ use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
 use setasign\Fpdi\Fpdi;
+use Twilio\Rest\Client;
 use Yajra\DataTables\DataTables;
 
 class MkPjController extends Controller
 {
     public function index()
     {
+
+        $dataRole = DRole::all();
         $dataUser = User::all();
         if (request()->ajax()) {
-            return DataTables::of(Pengadaan::with('getperusahaan')->where('id_mp1',1)->latest()->get())
+            return DataTables::of(Pengadaan::with('getperusahaan')->where(['id_mp1' => 2])->latest()->get())
                 ->addColumn('upload', function ($data) {
-                    if ($data->kontrak != null && $data->proses != null) {
-                        $button = '<button class="btn btn-brand dropdown-toggle btn-sm" type="button"
+
+                    if (Auth::user()->jabatan == 'Admin') {
+                        $button = '<div class="dropdown"><button class="btn btn-brand dropdown-toggle btn-sm" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
                                         Download
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
-                        $button .= '<a href="downloadProses/' . $data->proses . '" type="button" class="detail dropdown-item">Proses</a>';
-                        $button .= '<a href="downloadKontrak/' . $data->kontrak . '" type="button" class="detail dropdown-item">Kontrak</a>';
-                        $button .= '</div>';
+
+
+                        $button .= '<a href="downloadProses/' . $data->proses . '"  class="detail dropdown-item">Proses</a>';
+                        $button .= '<a target="_blank" href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
+
+                        $button .= '</div></div>';
                         return $button;
-                    } else if ($data->kontrak != null) {
-                        $button = '<a href="downloadKontrak/' . $data->kontrak . '" type="button" class="detail btn btn-primary btn-sm">Kontrak</a>';
-                        $button .= '&nbsp;&nbsp;';
-                        return $button;
-                    } else if ($data->proses != null) {
-                        $button = '<a href="downloadProses/' . $data->proses . '" type="button" class="detail btn btn-primary btn-sm">Proses</a>';
-                        $button .= '&nbsp;&nbsp;';
+                    }
+                    if (AturUser::where(['id_user' => Auth::user()->id, 'id_pengadaan' => $data->id])->count() == 1) {
+                        $button = '<a target="_blank" href="downloadKontrak/' . $data->kontrak . '" class="detail btn btn-warning btn-sm">Kontrak</a>';
                         return $button;
                     }
                 })
                 ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="aturUser" id="' . $data->id . '" class="aturUser btn btn-warning btn-sm">Atur User</button>';
+                    if (Auth::user()->jabatan == 'Admin') {
+                        $button = '<div class="dropdown"><button class="btn btn-warning dropdown-toggle btn-sm" type="button"
+                                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        Atur User
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <button id="' . $data->id . '" idRole="Direksi" class="aturUser dropdown-item">Direksi</button>
+                                    <button id="' . $data->id . '" idRole="Pengawas" class="aturUser dropdown-item">Pengawas</button>
+                                    <button id="' . $data->id . '" idRole="TimMutu" class="aturUser dropdown-item">Tim Mutu</button>
+                                    <button id="' . $data->id . '" idRole="Logistik" class="aturUser dropdown-item">Logistik</button>
+                                    <button id="' . $data->id . '" idRole="Keuangan" class="aturUser dropdown-item">Keuangan</button>
+                                    </div>
+                                   </div>';
+                        return $button;
+                    }
+                })
+                ->addColumn('tanggal_kontrak', function ($data) {
+                    if ($data->status_berakhir == 'Sejak BA Terima Lokasi') {
+                        $button = '<button type="button" name="tanggal_kontrak" id="' . $data->id . '" class="tanggal_kontrak btn btn-primary btn-sm">' . $data->tgl_diterima_panitia . '</button>';
+                        return $button;
+                    } else {
+                        $button = '<button type="button" name="tanggal_kontrak_milih" id="' . $data->id . '" class="tanggal_kontrak_milih btn btn-primary btn-sm">' . $data->tgl_diterima_panitia . '</button>';
+                        return $button;
+                    }
+
+                })
+                ->addColumn('harga_kontrak', function ($data) {
+                    $button = '<button type="button" name="harga_kontrak" id="' . $data->id . '" class="harga_kontrak btn btn-danger btn-sm">' . "Rp " . number_format($data->rab, 2, ',', '.') . '</button>';
                     return $button;
                 })
-                ->rawColumns(['upload','action'])
+                ->addColumn('direksi_view', function ($data) {
+                    $button = '<button type="button" name="direksi_view" id="' . $data->id . '" class="direksi_view btn btn-default btn-sm">' . $data->pengawas . '</button>';
+                    return $button;
+                })
+                ->rawColumns(['upload', 'action', 'tanggal_kontrak', 'harga_kontrak', 'direksi_view'])
                 ->make(true);
         }
         return view('pages/user/monitoring-kontrak/pj/indexMonitoring', compact([
@@ -58,47 +94,92 @@ class MkPjController extends Controller
         ]));
     }
 
+    public function aturUserDireksiView($role)
+    {
+        if (request()->ajax()) {
+            return DataTables::of(User::where('role', $role)->latest()->get())
+                ->addColumn('action', function ($data) {
+                    $button = '<button id="' . $data->id . '" class="tambahkanUserAksesDireksi btn btn-primary btn-sm">Tambahkan Akses</button>';
+
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+    }
+
+    public function aturUserDireksiViewAkses($id, $role)
+    {
+
+        if (request()->ajax()) {
+            return DataTables::of(AturUser::with('getuseraturuser')->where(['id_pengadaan' => $id, 'role' => $role])->latest()->get())
+                ->addColumn('action', function ($data) {
+                    $button = '<button id="' . $data->id . '" class="hapusUserAksesDireksi detail btn btn-danger btn-sm">Hapus Akses</button>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+    }
+
+    public function tambahkanUserAksesDireksi($id, $idP)
+    {
+
+        $cek = AturUser::where(['id_user' => $id, 'id_pengadaan' => $idP])->count();
+        $getUser = User::where(['id' => $id])->first();
+        if ($cek === 0) {
+
+            $aturUser = new AturUser();
+
+            $aturUser->id_user = $id;
+            $aturUser->id_pengadaan = $idP;
+            $aturUser->role = $getUser->role;
+
+
+            if ($aturUser->save()) {
+                return response()->json(['success' => 'Data Added successfully.']);
+            } else {
+                return response()->json(['success' => 'Gagal']);
+            }
+        } else {
+            return response()->json(['success' => 'User Sudah Ada di Akses Ini']);
+        }
+
+
+    }
+
+    public function hapusUserAksesDireksi($id)
+    {
+
+        $data = AturUser::findOrFail($id);
+
+        if ($data->delete()) {
+            return response()->json(['success' => 'Data Added successfully.']);
+        } else {
+            return response()->json(['success' => 'Gagal']);
+        }
+
+    }
+
+
     public function aturUserEdit($id)
     {
         if (request()->ajax()) {
-            $data = AturUser::where('id_pengadaan',$id)->get();
+            $data = AturUser::where('id_pengadaan', $id)->get();
             return response()->json(['data' => $data]);
         }
     }
 
-    public function aturUser(Request $request)
+    function RotatedText($x, $y, $txt, $angle)
     {
-        $rules = array(
-            'user' => 'required',
-        );
-
-        $error = Validator::make($request->all(), $rules);
-
-        if ($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }
-
-        $data = [];
-        for ($i = 0; $i < count($request->user); $i++) {
-            $data[$i] = [
-                'id_pengadaan' => $request->id_pengadaan,
-                'id_user' => $request->user[$i]
-            ];
-        }
-
-        $form_data = array(
-            'id_pengadaan' => $request->id_pengadaan,
-            'id_user' => $request->id_user,
-        );
-
-
-        if (AturUser::insert($data)) {
-            return response()->json(['success' => 'Data Added successfully.']);
-        } else {
-            return response()->json(['success' => 'Gagal Tambahkan User']);
-        }
+        $pdf = new \PDF_Rotate();
+        //Text rotated around its origin
+        $pdf->Rotate($angle, $x, $y);
+        $pdf->Text($x, $y, $txt);
+        $pdf->Rotate(0);
     }
-
 
     function add_watermark($file, $nama)
     {
@@ -113,13 +194,23 @@ class MkPjController extends Controller
 
                 $pdf->useTemplate($tpl, null, null, $size['width'], $size['height'], TRUE);
                 //Put the watermark
-                $pdf->SetFont('Arial', 'B', 12);
-                $pdf->SetTextColor(255, 0, 0);
-                $pdf->SetXY(20, 15);
+                $pdf->SetFont('Arial', 'B', 8);
+                $pdf->SetTextColor(66, 135, 245);
+                $pdf->SetXY(30, 120);
                 $pdf->Write(0, Auth::user()->username);
+//                $this->RotatedText(35,190,'W a t e r m a r k   d e m o',45);
             }
 
-            return $pdf->Output('I');
+
+            $twilio_whatsapp_number = "6285272993360";
+            $account_sid = "AC95ff84cb05966ff362366691a6152f44";
+            $auth_token = "d467cb9e15a9fe801a7591d5fb2ab377";
+            $recipient = "6285272993360";
+            $client = new Client($account_sid, $auth_token);
+            $message = "Your registration pin code is ";
+            return $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
+
+            return $pdf->Output();
 
 
         } else {
@@ -127,6 +218,31 @@ class MkPjController extends Controller
         }
 
 
+    }
+
+
+    public function tanggalKontrak($id)
+    {
+        if (request()->ajax()) {
+            $data = Pengadaan::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    public function direksi($id)
+    {
+        if (request()->ajax()) {
+            $data = Pengadaan::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    public function hargaKontrak($id)
+    {
+        if (request()->ajax()) {
+            $data = Pengadaan::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
     }
 
 
@@ -159,7 +275,6 @@ class MkPjController extends Controller
 
         return Response::download($file, $id, $headers);
     }
-
 
 
 }

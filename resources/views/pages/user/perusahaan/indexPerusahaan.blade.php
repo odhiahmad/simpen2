@@ -1,4 +1,4 @@
-@section('title','Data Perusahaan')
+@section('title','Data DPT')
 @extends('../../../main')
 @section('content')
     <div>
@@ -6,11 +6,11 @@
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
                     <h3 class="m-subheader__title m-subheader__title--separator">
-                        Data Perusahaan
+                        Data DPT
                     </h3>
                     <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                         <li class="m-nav__item m-nav__item--home">
-                            <a href='{!! url('perusahaan/beranda'); !!}' class="m-nav__link m-nav__link--icon">
+                            <a href='{!! url('dpt/beranda'); !!}' class="m-nav__link m-nav__link--icon">
                                 <i class="m-nav__link-icon la la-home"></i>
                             </a>
                         </li>
@@ -42,7 +42,13 @@
                                                 Nama
                                             </th>
                                             <th>
-                                                Created At
+                                                Pimpinan
+                                            </th>
+                                            <th>
+                                               Sebutan Jabatan
+                                            </th>
+                                            <th>
+                                                Alamat
                                             </th>
                                             <th>
                                                 Action
@@ -63,7 +69,23 @@
                             <h2 class="modal-title">Konfirmasi</h2>
                         </div>
                         <div class="modal-body">
-                            <h4 align="center" style="margin:0;">Apakah anda yakin ingin menghapus data perusahaan ini ?</h4>
+                            <h4 align="center" style="margin:0;">Apakah anda yakin ingin menghapus data dpt ini ?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="lihatDetail" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Detail</h2>
+                        </div>
+                        <div class="modal-body lihatDetailModal">
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
@@ -99,6 +121,111 @@
                                                placeholder="Masukan Nama">
                                     </div>
                                 </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Pimpinan
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="pimpinan" name="pimpinan"
+                                               placeholder="Masukan Pimpinan">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Jabatan
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="notaris" name="notaris"
+                                               placeholder="Masukan Jabatan">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Alamat
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="alamat" name="alamat"
+                                               placeholder="Masukan Alamat">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Bank
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="bank" name="bank"
+                                               placeholder="Masukan bank">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Kantor Cabang
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="kantor_cabang" name="kantor_cabang"
+                                               placeholder="Masukan Kantor Cabang">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Rekening
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="rekening" name="rekening"
+                                               placeholder="Masukan Rekening">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        NPWP
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="npwp" name="npwp"
+                                               placeholder="Masukan NPWP">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Sebutan Jabatan
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="sebutan_jabatan" name="sebutan_jabatan"
+                                               placeholder="Masukan Sebutan Jabatan">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Bentuk DPT
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="bentuk_dpt" name="bentuk_dpt"
+                                               placeholder="Masukan Bentuk DPT">
+                                    </div>
+                                </div>
+                                <div class="input-group hdtuto control-group lst increment" >
+                                    <table class="table table-bordered" id="dynamic_field_sub">
+                                        <tr>
+                                            <td>
+                                                <button type="button" name="add_foto" id="add_foto"
+                                                        class="btn btn-success">Add
+                                                    Sub Pekerjaan
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+{{--                                    <input type="file" name="filenames[]" class="myfrm form-control">--}}
+{{--                                    <div class="input-group-btn">--}}
+{{--                                        <button class="btn btn-success tambah" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>--}}
+{{--                                    </div>--}}
+                                </div>
+                                <div class="clone hide">
+                                    <div class="hdtuto control-group lst input-group" style="margin-top:10px">
+                                        <input type="file" name="filenames[]" class="myfrm form-control">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-danger hapus" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <br/>
                                 <div class="form-group" align="center">
                                     <input type="hidden" name="action" id="action"/>
@@ -116,12 +243,19 @@
     </div>
     <script>
         $(document).ready(function () {
+            $(".tambah").click(function(){
+                var lsthmtl = $(".clone").html();
+                $(".increment").after(lsthmtl);
+            });
+            $("body").on("click",".hapus",function(){
+                $(this).parents(".control-group lst input-group").remove();
+            });
 
             $('#user_table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "/user/perusahaan/index",
+                    url: "/user/dpt/index",
                 },
                 columns: [
                     {
@@ -129,8 +263,16 @@
                         name: 'nama'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at',
+                        data: 'pimpinan',
+                        name: 'pimpinan',
+                    },
+                    {
+                        data: 'sebutan_jabatan',
+                        name: 'sebutan_jabatan',
+                    },
+                    {
+                        data: 'alamat',
+                        name: 'alamat',
                     },
                     {
                         data: 'action',
@@ -141,7 +283,7 @@
             });
 
             $('#create_record').click(function () {
-                $('.modal-title').text("Tambahkan Perusahaan Baru");
+                $('.modal-title').text("Tambahkan DPT Baru");
                 $('#action_button').val("Tambahkan");
                 $('#action').val("Add");
                 $('#sample_form')[0].reset();
@@ -149,12 +291,83 @@
                 $('#formModal').modal('show');
             });
 
+            $(document).on('click', '.lihatDetail', function () {
+                var id = $(this).attr('id');
+                $('.lihatDetailModal').empty()
+                $('#form_result').html('');
+                $.ajax({
+                    url: "/user/dpt/" + id + "/edit",
+                    dataType: "json",
+                    success: function (data) {
+
+                        var tes = JSON.parse(data.data.foto)
+
+                        var getData = data.data;
+                        var html = "";
+                        html += '<table class="table table-bordered" >';
+                        html += '<tr>';
+                        html += '<td> Nama </td>';
+                        html += '<td>' + getData.nama + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td>Pimpinan</td>';
+                        html += '<td>' + getData.pimpinan+ '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Notaris </td>';
+                        html += '<td>' + getData.notaris + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Alamat </td>';
+                        html += '<td>' + getData.alamat + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Bank</td>';
+                        html += '<td>' + getData.bank + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Kantor Cabang</td>';
+                        html += '<td>' + getData.kantor_cabang + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Rekening</td>';
+                        html += '<td>' + getData.rekening + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> NPWP</td>';
+                        html += '<td>' + getData.npwp + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Sebutan Jabatan</td>';
+                        html += '<td>' + getData.sebutan_jabatan + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Bentuk DPT</td>';
+                        html += '<td>' + getData.bentuk_perusahaan + '</td>';
+                        html += '</tr>';
+
+                        html += '</table>';
+                        for(var i=0;i<tes.length;i++){
+
+                            html += '<a href="http://127.0.0.1:8000/dpt/'+tes[i]+'">' +
+                                '<img width="200" src="http://127.0.0.1:8000/dpt/'+tes[i]+'"></a>';
+
+                        }
+
+                        $('.lihatDetailModal').append(html)
+
+                        $('#lihatDetail').modal('show');
+                    }
+                })
+            });
+
+
             $('#sample_form').on('submit', function (event) {
 
                 event.preventDefault();
                 if ($('#action').val() == 'Add') {
                     $.ajax({
-                        url: "{{ route('perusahaan.store') }}",
+                        url: "{{ route('dpt.store') }}",
                         method: "POST",
                         data: new FormData(this),
                         contentType: false,
@@ -182,7 +395,7 @@
 
                 if ($('#action').val() == "Edit") {
                     $.ajax({
-                        url: "/user/perusahaan/update",
+                        url: "/user/dpt/update",
                         method: "POST",
                         data: new FormData(this),
                         contentType: false,
@@ -213,10 +426,20 @@
                 var id = $(this).attr('id');
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/perusahaan/" + id + "/edit",
+                    url: "/user/dpt/" + id + "/edit",
                     dataType: "json",
                     success: function (html) {
                         $('#nama').val(html.data.nama);
+                        $('#pimpinan').val(html.data.pimpinan);
+                        $('#notaris').val(html.data.notaris);
+                        $('#alamat').val(html.data.alamat);
+                        $('#bank').val(html.data.bank);
+                        $('#kantor_cabang').val(html.data.kantor_cabang);
+                        $('#rekening').val(html.data.rekening);
+                        $('#npwp').val(html.data.npwp);
+                        $('#sebutan_jabatan').val(html.data.sebutan_jabatan);
+                        $('#bentuk_dpt').val(html.data.bentuk_perusahaan);
+
                         $('#hidden_id').val(html.data.id);
                         $('.modal-title').text("Edit New Record");
                         $('#action_button').val("Edit");
@@ -241,7 +464,7 @@
 
             $('#ok_button').click(function () {
                 $.ajax({
-                    url: "/user/perusahaan/destroy/" + user_id,
+                    url: "/user/dpt/destroy/" + user_id,
                     beforeSend: function () {
                         $('#ok_button').text('Deleting...');
                     },
@@ -249,6 +472,7 @@
                         setTimeout(function () {
                             $('#confirmModal').modal('hide');
                             $('#user_table').DataTable().ajax.reload();
+                            $('#ok_button').text('Delete');
                         }, 2000);
                     }
                 })

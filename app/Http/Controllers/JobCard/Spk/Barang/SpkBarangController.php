@@ -20,16 +20,20 @@ use App\Http\Controllers\Template\UndanganPengadaanLangsung;
 use App\Http\Controllers\Template\UsulanPenetapanPemenang;
 use App\ModelsResource\DBagian;
 use App\ModelsResource\DCaraPembayaran;
+use App\ModelsResource\DCoo;
 use App\ModelsResource\DFungsiPembangkit;
 use App\ModelsResource\DJabatanPengawas;
 use App\ModelsResource\DJenis;
 use App\ModelsResource\DMasaBerlaku;
 use App\ModelsResource\DMasaGaransi;
 use App\ModelsResource\DMetodePengadaan;
+use App\ModelsResource\DPenerbitCoo;
+use App\ModelsResource\DPenerbitGaransi;
 use App\ModelsResource\DPengawas;
 use App\ModelsResource\DPerjanjianKontrak;
 use App\ModelsResource\DPicPelaksana;
 use App\ModelsResource\DPosAnggaran;
+use App\ModelsResource\DSistemDenda;
 use App\ModelsResource\DStatus;
 use App\ModelsResource\DSumberDana;
 use App\ModelsResource\DSyaratBidangUsaha;
@@ -37,7 +41,6 @@ use App\ModelsResource\DTempatPenyerahan;
 use App\ModelsResource\DVfmc;
 use App\Pengadaan;
 use App\Perusahaan;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -48,17 +51,19 @@ class SpkBarangController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(Pengadaan::with(['getMp1','getMp2'])->where(['id_mp1' => 2,'id_mp2'=>4])->latest()->get())
+            return DataTables::of(Pengadaan::with(['getMp1', 'getMp2'])->where(['id_mp1' => 2, 'id_mp2' => 4])->latest()->get())
                 ->addColumn('action', function ($data) {
                     $button = '<a href="update-data/' . $data->id . '" class="detail btn btn-info btn-sm">Update</a>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<button type="button" name="hapus" id="' . $data->id . '" class="hapus btn btn-danger btn-sm">Hapus</button>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="info" id="' . $data->id . '" class="info btn btn-warning btn-sm">Info</button>';
-
                     return $button;
                 })
-                ->rawColumns(['action'])
+                ->addColumn('info', function ($data) {
+                    $button = '<button type="button" name="info" id="' . $data->id . '" class="info btn btn-warning btn-sm">No Nota Dinas : 0' . $data->no_prk . '</button>';
+                    return $button;
+                })
+
+                ->rawColumns(['action', 'info'])
                 ->make(true);
         }
         return view('pages/user/job-card/spk/barang/indexPengadaan');
@@ -79,7 +84,7 @@ class SpkBarangController extends Controller
 
     public function getRowDetailsData()
     {
-        $data = Pengadaan::with(['getMp1','getMp2'])->where(['id_mp1' => 2,'id_mp2'=>4])->latest()->get();
+        $data = Pengadaan::with(['getMp1', 'getMp2'])->where(['id_mp1' => 2, 'id_mp2' => 4])->latest()->get();
 
         return Datatables::of($data)->make(true);
     }
@@ -90,7 +95,7 @@ class SpkBarangController extends Controller
         $surveiHarga->SurveyHargaPasar1($id);
 
         $data = Pengadaan::where('id', $id)->first();
-        $file = public_path('data-pengadaan') . "/rks/rks".'.doc';
+        $file = public_path('data-pengadaan') . "/rks/rks" . '.doc';
 
         $headers = array(
             'Content-Type: application/docx',
@@ -353,9 +358,13 @@ class SpkBarangController extends Controller
 
     public function indexUpdateView(Request $request)
     {
+        $dataCoo = DCoo::all();
+        $dataPenerbitCoo = DPenerbitCoo::all();
+        $dataPenerbitGaransi = DPenerbitGaransi::all();
+        $dataSistemDenda = DSistemDenda::all();
         $dataPerusahaan = Perusahaan::all();
         $dataPosAnggaran = DPosAnggaran::all();
-        $dataPengadaan = Pengadaan::with(['getMp1','getmp2','getMp3','getMp4','getMp5'])->where('id', $request->id)->first();
+        $dataPengadaan = Pengadaan::with(['getMp1', 'getmp2', 'getMp3', 'getMp4', 'getMp5'])->where('id', $request->id)->first();
         $dataBagian = DBagian::all();
         $dataCaraPembayaran = DCaraPembayaran::all();
         $dataFungsiPembangkit = DFungsiPembangkit::all();
@@ -373,6 +382,10 @@ class SpkBarangController extends Controller
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         return view('pages/user/job-card/spk/barang/updatePengadaan', compact([
+            'dataCoo',
+            'dataPenerbitCoo',
+            'dataPenerbitGaransi',
+            'dataSistemDenda',
             'dataPerusahaan',
             'dataPosAnggaran',
             'dataPengadaan',
@@ -402,6 +415,10 @@ class SpkBarangController extends Controller
 
     public function tambahPengadaan()
     {
+        $dataCoo = DCoo::all();
+        $dataPenerbitCoo = DPenerbitCoo::all();
+        $dataPenerbitGaransi = DPenerbitGaransi::all();
+        $dataSistemDenda = DSistemDenda::all();
         $dataPerusahaan = Perusahaan::all();
         $dataPosAnggaran = DPosAnggaran::all();
         $dataBagian = DBagian::all();
@@ -422,6 +439,10 @@ class SpkBarangController extends Controller
         $dataJabatanPengawas = DJabatanPengawas::all();
 
         return view('pages/user/job-card/spk/barang/tambahPengadaan', compact([
+            'dataCoo',
+            'dataPenerbitCoo',
+            'dataPenerbitGaransi',
+            'dataSistemDenda',
             'dataPerusahaan',
             'dataPosAnggaran',
             'dataJabatanPengawas',
@@ -482,7 +503,7 @@ class SpkBarangController extends Controller
 
 
         $rules = array(
-            'perusahaan'=>'required',
+            'perusahaan' => 'required',
             'rab' => 'required',
             'nilai_kontrak' => 'required',
             'sisa_anggaran' => 'required',
@@ -495,7 +516,7 @@ class SpkBarangController extends Controller
             'fungsi_pembangkit' => 'required',
             'no_undang_pl' => 'required',
             'lingkup_pekerjaan' => 'required',
-            'metode_pengadaan' => 'required',
+//            'metode_pengadaan' => 'required',
             'rencana' => 'required',
             'tempat_penyerahan' => 'required',
             'masa_berlaku_surat' => 'required',
@@ -514,7 +535,21 @@ class SpkBarangController extends Controller
             'pic_pelaksana' => 'required',
             'hps' => 'required',
             'no_proses_pengadaan' => 'required',
-            'jabatan_pengawas' => 'required'
+            'jabatan_pengawas' => 'required',
+            'no_perjanjian' => 'required',
+            'harga_penawaran' => 'required',
+            'harga_kontrak' => 'required',
+            'nilai_jaminan' => 'required',
+            'jangka_waktu' => 'required',
+            'jangka_waktu_hari' => 'required',
+            'jangka_waktu_tgl' => 'required',
+            'coo' => 'required',
+            'melampirkan_sertifikat_coo' => 'required',
+            'penerbit_coo' => 'required',
+            'melampirkan_sertifikat' => 'required',
+            'penerbit_garansi' => 'required',
+            'melampirkan_msds' => 'required',
+            'sistem_denda' => 'required',
         );
 
 
@@ -610,16 +645,28 @@ class SpkBarangController extends Controller
             'kontrak' => $new_name,
             'proses' => $new_name1,
             'status' => $request->status,
+
+            'no_perjanjian' => $request->no_perjanjian,
+            'harga_penawaran' => $request->harga_penawaran,
+            'harga_kontrak' => $request->harga_kontrak,
+            'nilai_jaminan' => $request->nilai_jaminan,
+            'jangka_waktu' => $request->jangka_waktu,
+            'jangka_waktu_hari' => $request->jangka_waktu_hari,
+            'jangka_waktu_tgl' => $request->jangka_waktu_tgl,
+            'coo' => $request->coo,
+            'melampirkan_sertifikat_coo' => $request->melampirkan_sertifikat_coo,
+            'penerbit_coo' => $request->penerbit_coo,
+            'melampirkan_sertifikat' => $request->melampirkan_sertifikat,
+            'penerbit_garansi' => $request->penerbit_garansi,
+            'melampirkan_msds' => $request->melampirkan_msds,
+            'sistem_denda' => $request->sistem_denda,
         );
 
-        if($request->vfmc != $request->direksi || $request->vfmc2 != $request->direksi){
-            if (Pengadaan::whereId($request->id)->update($form_data)) {
-                return response()->json(['success' => 'Data Added successfully.']);
-            } else {
-                return response()->json(['errors' => 'Gagal']);
-            }
-        }else{
-            return response()->json(['errors' => 'Gagal, VFMC Tidak boleh sama dengan Direksi']);
+
+        if (Pengadaan::whereId($request->id)->update($form_data)) {
+            return response()->json(['success' => 'Data Added successfully.']);
+        } else {
+            return response()->json(['errors' => 'Gagal']);
         }
 
 
@@ -633,7 +680,7 @@ class SpkBarangController extends Controller
 
 
         $rules = array(
-            'perusahaan'=>'required',
+            'perusahaan' => 'required',
             'rab' => 'required',
             'nilai_kontrak' => 'required',
             'sisa_anggaran' => 'required',
@@ -668,7 +715,22 @@ class SpkBarangController extends Controller
             'status' => 'required',
             'proses_file' => 'required|max:512',
             'kontrak_file' => 'required|max:512',
-            'jabatan_pengawas' => 'required'
+            'jabatan_pengawas' => 'required',
+
+            'no_perjanjian' => 'required',
+            'harga_penawaran' => 'required',
+            'harga_kontrak' => 'required',
+            'nilai_jaminan' => 'required',
+            'jangka_waktu' => 'required',
+            'jangka_waktu_hari' => 'required',
+            'jangka_waktu_tgl' => 'required',
+            'coo' => 'required',
+            'melampirkan_sertifikat_coo' => 'required',
+            'penerbit_coo' => 'required',
+            'melampirkan_sertifikat' => 'required',
+            'penerbit_garansi' => 'required',
+            'melampirkan_msds' => 'required',
+            'sistem_denda' => 'required',
         );
 
 
@@ -728,6 +790,21 @@ class SpkBarangController extends Controller
         $pengadaan->spk_nomor = $request->nppv10;
         $pengadaan->rks_nomor = $request->nppv11;
         $pengadaan->status = $request->status;
+
+        $pengadaan->no_perjanjian = $request->no_perjanjian;
+        $pengadaan->harga_penawaran = $request->harga_penawaran;
+        $pengadaan->harga_kontrak = $request->harga_kontrak;
+        $pengadaan->nilai_jaminan = $request->nilai_jaminan;
+        $pengadaan->jangka_waktu = $request->jangka_waktu;
+        $pengadaan->jangka_waktu_hari = $request->jangka_waktu_hari;
+        $pengadaan->jangka_waktu_tgl = $request->jangka_waktu_tgl;
+        $pengadaan->coo = $request->coo;
+        $pengadaan->melampirkan_sertifikat_coo = $request->melampirkan_sertifikat_coo;
+        $pengadaan->penerbit_coo = $request->penerbit_coo;
+        $pengadaan->melampirkan_sertifikat = $request->melampirkan_sertifikat;
+        $pengadaan->penerbit_garansi = $request->penerbit_garansi;
+        $pengadaan->melampirkan_msds = $request->melampirkan_msds;
+        $pengadaan->sistem_denda = $request->sistem_denda;
 
 
         if ($request->rks_tgl) {
@@ -818,16 +895,15 @@ class SpkBarangController extends Controller
         $pengadaan->proses = $new_name1;
         $pengadaan->kontrak = $new_name;
 
-        if($request->vfmc != $request->direksi || $request->vfmc2 != $request->direksi){
+        if ($request->vfmc != $request->direksi || $request->vfmc2 != $request->direksi) {
             if ($pengadaan->save()) {
                 return response()->json(['success' => 'Data Added successfully.']);
             } else {
                 return response()->json(['success' => 'Gagal']);
             }
-        }else{
+        } else {
             return response()->json(['errors' => 'Gagal, VFMC Tidak boleh sama dengan Direksi']);
         }
-
 
 
     }

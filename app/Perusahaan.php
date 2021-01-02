@@ -12,6 +12,16 @@ class Perusahaan extends Model
 
     protected $fillable = [
         'nama',
+        'pimpinan',
+        'notaris',
+        'alamat',
+        'bank',
+        'kantor_cabang',
+        'rekening',
+        'npwp',
+        'sebutan_jabatan',
+        'bentuk_perusahaan',
+        'foto',
     ];
 
 

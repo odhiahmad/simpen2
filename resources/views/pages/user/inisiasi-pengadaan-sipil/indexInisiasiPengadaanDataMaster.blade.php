@@ -6,7 +6,7 @@
             <div class="d-flex align-items-center">
                 <div class="mr-auto">
                     <h3 class="m-subheader__title m-subheader__title--separator">
-                        Daftar Inisiasi Pengadaan Sipil Data Master
+                        Inisiasi Pengadaan Sipil
                     </h3>
                     <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                         <li class="m-nav__item m-nav__item--home">
@@ -18,202 +18,294 @@
                             -
                         </li>
                         <li class="m-nav__item">
-                            <a href="" class="m-nav__link">
+                            <a href='#' class="m-nav__link">
                                 <span class="m-nav__link-text">
-                                   Inisiasi Pengadaan Sipil Data Master
+                                    Inisiasi Pengadaan
+                                </span>
+                            </a>
+                        </li>
+                        <li class="m-nav__separator">
+                            -
+                        </li>
+                        <li class="m-nav__item">
+                            <a href='#' class="m-nav__link">
+                                <span class="m-nav__link-text">
+                                    Data Master
                                 </span>
                             </a>
                         </li>
                     </ul>
                 </div>
+                <div>
+                    <button type="button" data-toggle="modal"  name="create_record"
+                            id="create_record" class="btn btn-outline-warning m-btn m-btn--custom">Create Record
+                    </button>
 
+                </div>
             </div>
         </div>
         <div class="m-content">
-            <div class="m-portlet m-portlet--mobile">
-                <div class="m-portlet__head">
-                    <div class="m-portlet__head-caption">
-                        <div class="m-portlet__head-title">
-                            <h3 class="m-portlet__head-text">
-                                Daftar Inisiasi Pengadaan Sipil
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="m-portlet__head-tools">
-                        <ul class="m-portlet__nav">
-                            <li class="m-portlet__nav-item">
-                                <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
-                                    <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
-                                        <i class="la la-ellipsis-h m--font-brand"></i>
-                                    </a>
-                                    <div class="m-dropdown__wrapper">
-                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                        <div class="m-dropdown__inner">
-                                            <div class="m-dropdown__body">
-                                                <div class="m-dropdown__content">
-                                                    <ul class="m-nav">
-                                                        <li class="m-nav__section m-nav__section--first">
-                                                                        <span class="m-nav__section-text">
-                                                                            Quick Actions
-                                                                        </span>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-share"></i>
-                                                                <span class="m-nav__link-text">
-                                                                                Create Post
-                                                                            </span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                                <span class="m-nav__link-text">
-                                                                                Send Messages
-                                                                            </span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-multimedia-2"></i>
-                                                                <span class="m-nav__link-text">
-                                                                                Upload File
-                                                                            </span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__section">
-                                                                        <span class="m-nav__section-text">
-                                                                            Useful Links
-                                                                        </span>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-info"></i>
-                                                                <span class="m-nav__link-text">
-                                                                                FAQ
-                                                                            </span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                <span class="m-nav__link-text">
-                                                                                Support
-                                                                            </span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__separator m-nav__separator--fit m--hide"></li>
-                                                        <li class="m-nav__item m--hide">
-                                                            <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-                                                                Submit
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="m-portlet m-portlet--full-height">
+                        <div class="m-portlet__body">
+                            <div class="m-section">
+                        <span class="m-section__sub">
+                            Berikut adalah data harga:
+                        </span>
+                                <div class="m-section__content">
+                                    <table class="table" id="user_table" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                Pekerjaan
+                                            </th>
+                                            <th>
+                                                Vol Pekerjaan
+                                            </th>
+                                            <th>
+                                                Satuan Pekerjaan
+                                            </th>
+                                            <th>
+                                                Action
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                    </table>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="m-portlet__body">
-                    <!--begin: Search Form -->
-                    <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
-                        <div class="row align-items-center">
-                            <div class="col-xl-8 order-2 order-xl-1">
-                                <div class="form-group m-form__group row align-items-center">
-                                    <div class="col-md-4">
-                                        <div class="m-input-icon m-input-icon--left">
-                                            <input type="text" class="form-control m-input m-input--solid" placeholder="Search..." id="generalSearch">
-                                            <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                            <span>
-                                                                <i class="la la-search"></i>
-                                                            </span>
-                                                        </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 order-1 order-xl-2 m--align-right">
-                                <a href="#" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
-                                                <span>
-                                                    <i class="la la-cart-plus"></i>
-                                                    <span>
-                                                        Inisiasi Baru
-                                                    </span>
-                                                </span>
-                                </a>
-                                <div class="m-separator m-separator--dashed d-xl-none"></div>
                             </div>
                         </div>
                     </div>
-                    <!--end: Search Form -->
-                    <!--begin: Datatable -->
-                    <table class="m-datatable" id="html_table" width="100%">
-                        <thead>
-                        <tr>
-                            <th title="Field #1">
-                                Order ID
-                            </th>
-                            <th title="Field #2">
-                                Owner
-                            </th>
-                            <th title="Field #3">
-                                Contact
-                            </th>
-                            <th title="Field #4">
-                                Car Make
-                            </th>
-                            <th title="Field #5">
-                                Car Model
-                            </th>
-                            <th title="Field #6">
-                                Color
-                            </th>
-                            <th title="Field #7">
-                                Deposit Paid
-                            </th>
-                            <th title="Field #8">
-                                Order Date
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                49260-613
-                            </td>
-                            <td>
-                                Tedi Cullingford
-                            </td>
-                            <td>
-                                (839) 5548407
-                            </td>
-                            <td>
-                                Pontiac
-                            </td>
-                            <td>
-                                Firebird
-                            </td>
-                            <td>
-                                Orange
-                            </td>
-                            <td>
-                                $28603.11
-                            </td>
-                            <td>
-                                2016-09-27
-                            </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                    <!--end: Datatable -->
                 </div>
             </div>
+            <div id="confirmModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Konfirmasi</h2>
+                        </div>
+                        <div class="modal-body">
+                            <h4 align="center" style="margin:0;">Apakah anda yakin ingin menghapus data pekerjaan ini ?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 id="formModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                New message
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span id="form_result"></span>
+                            <form method="post" id="sample_form" class="form-horizontal" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Nama Pekerjaan
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="nama" name="nama"
+                                               placeholder="Masukan Nama Pekerjaan">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Vol Pekerjaan
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="number" class="form-control m-input" id="vol" name="vol"
+                                               placeholder="Masukan Vol Pekerjaan">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Satuan Pekerjaan
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="satuan" name="satuan"
+                                               placeholder="Masukan Satuan Pekerjaan">
+                                    </div>
+                                </div>
+                                <div class="form-group" align="center">
+                                    <input type="hidden" name="action" id="action"/>
+                                    <input type="hidden" name="hidden_id" id="hidden_id"/>
+                                    <input type="submit" name="action_button" id="action_button" class="btn btn-warning"
+                                           value="Add"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+
+            $('#user_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "/user/inisiasi-pengadaan-sipil/ips-dm/index",
+                },
+                columns: [
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'vol_pekerjaan',
+                        name: 'vol_pekerjaan'
+                    },
+                    {
+                        data: 'satuan',
+                        name: 'satuan'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        order:false
+                    },
+                ]
+            });
+
+
+
+            $('#create_record').click(function () {
+                $('.modal-title').text("Tambahkan Data Pekerjaan Baru");
+                $('#action_button').val("Tambahkan");
+                $('#action').val("Add");
+                $('#sample_form')[0].reset();
+                $('#form_result').html('');
+                $('#formModal').modal('show');
+            });
+
+            $('#sample_form').on('submit', function (event) {
+                console.log($('#action').val())
+                event.preventDefault();
+                if ($('#action').val() == 'Add') {
+                    $.ajax({
+                        url: "{{ route('ips-dm.store') }}",
+                        method: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        dataType: "json",
+                        success: function (data) {
+                            var html = '';
+                            if (data.errors) {
+                                html = '<div class="alert alert-danger">';
+                                for (var count = 0; count < data.errors.length; count++) {
+                                    html += '<p>' + data.errors[count] + '</p>';
+                                }
+                                html += '</div>';
+                            }
+                            if (data.success) {
+                                html = '<div class="alert alert-success">' + data.success + '</div>';
+                                $('#sample_form')[0].reset();
+                                $('#user_table').DataTable().ajax.reload();
+                            }
+                            $('#form_result').html(html);
+                        }
+                    })
+                }
+
+                if ($('#action').val() == "Edit") {
+
+                    $.ajax({
+                        url: "/user/inisiasi-pengadaan-sipil/ips-dm/update",
+                        method: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        dataType: "json",
+                        success: function (data) {
+                            var html = '';
+                            if (data.errors) {
+                                html = '<div class="alert alert-danger">';
+                                for (var count = 0; count < data.errors.length; count++) {
+                                    html += '<p>' + data.errors[count] + '</p>';
+                                }
+                                html += '</div>';
+                            }
+                            if (data.success) {
+                                html = '<div class="alert alert-success">' + data.success + '</div>';
+                                $('#store_image').html('');
+                                $('#user_table').DataTable().ajax.reload();
+                            }
+                            $('#form_result').html(html);
+                        }
+                    });
+                }
+            });
+
+
+
+            $(document).on('click', '.edit', function () {
+                var id = $(this).attr('id');
+                $('#form_result').html('');
+                $.ajax({
+                    url: "/user/inisiasi-pengadaan-sipil/ips-dm/" + id + "/edit",
+                    dataType: "json",
+                    success: function (html) {
+                        $('#nama').val(html.data.nama);
+                        $('#vol').val(html.data.vol_pekerjaan);
+                        $('#satuan').val(html.data.satuan);
+
+                        $('#hidden_id').val(html.data.id);
+                        $('.modal-title').text("Edit Data");
+                        $('#action_button').val("Edit");
+                        $('#action').val("Edit");
+                        $('#formModal').modal('show');
+                    }
+                })
+            });
+
+
+
+            var user_id;
+
+            $(document).on('click', '.delete', function () {
+                user_id = $(this).attr('id');
+                $('.modal-title').text("Hapus Data");
+                $('#confirmModal').modal('show');
+            });
+
+
+            $('#ok_button').click(function () {
+                $.ajax({
+                    url: "/user/inisiasi-pengadaan-sipil/ips-dm/destroy/" + user_id,
+                    beforeSend: function () {
+                        $('#ok_button').text('Deleting...');
+                    },
+                    success: function (data) {
+                        setTimeout(function () {
+                            $('#confirmModal').modal('hide');
+                            $('#user_table').DataTable().ajax.reload();
+                        }, 2000);
+                    }
+                })
+            });
+
+
+        });
+    </script>
 @endsection

@@ -6,12 +6,15 @@ namespace App\Http\Controllers\MonitoringKontrak;
 
 use App\AturUser;
 use App\Http\Controllers\Controller;
+use App\ModelsResource\DRole;
 use App\Pengadaan;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use setasign\Fpdi\Fpdi;
+
+use Twilio\Rest\Client;
 use Yajra\DataTables\DataTables;
 
 class MkSpkController extends Controller
@@ -19,41 +22,34 @@ class MkSpkController extends Controller
     public function index()
     {
 
+        $dataRole = DRole::all();
         $dataUser = User::all();
         if (request()->ajax()) {
-            return DataTables::of(Pengadaan::with('getperusahaan')->where('id_mp1', 2)->latest()->get())
+            return DataTables::of(Pengadaan::with('getperusahaan')->where(['id_mp1' => 2])->latest()->get())
                 ->addColumn('upload', function ($data) {
-                    if ($data->kontrak != null && $data->proses != null) {
-                        $getAksesDownload = AturUser::where(['id_user'=>Auth::user()->id,'id_pengadaan'=>$data->id])->count();
 
-
+                    if (Auth::user()->jabatan == 'Admin') {
                         $button = '<div class="dropdown"><button class="btn btn-brand dropdown-toggle btn-sm" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
                                         Download
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a href="downloadProses/' . $data->proses . '"  class="detail dropdown-item">Proses</a>';
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
 
-                        if($getAksesDownload === 1) {
-                            $button .= '<a href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
-                        }elseif (Auth::user()->role='Admin'){
-                            $button .= '<a href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
-                        }
-                          $button .='</div></div>';
+
+                        $button .= '<a href="downloadProses/' . $data->proses . '"  class="detail dropdown-item">Proses</a>';
+                        $button .= '<a target="_blank" href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
+
+                        $button .= '</div></div>';
                         return $button;
-                    } else if ($data->kontrak != null) {
-                        $button = '<a href="downloadKontrak/' . $data->kontrak . '" type="button" class="detail btn btn-primary btn-sm">Kontrak</a>';
-                        $button .= '&nbsp;&nbsp;';
-                        return $button;
-                    } else if ($data->proses != null) {
-                        $button = '<a href="downloadProses/' . $data->proses . '" type="button" class="detail btn btn-primary btn-sm">Proses</a>';
-                        $button .= '&nbsp;&nbsp;';
+                    }
+                    if (AturUser::where(['id_user' => Auth::user()->id, 'id_pengadaan' => $data->id])->count() == 1) {
+                        $button = '<a target="_blank" href="downloadKontrak/' . $data->kontrak . '" class="detail btn btn-warning btn-sm">Kontrak</a>';
                         return $button;
                     }
                 })
                 ->addColumn('action', function ($data) {
-                    if(Auth::user()->role === 'Admin') {
+                    if (Auth::user()->jabatan == 'Admin') {
                         $button = '<div class="dropdown"><button class="btn btn-warning dropdown-toggle btn-sm" type="button"
                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
@@ -68,12 +64,27 @@ class MkSpkController extends Controller
                                     </div>
                                    </div>';
                         return $button;
-                    }else{
-                        $button = '';
-                        return $button;
                     }
                 })
-                ->rawColumns(['upload', 'action'])
+                ->addColumn('tanggal_kontrak', function ($data) {
+                    if ($data->status_berakhir == 'Sejak BA Terima Lokasi') {
+                        $button = '<button type="button" name="tanggal_kontrak" id="' . $data->id . '" class="tanggal_kontrak btn btn-primary btn-sm">' . $data->tgl_diterima_panitia . '</button>';
+                        return $button;
+                    } else {
+                        $button = '<button type="button" name="tanggal_kontrak_milih" id="' . $data->id . '" class="tanggal_kontrak_milih btn btn-primary btn-sm">' . $data->tgl_diterima_panitia . '</button>';
+                        return $button;
+                    }
+
+                })
+                ->addColumn('harga_kontrak', function ($data) {
+                    $button = '<button type="button" name="harga_kontrak" id="' . $data->id . '" class="harga_kontrak btn btn-danger btn-sm">' . "Rp " . number_format($data->rab, 2, ',', '.') . '</button>';
+                    return $button;
+                })
+                ->addColumn('direksi_view', function ($data) {
+                    $button = '<button type="button" name="direksi_view" id="' . $data->id . '" class="direksi_view btn btn-default btn-sm">' . $data->pengawas . '</button>';
+                    return $button;
+                })
+                ->rawColumns(['upload', 'action', 'tanggal_kontrak', 'harga_kontrak', 'direksi_view'])
                 ->make(true);
         }
         return view('pages/user/monitoring-kontrak/spk/indexMonitoring', compact([
@@ -83,8 +94,6 @@ class MkSpkController extends Controller
 
     public function aturUserDireksiView($role)
     {
-
-
         if (request()->ajax()) {
             return DataTables::of(User::where('role', $role)->latest()->get())
                 ->addColumn('action', function ($data) {
@@ -98,7 +107,7 @@ class MkSpkController extends Controller
 
     }
 
-    public function aturUserDireksiViewAkses($id,$role)
+    public function aturUserDireksiViewAkses($id, $role)
     {
 
         if (request()->ajax()) {
@@ -144,7 +153,7 @@ class MkSpkController extends Controller
 
         $data = AturUser::findOrFail($id);
 
-        if ( $data->delete()) {
+        if ($data->delete()) {
             return response()->json(['success' => 'Data Added successfully.']);
         } else {
             return response()->json(['success' => 'Gagal']);
@@ -161,6 +170,14 @@ class MkSpkController extends Controller
         }
     }
 
+    function RotatedText($x, $y, $txt, $angle)
+    {
+        $pdf = new \PDF_Rotate();
+        //Text rotated around its origin
+        $pdf->Rotate($angle, $x, $y);
+        $pdf->Text($x, $y, $txt);
+        $pdf->Rotate(0);
+    }
 
     function add_watermark($file, $nama)
     {
@@ -175,11 +192,21 @@ class MkSpkController extends Controller
 
                 $pdf->useTemplate($tpl, null, null, $size['width'], $size['height'], TRUE);
                 //Put the watermark
-                $pdf->SetFont('Arial', 'B', 12);
-                $pdf->SetTextColor(255, 0, 0);
-                $pdf->SetXY(20, 15);
+                $pdf->SetFont('Arial', 'B', 8);
+                $pdf->SetTextColor(66, 135, 245);
+                $pdf->SetXY(30, 120);
                 $pdf->Write(0, Auth::user()->username);
+//                $this->RotatedText(35,190,'W a t e r m a r k   d e m o',45);
             }
+
+
+            $twilio_whatsapp_number = "6285272993360";
+            $account_sid = "AC95ff84cb05966ff362366691a6152f44";
+            $auth_token = "d467cb9e15a9fe801a7591d5fb2ab377";
+            $recipient = "6285272993360";
+            $client = new Client($account_sid, $auth_token);
+            $message = "Your registration pin code is ";
+            return $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
 
             return $pdf->Output();
 
@@ -189,6 +216,31 @@ class MkSpkController extends Controller
         }
 
 
+    }
+
+
+    public function tanggalKontrak($id)
+    {
+        if (request()->ajax()) {
+            $data = Pengadaan::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    public function direksi($id)
+    {
+        if (request()->ajax()) {
+            $data = Pengadaan::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
+    }
+
+    public function hargaKontrak($id)
+    {
+        if (request()->ajax()) {
+            $data = Pengadaan::findOrFail($id);
+            return response()->json(['data' => $data]);
+        }
     }
 
 

@@ -45,7 +45,13 @@
                                                 NIP
                                             </th>
                                             <th>
-                                                Created At
+                                                Direksi
+                                            </th>
+                                            <th>
+                                                Role
+                                            </th>
+                                            <th>
+                                                Nomor Whatsapp
                                             </th>
                                             <th>
                                                 Action
@@ -113,11 +119,11 @@
                                 </div>
                                 <div class="form-group m-form__group row">
                                     <label class="col-form-label col-lg-3 col-sm-12">
-                                        Role
+                                        Jabatan
                                     </label>
                                     <div class="col-lg-8 col-md-9 col-sm-12">
-                                        <select class="form-control role" id="role"
-                                                name="role">
+                                        <select class="form-control jabatan" id="jabatan"
+                                                name="jabatan">
                                             @foreach ($dataRole as $key)
                                                 <option value="{{ $key->nama }}">
                                                     {{ $key->nama}}
@@ -125,6 +131,31 @@
                                             @endforeach
 
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Role
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <select class="form-control role_user" id="role_user"
+                                                name="role_user">
+                                            @foreach ($dataRole as $key)
+                                                <option value="{{ $key->nama }}">
+                                                    {{ $key->nama}}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Nomor Whatsapp
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="no_hp" name="no_hp"
+                                               placeholder="Masukan No Whatsapp">
                                     </div>
                                 </div>
                                 <div class="form-group m-form__group row">
@@ -173,8 +204,16 @@
                         name: 'username'
                     },
                     {
-                        data: 'created_at',
-                        name: 'created_at',
+                        data: 'jabatan',
+                        name: 'jabatan'
+                    },
+                    {
+                        data: 'role_user',
+                        name: 'role_user'
+                    },
+                    {
+                        data: 'no_hp',
+                        name: 'no_hp'
                     },
                     {
                         data: 'action',
@@ -262,6 +301,9 @@
                     success: function (html) {
                         $('#name').val(html.data.name);
                         $('#username').val(html.data.username);
+                        $('#jabatan').val(html.data.jabatan);
+                        $('#no_hp').val(html.data.no_hp);
+                        $('#role_user').val(html.data.role_user);
                         $('#hidden_id').val(html.data.id);
                         $('.modal-title').text("Edit New Record");
                         $('#action_button').val("Edit");

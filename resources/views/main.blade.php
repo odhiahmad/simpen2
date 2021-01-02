@@ -59,7 +59,7 @@
 </div>
 
 
-
+<script type="text/javascript" src="{{asset('assets/autonumeric/autoNumeric.js')}}"></script>
 
 </body>
 </html>

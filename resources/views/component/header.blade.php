@@ -188,256 +188,193 @@
                     <div id="m_header_menu"
                          class="m-header-menu m-aside-header-menu-mobile m-aside-header-menu-mobile--offcanvas  m-header-menu--skin-dark m-header-menu--submenu-skin-light m-aside-header-menu-mobile--skin-light m-aside-header-menu-mobile--submenu-skin-light ">
                         <ul class="m-menu__nav  m-menu__nav--submenu-arrow ">
-                            <li class="{{ request()->is('user/beranda') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
-                                aria-haspopup="true">
-                                <a href='{!! url('user/beranda'); !!}' class="m-menu__link ">
-                                    <span class="m-menu__item-here"></span>
-                                    <span class="m-menu__link-text">
+                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi')
+                                <li class="{{ request()->is('user/beranda') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
+                                    aria-haspopup="true">
+                                    <a href='{!! url('user/beranda'); !!}' class="m-menu__link ">
+                                        <span class="m-menu__item-here"></span>
+                                        <span class="m-menu__link-text">
 													Dashboard
 												</span>
-                                </a>
-                            </li>
-                            <li class="{{ request()->is('user/job-card/*') ? 'm-menu__item  m-menu__item--active m-menu__item--rel' : 'm-menu__item  m-menu__item--submenu m-menu__item--rel' }}"
-                                data-menu-submenu-toggle="click" aria-haspopup="true">
-                                <a href="#" class="m-menu__link m-menu__toggle">
-                                    <span class="m-menu__item-here"></span>
-                                    <span class="m-menu__link-text">
+                                    </a>
+                                </li>
+                            @endif
+                            @if(Auth::user()->jabatan == 'Admin')
+                                <li class="{{ request()->is('user/jobcard/*') ? 'm-menu__item  m-menu__item--active m-menu__item--rel' : 'm-menu__item  m-menu__item--submenu m-menu__item--rel' }}"
+                                    data-menu-submenu-toggle="click" aria-haspopup="true">
+                                    <a href="#" class="m-menu__link m-menu__toggle">
+                                        <span class="m-menu__item-here"></span>
+                                        <span class="m-menu__link-text">
 													Job Card
 												</span>
-                                    <i class="m-menu__hor-arrow la la-angle-down"></i>
-                                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                                </a>
-                                <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
-                                    <span class="m-menu__arrow m-menu__arrow--adjust"></span>
-                                    <ul class="m-menu__subnav">
-                                        <li class="m-menu__item  m-menu__item--submenu"
-                                            data-menu-submenu-toggle="hover" data-redirect="true"
-                                            aria-haspopup="true">
-                                            <a href="#" class="m-menu__link m-menu__toggle">
-                                                <i class="m-menu__link-icon flaticon-apps"></i>
-                                                <span class="m-menu__link-text">
-																SPK
-															</span>
-                                                <i class="m-menu__hor-arrow la la-angle-right"></i>
-                                                <i class="m-menu__ver-arrow la la-angle-right"></i>
-                                            </a>
-                                            <div
-                                                class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right">
-                                                <span class="m-menu__arrow "></span>
-                                                <ul class="m-menu__subnav">
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spk/barang/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Barang
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spk/konstruksi/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Konstruksi
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spk/jasa-lainnya/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Jasa Lainnya
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spk/jasa-konstruski/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Jasa Konstruksi
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="m-menu__item  m-menu__item--submenu"
-                                            data-menu-submenu-toggle="hover" data-redirect="true"
-                                            aria-haspopup="true">
-                                            <a href="#" class="m-menu__link m-menu__toggle">
-                                                <i class="m-menu__link-icon flaticon-apps"></i>
-                                                <span class="m-menu__link-text">
-																SPBJ
-															</span>
-                                                <i class="m-menu__hor-arrow la la-angle-right"></i>
-                                                <i class="m-menu__ver-arrow la la-angle-right"></i>
-                                            </a>
-                                            <div
-                                                class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--right">
-                                                <span class="m-menu__arrow "></span>
-                                                <ul class="m-menu__subnav">
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spbj/barang/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Barang
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spbj/konstruksi/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Konstruksi
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spbj/jasa-lainnya/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Jasa Lainnya
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                    <li class="m-menu__item " data-redirect="true"
-                                                        aria-haspopup="true">
-                                                        <a href='{!! url('user/job-card/spbj/jasa-konstruksi/index'); !!}'
-                                                           class="m-menu__link ">
-                                                                <span class="m-menu__link-text">
-                                                                    Jasa Konstruksi
-                                                                </span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="{{ request()->is('user/monitoring-kontrak/*') ? 'm-menu__item  m-menu__item--active m-menu__item--rel' : 'm-menu__item  m-menu__item--submenu m-menu__item--rel' }}"
-                                data-menu-submenu-toggle="click" aria-haspopup="true">
-                                <a href="#" class="m-menu__link m-menu__toggle">
-                                    <span class="m-menu__item-here"></span>
-                                    <span class="m-menu__link-text">
-													Monitoring Kontrak
-												</span>
-                                    <i class="m-menu__hor-arrow la la-angle-down"></i>
-                                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                                </a>
-                                <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
-                                    <span class="m-menu__arrow m-menu__arrow--adjust"></span>
-                                    <ul class="m-menu__subnav">
-                                        <li class="m-menu__item"
-                                            data-menu-submenu-toggle="hover" data-redirect="true"
-                                            aria-haspopup="true">
-                                            <a href='{!! url('user/monitoring-kontrak/pj/index'); !!}'
-                                               class="m-menu__link ">
-                                                <span class="m-menu__item-here"></span>
-                                                <span class="m-menu__link-text">
+                                        <i class="m-menu__hor-arrow la la-angle-down"></i>
+                                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+                                    <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+                                        <span class="m-menu__arrow m-menu__arrow--adjust"></span>
+                                        <ul class="m-menu__subnav">
+                                            <li class="m-menu__item"
+                                                data-menu-submenu-toggle="hover" data-redirect="true"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/jobcard/pj/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <span class="m-menu__item-here"></span>
+                                                    <span class="m-menu__link-text">
 													PJ
 												</span>
-                                            </a>
-                                        </li>
-                                        <li class="m-menu__item"
-                                            data-menu-submenu-toggle="hover" data-redirect="true"
-                                            aria-haspopup="true">
-                                            <a href='{!! url('user/monitoring-kontrak/spk/index'); !!}'
-                                               class="m-menu__link ">
-                                                <span class="m-menu__item-here"></span>
-                                                <span class="m-menu__link-text">
+                                                </a>
+                                            </li>
+                                            <li class="m-menu__item"
+                                                data-menu-submenu-toggle="hover" data-redirect="true"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/jobcard/spk/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <span class="m-menu__item-here"></span>
+                                                    <span class="m-menu__link-text">
 													SPK
 												</span>
-                                            </a>
-                                        </li>
-                                        <li class="m-menu__item"
-                                            data-menu-submenu-toggle="hover" data-redirect="true"
-                                            aria-haspopup="true">
-                                            <a href='{!! url('user/monitoring-kontrak/spbj/index'); !!}'
-                                               class="m-menu__link ">
-                                                <span class="m-menu__item-here"></span>
-                                                <span class="m-menu__link-text">
+                                                </a>
+                                            </li>
+                                            <li class="m-menu__item"
+                                                data-menu-submenu-toggle="hover" data-redirect="true"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/jobcard/spbj/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <span class="m-menu__item-here"></span>
+                                                    <span class="m-menu__link-text">
 													SPBJ
 												</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="m-menu__item  m-menu__item--submenu m-menu__item--rel"
-                                data-menu-submenu-toggle="click" aria-haspopup="true">
-                                <a href="#" class="m-menu__link m-menu__toggle">
-                                    <span class="m-menu__item-here"></span>
-                                    <span class="m-menu__link-text">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi' || Auth::user()->jabatan == 'Pengawas')
+                                <li class="{{ request()->is('user/monitoring-kontrak/*') ? 'm-menu__item  m-menu__item--active m-menu__item--rel' : 'm-menu__item  m-menu__item--submenu m-menu__item--rel' }}"
+                                    data-menu-submenu-toggle="click" aria-haspopup="true">
+                                    <a href="#" class="m-menu__link m-menu__toggle">
+                                        <span class="m-menu__item-here"></span>
+                                        <span class="m-menu__link-text">
+													Monitoring Kontrak
+												</span>
+                                        <i class="m-menu__hor-arrow la la-angle-down"></i>
+                                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+                                    <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+                                        <span class="m-menu__arrow m-menu__arrow--adjust"></span>
+                                        <ul class="m-menu__subnav">
+                                            <li class="m-menu__item"
+                                                data-menu-submenu-toggle="hover" data-redirect="true"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/monitoring-kontrak/pj/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <span class="m-menu__item-here"></span>
+                                                    <span class="m-menu__link-text">
+													PJ
+												</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-menu__item"
+                                                data-menu-submenu-toggle="hover" data-redirect="true"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/monitoring-kontrak/spk/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <span class="m-menu__item-here"></span>
+                                                    <span class="m-menu__link-text">
+													SPK
+												</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-menu__item"
+                                                data-menu-submenu-toggle="hover" data-redirect="true"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/monitoring-kontrak/spbj/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <span class="m-menu__item-here"></span>
+                                                    <span class="m-menu__link-text">
+													SPBJ
+												</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi' || Auth::user()->jabatan == 'Pengawas')
+                                <li class="{{ request()->is('user/inisiasi-pengadaan-sipil/*') ? 'm-menu__item  m-menu__item--active m-menu__item--rel' : 'm-menu__item  m-menu__item--submenu m-menu__item--rel' }}"
+                                    data-menu-submenu-toggle="click" aria-haspopup="true">
+                                    <a href="#" class="m-menu__link m-menu__toggle">
+                                        <span class="m-menu__item-here"></span>
+                                        <span class="m-menu__link-text">
 													Inisiasi Pengadaan Sipil
 												</span>
-                                    <i class="m-menu__hor-arrow la la-angle-down"></i>
-                                    <i class="m-menu__ver-arrow la la-angle-right"></i>
-                                </a>
-                                <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
-                                    <span class="m-menu__arrow m-menu__arrow--adjust"></span>
-                                    <ul class="m-menu__subnav">
-                                        <li class="{{ request()->is('user/inisiasi-pengadaan-sipil/data-master') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
-                                            aria-haspopup="true">
-                                            <a href='{!! url('user/inisiasi-pengadaan-sipil/data-master'); !!}'
-                                               class="m-menu__link ">
-                                                <i class="m-menu__link-icon flaticon-diagram"></i>
-                                                <span class="m-menu__link-title">
+                                        <i class="m-menu__hor-arrow la la-angle-down"></i>
+                                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+                                    <div class="m-menu__submenu m-menu__submenu--classic m-menu__submenu--left">
+                                        <span class="m-menu__arrow m-menu__arrow--adjust"></span>
+                                        <ul class="m-menu__subnav">
+                                            <li class="{{ request()->is('user/inisiasi-pengadaan-sipil/ips-dm/dataMaster') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/inisiasi-pengadaan-sipil/ips-dm/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <i class="m-menu__link-icon flaticon-diagram"></i>
+                                                    <span class="m-menu__link-title">
                                                     <span class="m-menu__link-wrap">
                                                         <span class="m-menu__link-text">
                                                             Data Master
                                                         </span>
                                                     </span>
                                                 </span>
-                                            </a>
-                                        </li>
-                                        <li class="{{ request()->is('user/inisiasi-pengadaan-sipil/pengadaan-sipil') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
-                                            aria-haspopup="true">
-                                            <a href='{!! url('user/inisiasi-pengadaan-sipil/pengadaan-sipil'); !!}'
-                                               class="m-menu__link ">
-                                                <i class="m-menu__link-icon flaticon-diagram"></i>
-                                                <span class="m-menu__link-title">
+                                                </a>
+                                            </li>
+                                            <li class="{{ request()->is('user/inisiasi-pengadaan-sipil/pengadaan-sipil') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
+                                                aria-haspopup="true">
+                                                <a href='{!! url('user/inisiasi-pengadaan-sipil/pengadaan-sipil/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <i class="m-menu__link-icon flaticon-diagram"></i>
+                                                    <span class="m-menu__link-title">
                                                     <span class="m-menu__link-wrap">
                                                         <span class="m-menu__link-text">
                                                            Pengadaan Sipil
                                                         </span>
                                                     </span>
                                                 </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="{{ request()->is('user/database-harga/*') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
-                                aria-haspopup="true">
-                                <a href='{!! url('user/database-harga/index'); !!}' class="m-menu__link ">
-                                    <span class="m-menu__item-here"></span>
-                                    <span class="m-menu__link-text">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endif
+                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi' || Auth::user()->jabatan == 'Pengawas')
+                                <li class="{{ request()->is('user/database-harga/*') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
+                                    aria-haspopup="true">
+                                    <a href='{!! url('user/database-harga/index'); !!}' class="m-menu__link ">
+                                        <span class="m-menu__item-here"></span>
+                                        <span class="m-menu__link-text">
 													Database Harga
 												</span>
-                                </a>
-                            </li>
-                            <li class="{{ request()->is('user/user/index') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
-                                aria-haspopup="true">
-                                <a href='{!! url('user/user/index'); !!}' class="m-menu__link ">
-                                    <span class="m-menu__item-here"></span>
-                                    <span class="m-menu__link-text">
+                                    </a>
+                                </li>
+                            @endif
+                            @if(Auth::user()->jabatan  === 'Admin')
+                                <li class="{{ request()->is('user/user/index') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
+                                    aria-haspopup="true">
+                                    <a href='{!! url('user/user/index'); !!}' class="m-menu__link ">
+                                        <span class="m-menu__item-here"></span>
+                                        <span class="m-menu__link-text">
                                             User
 												</span>
-                                </a>
-                            </li>
-                            <li class="{{ request()->is('user/perusahaan/index') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
+                                    </a>
+                                </li>
+                            @endif
+                            <li class="{{ request()->is('user/dpt/index') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
                                 aria-haspopup="true">
-                                <a href='{!! url('user/perusahaan/index'); !!}' class="m-menu__link ">
+                                <a href='{!! url('user/dpt/index'); !!}' class="m-menu__link ">
                                     <span class="m-menu__item-here"></span>
                                     <span class="m-menu__link-text">
-                                            Perusahaan
+                                            DPT
 												</span>
                                 </a>
                             </li>

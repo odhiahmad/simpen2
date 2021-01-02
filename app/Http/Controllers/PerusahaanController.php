@@ -6,8 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Perusahaan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -22,6 +20,8 @@ class PerusahaanController extends Controller
                     $button = '<button type="button" name="edit" id="' . $data->id . '" class="edit btn btn-primary btn-sm">Edit</button>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm">Delete</button>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="lihatDetail" id="' . $data->id . '" class="lihatDetail btn btn-warning btn-sm">Detail</button>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -41,6 +41,15 @@ class PerusahaanController extends Controller
 
         $rules = array(
             'nama' => 'required',
+            'pimpinan' => 'required',
+            'notaris' => 'required',
+            'alamat' => 'required',
+            'bank' => 'required',
+            'kantor_cabang' => 'required',
+            'rekening' => 'required',
+            'npwp' => 'required',
+            'sebutan_jabatan' => 'required',
+
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -49,9 +58,29 @@ class PerusahaanController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
+        if($request->hasfile('filenames'))
+        {
+            foreach($request->file('filenames') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/dpt/', $name);  // your folder path
+                $data[] = $name;
+            }
+        }
+
 
         $form_data = array(
+            'foto' => json_encode($data),
             'nama' => $request->nama,
+            'pimpinan' => $request->pimpinan,
+            'notaris' => $request->notaris,
+            'alamat' => $request->alamat,
+            'bank' => $request->bank,
+            'kantor_cabang' => $request->kantor_cabang,
+            'rekening' => $request->rekening,
+            'npwp' => $request->npwp,
+            'sebutan_jabatan' => $request->sebutan_jabatan,
+            'bentuk_perusahaan' => $request->bentuk_dpt,
         );
 
 
@@ -85,9 +114,28 @@ class PerusahaanController extends Controller
             return response()->json(['errors' => $error->errors()->all()]);
         }
 
+        if($request->hasfile('filenames'))
+        {
+            foreach($request->file('filenames') as $image)
+            {
+                $name=$image->getClientOriginalName();
+                $image->move(public_path().'/dpt/', $name);  // your folder path
+                $data[] = $name;
+            }
+        }
 
         $form_data = array(
+            'foto' => json_encode($data),
             'nama' => $request->nama,
+            'pimpinan' => $request->pimpinan,
+            'notaris' => $request->notaris,
+            'alamat' => $request->alamat,
+            'bank' => $request->bank,
+            'kantor_cabang' => $request->kantor_cabang,
+            'rekening' => $request->rekening,
+            'npwp' => $request->npwp,
+            'sebutan_jabatan' => $request->sebutan_jabatan,
+            'bentuk_dpt' => $request->bentuk_dpt,
         );
         Perusahaan::whereId($request->hidden_id)->update($form_data);
 
@@ -100,7 +148,6 @@ class PerusahaanController extends Controller
         $data = Perusahaan::findOrFail($id);
         $data->delete();
     }
-
 
 
 }

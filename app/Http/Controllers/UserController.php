@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 
 use App\ModelsResource\DRole;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -28,7 +28,7 @@ class UserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pages/user/data-user/indexUser',compact([
+        return view('pages/user/data-user/indexUser', compact([
             'dataRole'
         ]));
     }
@@ -46,7 +46,9 @@ class UserController extends Controller
             'name' => 'required',
             'username' => 'required',
             'password' => 'required',
-            'role' => 'required'
+            'jabatan' => 'required',
+            'role_user' => 'required',
+            'no_hp' => 'required'
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -60,7 +62,9 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'role' => $request->role
+            'jabatan' => $request->jabatan,
+            'role_user' => $request->role_user,
+            'no_hp' => $request->no_hp
         );
 
 
@@ -91,11 +95,14 @@ class UserController extends Controller
     public function update(Request $request)
     {
 
-        if($request->password != ''){
+        if ($request->password != '') {
             $rules = array(
                 'name' => 'required',
                 'username' => 'required',
-                'password' => 'required'
+                'password' => 'required',
+                'jabatan' => 'required',
+                'role_user' => 'required',
+                'no_hp' => 'required'
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -109,13 +116,20 @@ class UserController extends Controller
                 'name' => $request->name,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
+                'jabatan' => $request->jabatan,
+                'role_user' => $request->role_user,
+                'no_hp' => $request->no_hp,
 
             );
             User::whereId($request->hidden_id)->update($form_data);
-        }else{
+        } else {
             $rules = array(
                 'name' => 'required',
                 'username' => 'required',
+                'jabatan' => 'required',
+                'role_user' => 'role_user',
+                'no_hp' => 'required'
+
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -128,7 +142,10 @@ class UserController extends Controller
             $form_data = array(
                 'name' => $request->name,
                 'username' => $request->username,
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make($request->password),
+                'jabatan' => $request->jabatan,
+                'role_user' => $request->role_user,
+                'no_hp' => $request->no_hp,
 
             );
             User::whereId($request->hidden_id)->update($form_data);

@@ -17,16 +17,16 @@ class Pengadaan extends Model
         return $this->hasOne('App\ModelsResource\DMetodePengadaan',"id","id_mp1");
     }
     public function getmp2() {
-        return $this->hasOne('App\ModelsResource\DMp1',"id","id_mp2");
+        return $this->hasOne('App\ModelsResource\DMetodePengadaan',"id","id_mp2");
     }
     public function getMp3() {
-        return $this->hasOne('App\ModelsResource\DMp2',"id","id_mp3");
+        return $this->hasOne('App\ModelsResource\DMetodePengadaan',"id","id_mp3");
     }
     public function getMp4() {
-        return $this->hasOne('App\ModelsResource\DMp3',"id","id_mp4");
+        return $this->hasOne('App\ModelsResource\DMetodePengadaan',"id","id_mp4");
     }
     public function getMp5() {
-        return $this->hasOne('App\ModelsResource\DMp4',"id","id_mp5");
+        return $this->hasOne('App\ModelsResource\DMetodePengadaan',"id","id_mp5");
     }
 
 

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Template\HasilKlarifikasi;
 use App\Pengadaan;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\Style\Cell;
 
@@ -30,8 +31,7 @@ class DaftarHadirPembuktianKualifikasi
         $phpWord->addTableStyle('Colspan Rowspan', $styleTable);
         $table = $section->addTable('Colspan Rowspan');
         $table->addRow();
-        $table->addCell(2000, $cellRowSpan)->addText('Tes');
-
+        $table->addCell(2000,$cellRowSpan)->addImage(public_path('logo_pln.png'), array('width'=>40,'marginTop' => round(Converter::cmToPixel(2)),'marginLeft' => round(Converter::cmToPixel(2))));
         $table->addCell(12000, $cellColSpan)->addText('PT. PLN (PERSERO) UNIT PELAKSANA PENGENDALIAN PEMBANGKITAN PEKANBARU', array('name'=>'Arial','color'=>'blue'), $cellHCentered);
         $table->addRow(300);
         $table->addCell(null, $cellRowContinue);

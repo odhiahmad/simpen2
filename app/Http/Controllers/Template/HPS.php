@@ -6,8 +6,10 @@ namespace App\Http\Controllers\Template;
 
 use App\Pengadaan;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 class HPS
 {
     public function HPS($id){
@@ -23,12 +25,20 @@ class HPS
         $styleArray = array(
             'borders' => array(
                 'outline' => array(
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                    'color' => array('argb' => 'FFFF0000'),
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => array('argb' => '0000000'),
                 ),
             ),
         );
         $data = Pengadaan::where('id',$id)->first();
+
+//        $spreadsheet->getActiveSheet()
+//            ->getStyle('A18:H10')
+//            ->getBorders()
+//            ->getBottom()
+//            ->setBorderStyle(Border::BORDER_THICK)
+//            ->setColor(new Color('FFFF0000'));
+
         $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(5);
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(23);
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(2);
@@ -86,7 +96,7 @@ class HPS
         $sheet->mergeCells('B19:D19');
         $sheet->mergeCells('B20:D20');
         $sheet->mergeCells('A18:A20')->setCellValue('A18', 'No')->getStyle('A18')->getAlignment()->applyFromArray($arrayStyle);
-        $sheet->mergeCells('B18:B20')->setCellValue('B19', 'Uraian Barang')->getStyle('B19')->getAlignment()->applyFromArray($arrayStyle);
+        $sheet->mergeCells('B18:D20')->setCellValue('B19', 'Uraian Barang')->getStyle('B19')->getAlignment()->applyFromArray($arrayStyle);
         $sheet->mergeCells('E18:E20')->setCellValue('E18', 'Spesifikasi')->getStyle('E18')->getAlignment()->applyFromArray($arrayStyle);
         $sheet->mergeCells('F18:F20')->setCellValue('F18', 'Kuantitas')->getStyle('F18')->getAlignment()->applyFromArray($arrayStyle);
         $sheet->mergeCells('G18:G20')->setCellValue('G18', 'Satuan Ukuran')->getStyle('G18')->getAlignment()->applyFromArray($arrayStyle);
@@ -119,7 +129,9 @@ class HPS
         $sheet->getStyle('D11:D12')->getFont()->setName('Arial')->setSize(10);
         $sheet->getStyle('D13:D14')->getFont()->setName('Arial')->setSize(10);
         $sheet->getStyle('D15:D16')->getFont()->setName('Arial')->setSize(10);
-        $sheet->getStyle('A18:I18')->getBorders()->applyFromArray($styleArray);
+        $sheet->getStyle('A18:I27')->applyFromArray($styleArray);
+        $sheet->getStyle('A18:I20')->applyFromArray($styleArray);
+
 // Rename worksheet
 
         $writer = new Xlsx($spreadsheet);
