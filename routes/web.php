@@ -1,20 +1,19 @@
 <?php
-use \App\Http\Controllers\JobCard\Spbj\Barang\SpbjBarangController;
-use \App\Http\Controllers\JobCard\Spbj\Konstruksi\SpbjKonstruksiController;
-use \App\Http\Controllers\JobCard\Spbj\JasaLainnya\SpbjJasaLainnyaController;
-use \App\Http\Controllers\JobCard\Spbj\JasaKonstruksi\SpbjJasaKonstruksiController;
+
 use \App\Http\Controllers\JobCardController;
 use \App\Http\Controllers\JobCard\Pj\UpdateControllerPj;
 use \App\Http\Controllers\JobCard\Pj\ViewUpdateControllerPj;
-use \App\Http\Controllers\JobCard\Spk\Konstruksi\SpkKonstruksiController;
-use \App\Http\Controllers\JobCard\Spk\JasaLainnya\SpkJasaLainnyaController;
-use \App\Http\Controllers\JobCard\Spk\JasaKonstruksi\SpkJasaKonstruksiController;
+use \App\Http\Controllers\JobCard\Spbj\UpdateControllerSpbj;
+use \App\Http\Controllers\JobCard\Spbj\ViewUpdateControllerSpbj;
+
 
 use \App\Http\Controllers\PengadaanSipil\PekerjaanController;
 use \App\Http\Controllers\PengadaanSipil\SubPekerjaanController;
 
 use \App\Http\Controllers\JobCard\JobCardPjController;
 use \App\Http\Controllers\JobCard\JobCardSpbjController;
+
+use \App\Http\Controllers\JobCard\Spk\DownloadControllerSpk;
 
 use \App\Http\Controllers\PengadaanSipil\PengadaanSipilController;
 
@@ -118,9 +117,9 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
             Route::get('pembayaran',  [JobCardSpbjController::class, 'indexPembayaranPengadaan']);
             Route::get('tambah',  [JobCardSpbjController::class, 'tambahPengadaan']);
 
-            Route::post('insert',  [JobCardSpbjController::class, 'store'])->name('jobcard.insert');
-            Route::post('update',  [JobCardSpbjController::class, 'updateData'])->name('jobcard.update');
-            Route::get('update-data/{id}',  [JobCardSpbjController::class, 'indexUpdateView']);
+            Route::post('insert',  [JobCardSpbjController::class, 'store'])->name('jobcard.spbj.insert');
+            Route::post('update',  [UpdateControllerSpbj::class, 'updateData'])->name('jobcard.spbj.update');
+            Route::get('update-data/{id}/{id1}/{id2}',  [ViewUpdateControllerSpbj::class, 'indexUpdateView']);
 
             Route::post('fetch',  [JobCardSpbjController::class, 'fetchData'])->name('jobcard.spk.barang.fetch');
             Route::post('fetchJenis1',  [JobCardSpbjController::class, 'fetchDataJenis1'])->name('jobcard.spk.barang.fetchJenis1');
@@ -167,24 +166,24 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
 
             Route::get('{id}/info',  [JobCardController::class, 'info']);
 
-            Route::get('download-rks/{id}',  [JobCardController::class, 'downloadRks']);
+            Route::get('download-rks/{id}',  [DownloadControllerSpk::class, 'downloadRks']);
 
-            Route::get('download-shp1/{id}',  [JobCardController::class, 'downloadShp1']);
-            Route::get('download-shp2/{id}',  [JobCardController::class, 'downloadShp2']);
+            Route::get('download-shp1/{id}',  [DownloadControllerSpk::class, 'downloadSurveyHargaPasar']);
+            Route::get('download-shp2/{id}',  [DownloadControllerSpk::class, 'downloadSurveyHargaPasar2']);
             Route::get('download-hps/{id}',  [JobCardController::class, 'downloadHps']);
-            Route::get('download-uplh/{id}',  [JobCardController::class, 'downloadUplh']);
+            Route::get('download-uplh/{id}',  [DownloadControllerSpk::class, 'downloadUpl']);
 
-            Route::get('evaluasiDokumen1/{id}',  [JobCardController::class, 'downloadEvaluasiDokumen1']);
-            Route::get('evaluasiDokumen2/{id}',  [JobCardController::class, 'downloadEvaluasiDokumen2']);
-            Route::get('evaluasiDokumen3/{id}',  [JobCardController::class, 'downloadEvaluasiDokumen3']);
+            Route::get('evaluasiDokumen1/{id}',  [DownloadControllerSpk::class, 'downloadEvaluasiDokumen1']);
+            Route::get('evaluasiDokumen2/{id}',  [DownloadControllerSpk::class, 'downloadEvaluasiDokumen2']);
+            Route::get('evaluasiDokumen3/{id}',  [DownloadControllerSpk::class, 'downloadEvaluasiDokumen3']);
 
             Route::get('download-ndPenetapan/{id}',  [JobCardController::class, 'downloadNdPenetapan']);
-            Route::get('download-hasilPengadaan1/{id}',  [JobCardController::class, 'downloadHasilPengadaan1']);
-            Route::get('download-hasilPengadaan2/{id}',  [JobCardController::class, 'downloadHasilPengadaan2']);
-            Route::get('download-hasilKlarifikasi1/{id}',  [JobCardController::class, 'downloadHasilKlarifikasi1']);
-            Route::get('download-hasilKlarifikasi2/{id}',  [JobCardController::class, 'downloadHasilKlarifikasi2']);
+            Route::get('download-hasilPengadaan1/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilPengadaanLangsung1']);
+            Route::get('download-hasilPengadaan2/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilPengadaanLangsung2']);
+            Route::get('download-hasilKlarifikasi1/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilKlarifikasi1']);
+            Route::get('download-hasilKlarifikasi2/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilKlarifikasi2']);
             Route::get('download-hasilKlarifikasi3/{id}',  [JobCardController::class, 'downloadHasilKlarifikasi3']);
-            Route::get('download-hasilKlarifikasi4/{id}',  [JobCardController::class, 'downloadHasilKlarifikasi4']);
+            Route::get('download-hasilKlarifikasi4/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilKlarifikasi4']);
             Route::get('download-spkBarang',  [JobCardController::class, 'downloadSpkBarang']);
             Route::get('download-daftarKuantitas',  [JobCardController::class, 'downloadDaftarKuantitas']);
         });

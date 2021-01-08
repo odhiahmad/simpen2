@@ -474,6 +474,7 @@ class JobCardController extends Controller
             'dataStatus',
             'dataJabatanPengawas',
             'dataStatusBerakhir',
+            'dataPengadaanDetail',
             'dataId1',
             'dataId2',
 

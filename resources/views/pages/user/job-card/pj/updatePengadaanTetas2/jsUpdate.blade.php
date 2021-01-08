@@ -38,6 +38,42 @@
     }
 
     $(document).ready(function () {
+        var $tgl13 = $('#tanggal_diterima_panitia'), $valueTgl13 = $('#jangka_waktu');
+        $valueTgl13.on('input', function (e) {
+            var totaltgl13 = 1;
+            $valueTgl13.each(function (index, elem) {
+                if (!Number.isNaN(parseInt(this.value, 10)))
+                    totaltgl13 = totaltgl13 * parseInt(this.value, 10);
+            });
+
+            $('#status_berakhir').empty();
+            var html = "";
+            html += '<option value="">Pilih Status</option>';
+            html += '<option value="Sejak BA Terima Lokasi">Sejak BA Terima Lokasi  </option>';
+            html += '<option value="' + totaltgl13 + '">' + totaltgl13 + ' Hari </option>';
+            $('#status_berakhir').append(html)
+
+        });
+
+        $('#status_berakhir').change(function () {
+            if ($(this).val() != '') {
+                var value = $(this).val();
+
+                if (value === 'Sejak BA Terima Lokasi') {
+                    $('#jangka_waktu_tgl').val('');
+                    $('#jangka_waktu_hari').val('')
+                } else {
+
+                    var getTanggalStatusBerakhir = new Date($('#cda_tgl').val());
+                    var tanggalStatusBerakhir = new Date(getTanggalStatusBerakhir.getFullYear(), getTanggalStatusBerakhir.getMonth(), getTanggalStatusBerakhir.getDate() + parseInt(value) - 1)
+
+                    $('#jangka_waktu_tgl').datepicker('setDate', tanggalStatusBerakhir);
+                    $('#jangka_waktu_hari').val(hari[tanggalStatusBerakhir.getDay()])
+                }
+            }
+        })
+
+
         $('.dynamic').change(function () {
             if ($(this).val() != '') {
                 var select = $(this).attr("id");
@@ -100,6 +136,7 @@
                 })
             }
         })
+
 
         $('.metode_pengadaan_jenis3').change(function () {
             if ($(this).val() != '') {
@@ -233,48 +270,45 @@
             // },
         });
 
-
-
-        var $tgl13 = $('#tanggal_diterima_panitia'), $valueTgl13 = $('#jangka_waktu');
-        $valueTgl13.on('input', function (e) {
-            var totaltgl13 = 1;
-            $valueTgl13.each(function (index, elem) {
-                if (!Number.isNaN(parseInt(this.value, 10)))
-                    totaltgl13 = totaltgl13 * parseInt(this.value, 10);
-            });
-
-            var jumlahA = parseInt(tglA.val())
-            var jumlahB = parseInt(tglB.val());
-            var jumlahC = parseInt(tglC.val());
-            var jumlahD = parseInt(tglD.val());
-            var jumlahE = parseInt(tglE.val());
-            var jumlahF = parseInt(tglF.val());
-            var jumlahG = parseInt(tglG.val());
-            var jumlahH = parseInt(tglH.val());
-            var jumlahI = parseInt(tglI.val());
-            var jumlahJ = parseInt(tglJ.val());
-            var jumlahK = parseInt(tglK.val());
-            var jumlahL = parseInt(tglL.val());
-            var jumlahM = parseInt(tglM.val());
-
-            var getTanggalTes13 = $tgl13.val()
-            var getTanggal13 = new Date(getTanggalTes13)
-            var getFull13 = new Date(getTanggal13.getFullYear(), getTanggal13.getMonth(), getTanggal13.getDate() + (totaltgl13 + jumlahA + jumlahB + jumlahC + jumlahD + jumlahE + jumlahF + jumlahG + jumlahH + jumlahI + jumlahJ + jumlahK + jumlahL + jumlahM))
-
-            $('#status_berakhir').empty();
-            var html = "";
-            html += '<option value="">Pilih Status</option>';
-            html += '<option value="Sejak BA Terima Lokasi">Sejak BA Terima Lokasi  </option>';
-            html += '<option value="' + totaltgl13 + '">' + totaltgl13 + ' Hari </option>';
-            $('#status_berakhir').append(html)
-
+        $("#pembukaan_penawaran_sampul_satu_tgl,#evaluasi_dok_penawaran_sampul_satu_tgl,#pembukaan_penawaran_sampul_dua_tgl,#evaluasi_dok_penawaran_sampul_dua_tgl,#pengumuman_hasil_evaluasi_sampul_satu_tgl,#pengumuman_tgl,#undangan_aanwijzing_direksi_pekerjaan_tgl,#undangan_aanwijzing_peserta_tgl,#aanwijzing_tgl,#addendum_rks_tgl,#pemasukan_dok_penawaran_tgl,#pembukaan_penawaran_tgl,#evaluasi_dokumen_tgl,#evaluasi_dok_penawaran_tgl,#undangan_pembuktian_kualifikasi_tgl,#pembuktian_kualifikasi_tgl,#undangan_klarifikasi_dan_nego_penawaran_tgl,#nd_penetapan_calon_pemenang_tgl,#ba_hasil_klarifikasi_dan_nego_penawaran_tgl,#ba_hasil_klarifikasi_tgl,#laporan_hasil_evaluasi_tgl,#nd_usulan_penetapan_calon_pemenang_tgl,#pengumuman_calon_pemenang_tgl,#penunjukan_pemenang_tgl,#skkp_tgl,#undangan_cda_tgl,#cda_tgl,#pj_tgl,#bastl_tgl").datepicker({
+            format: 'yyyy-mm-dd',
+            todayHighlight: !0,
+            // orientation: "bottom left",
+            // templates: {
+            //     leftArrow: '<i class="la la-angle-left"></i>',
+            //     rightArrow: '<i class="la la-angle-right"></i>'
+            // },
         });
+
+
+
+        $('#status_berakhir').change(function () {
+            if ($(this).val() != '') {
+                var value = $(this).val();
+
+
+                if (value === 'Sejak BA Terima Lokasi') {
+                    $('#jangka_waktu_tgl').val('');
+                    $('#jangka_waktu_hari').val('')
+                } else {
+                    // var totalJangkaWaktu  = value + jumlahA + jumlahB + jumlahC + jumlahD + jumlahE + jumlahF + jumlahG + jumlahH + jumlahI + jumlahJ + jumlahK + jumlahL + jumlahM
+                    //
+
+                    var getTanggalStatusBerakhir = new Date($('#spk_tgl').val());
+                    var tanggalStatusBerakhir = new Date(getTanggalStatusBerakhir.getFullYear(), getTanggalStatusBerakhir.getMonth(), getTanggalStatusBerakhir.getDate() + parseInt(value) - 1)
+
+                    $('#jangka_waktu_tgl').datepicker('setDate', tanggalStatusBerakhir);
+                    $('#jangka_waktu_hari').val(hari[tanggalStatusBerakhir.getDay()])
+                }
+            }
+        })
+
 
         $('#sample_form').on('submit', function (event) {
             event.preventDefault();
             if ($('#action').val() == 'Add') {
                 $.ajax({
-                    url: '{{route('jobcard.pj.update')}}',
+                    url: '{{route('jobcard.spbj.update')}}',
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,
@@ -286,7 +320,7 @@
                     },
                     success: function (data) {
                         if (data.errors) {
-                            $('#action_button').val('Submit')
+
                             for (var count = 0; count < data.errors.length; count++) {
                                 toastr.error(data.errors[count])
                             }

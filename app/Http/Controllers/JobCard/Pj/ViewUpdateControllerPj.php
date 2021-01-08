@@ -84,7 +84,8 @@ class ViewUpdateControllerPj extends Controller
             'dataVfmc',
             'dataStatus',
             'dataJabatanPengawas',
-            'dataStatusBerakhir'
+            'dataStatusBerakhir',
+            'dataPengadaanDetail'
         ]));
     }
 
@@ -139,7 +140,8 @@ class ViewUpdateControllerPj extends Controller
             'dataVfmc',
             'dataStatus',
             'dataJabatanPengawas',
-            'dataStatusBerakhir'
+            'dataStatusBerakhir',
+            'dataPengadaanDetail'
         ]));
     }
 
@@ -194,7 +196,8 @@ class ViewUpdateControllerPj extends Controller
             'dataVfmc',
             'dataStatus',
             'dataJabatanPengawas',
-            'dataStatusBerakhir'
+            'dataStatusBerakhir',
+            'dataPengadaanDetail'
         ]));
     }
 
@@ -249,7 +252,8 @@ class ViewUpdateControllerPj extends Controller
             'dataVfmc',
             'dataStatus',
             'dataJabatanPengawas',
-            'dataStatusBerakhir'
+            'dataStatusBerakhir',
+            'dataPengadaanDetail'
         ]));
     }
 }

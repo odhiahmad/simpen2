@@ -30,7 +30,7 @@
                         <li class="m-nav__item">
                             <a href='#' class="m-nav__link">
                                 <span class="m-nav__link-text">
-                                    SPK
+                                    SPBJ
                                 </span>
                             </a>
                         </li>
@@ -232,7 +232,7 @@
                 event.preventDefault();
                 if ($('#action').val() == 'Add') {
                     $.ajax({
-                        url: "{{ route('monitoringKontrak.spk.aturUser') }}",
+                        url: "{{ route('monitoringKontrak.spbj.aturUser') }}",
                         method: "POST",
                         data: new FormData(this),
                         contentType: false,
@@ -264,7 +264,7 @@
                 $('.tanggalKontrakView').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/monitoring-kontrak/spk/" + id + "/tanggalKontrak",
+                    url: "/user/monitoring-kontrak/spbj/" + id + "/tanggalKontrak",
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
@@ -308,7 +308,7 @@
                 $('.tanggalKontrakMilihView').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/monitoring-kontrak/spk/" + id + "/tanggalKontrak",
+                    url: "/user/monitoring-kontrak/spbj/" + id + "/tanggalKontrak",
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
@@ -351,7 +351,7 @@
                 $('.direksiView').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/monitoring-kontrak/spk/" + id + "/direksi",
+                    url: "/user/monitoring-kontrak/spbj/" + id + "/direksi",
                     dataType: "json",
                     success: function (data) {
                         var getData = data.data;
@@ -380,7 +380,7 @@
                 $('.hargaKontrakView').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/monitoring-kontrak/spk/" + id + "/hargaKontrak",
+                    url: "/user/monitoring-kontrak/spbj/" + id + "/hargaKontrak",
                     dataType: "json",
                     success: function (data) {
 
@@ -424,7 +424,7 @@
                     paging: false,
                     destroy: true,
                     ajax: {
-                        url: "/user/monitoring-kontrak/spk/aturUserDireksiView/" + role,
+                        url: "/user/monitoring-kontrak/spbj/aturUserDireksiView/" + role,
                     },
                     columns: [
                         {
@@ -454,7 +454,7 @@
                     search: false,
                     destroy: true,
                     ajax: {
-                        url: "/user/monitoring-kontrak/spk/aturUserDireksiViewAkses/" + idKontrak + "/" + role,
+                        url: "/user/monitoring-kontrak/spbj/aturUserDireksiViewAkses/" + idKontrak + "/" + role,
                     },
                     columns: [
                         {
@@ -477,7 +477,7 @@
                 var idUserAkses = $(this).attr('id');
 
                 $.ajax({
-                    url: "/user/monitoring-kontrak/spk/tambahkanUserAksesDireksi/" + idUserAkses + "/" + idKontrak,
+                    url: "/user/monitoring-kontrak/spbj/tambahkanUserAksesDireksi/" + idUserAkses + "/" + idKontrak,
                     dataType: "json",
                     success: function () {
                         $('#aturUserTableAkses').DataTable().ajax.reload();
@@ -488,7 +488,7 @@
             $(document).on('click', '.hapusUserAksesDireksi', function () {
                 var idUserHapus = $(this).attr('id');
                 $.ajax({
-                    url: "/user/monitoring-kontrak/spk/hapusUserAksesDireksi/" + idUserHapus,
+                    url: "/user/monitoring-kontrak/spbj/hapusUserAksesDireksi/" + idUserHapus,
                     dataType: "json",
                     success: function () {
                         $('#aturUserTableAkses').DataTable().ajax.reload();
@@ -500,7 +500,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "/user/monitoring-kontrak/spk/index",
+                    url: "/user/monitoring-kontrak/spbj/index",
                 },
                 columns: [
                     {

@@ -590,7 +590,8 @@
                     success: function (data) {
                         var getData = data.data;
                         $('.modal-title').text("Tambahkan Pekerjaan " + getData.judul + "");
-                        $('#id_ips').val(getData.id);
+                        $('#id_ips').val(getData.id_ips);
+                        $('#id_ips_pekerjaan').val(getData.id);
                         $('#action_button_detail').val("Tambahkan");
                         $('#tambahPekerjaanModal').modal('show');
                     }

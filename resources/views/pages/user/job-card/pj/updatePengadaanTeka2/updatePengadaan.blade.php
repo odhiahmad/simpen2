@@ -592,16 +592,16 @@
                                        placeholder="Upload Dokumen Proses">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-6">
-                                <label>
-                                    No Perjanjian Kontrak:
-                                </label>
-                                <input type="text" class="form-control m-input"
-                                       value="{{$dataPengadaan->no_perjanjian}}"
-                                       id="no_perjanjian" name="no_perjanjian"
-                                       placeholder="Masukan No Perjanjian Kontrak">
-                                <span class="m-form__help"></span>
-                            </div>
+{{--                            <div class="col-lg-6">--}}
+{{--                                <label>--}}
+{{--                                    No Perjanjian Kontrak:--}}
+{{--                                </label>--}}
+{{--                                <input type="text" class="form-control m-input"--}}
+{{--                                       value="{{$dataPengadaan->no_perjanjian}}"--}}
+{{--                                       id="no_perjanjian" name="no_perjanjian"--}}
+{{--                                       placeholder="Masukan No Perjanjian Kontrak">--}}
+{{--                                <span class="m-form__help"></span>--}}
+{{--                            </div>--}}
                             <div class="col-lg-6">
                                 <label>
                                     Harga Penawaran:

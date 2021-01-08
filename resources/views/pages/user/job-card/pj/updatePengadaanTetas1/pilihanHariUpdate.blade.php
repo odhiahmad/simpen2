@@ -1,35 +1,38 @@
 <div class="form-group m-form__group row">
+    <button id="refreshTanggal" class="btn btn-block btn-info">Sync Tanggal</button>
+</div>
+<div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
         Survei Harga Pasar:
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->survei_harga_pasar_nomor}}" id="nppv1"
+        <input type="text" value="{{$dataPengadaanDetail->survey_harga_pasar_nomor}}" id="nppv1"
                name="nppv1" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
         <input type="text" class="form-control m-input survey_harga_pasar_jumlah"
                name="survey_harga_pasar_jumlah"
-               value="{{$dataPengadaan->survei_harga_pasar_jumlah}}"
+               value="{{$dataPengadaanDetail->survey_harga_pasar_jumlah}}"
                id="survey_harga_pasar_jumlah" placeholder="Jumlah">
         <span class="m-form__help "></span>
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->survei_harga_pasar_tgl}}"
+            value="{{$dataPengadaanDetail->survey_harga_pasar_tgl}}"
             name="survey_harga_pasar_tgl"
             id="survey_harga_pasar_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->survei_harga_pasar_hari}}"
+        <input value="{{$dataPengadaanDetail->survey_harga_pasar_hari}}"
                name="survey_harga_pasar_hari"
                id="survey_harga_pasar_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
-    @if($dataPengadaan->survei_harga_pasar_tgl != null)
+    @if($dataPengadaanDetail->survei_harga_pasar_tgl != null)
         <div class="col-lg-2">
             <div class="dropdown">
                 <button class="btn btn-brand dropdown-toggle btn-sm" type="button"
@@ -58,12 +61,12 @@
         HPS:
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->hps_nomor}}" id="nppv2"
+        <input type="text" value="{{$dataPengadaanDetail->hps_nomor}}" id="nppv2"
                name="nppv2" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->hps_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->hps_jumlah}}"
                class="form-control m-input hps_jumlah"
                name="hps_jumlah"
                id="hps_jumlah" placeholder="Jumlah">
@@ -71,13 +74,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->hps_tgl}}"
+            value="{{$dataPengadaanDetail->hps_tgl}}"
             name="hps_tgl"
             id="hps_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->hps_hari}}" name="hps_hari"
+        <input value="{{$dataPengadaanDetail->hps_hari}}" name="hps_hari"
                id="hps_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -95,12 +98,12 @@
         Pengumuman :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->pengumuman_nomor}}" id="nppv3"
+        <input type="text" value="{{$dataPengadaanDetail->pengumuman_nomor}}" id="nppv3"
                name="nppv3" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->pengumuman_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->pengumuman_jumlah}}"
                class="form-control m-input pengumuman_jumlah"
                name="pengumuman_jumlah"
                id="pengumuman_jumlah" placeholder="Jumlah">
@@ -108,13 +111,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->pengumuman_tgl}}"
+            value="{{$dataPengadaanDetail->pengumuman_tgl}}"
             name="pengumuman_tgl"
             id="pengumuman_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->pengumuman_hari}}" name="pengumuman_hari"
+        <input value="{{$dataPengadaanDetail->pengumuman_hari}}" name="pengumuman_hari"
                id="pengumuman_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -132,12 +135,12 @@
         Undangan aanwijzing Peserta :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->undangan_aanwijzing_peserta_nomor}}" id="nppv4"
+        <input type="text" value="{{$dataPengadaanDetail->undangan_aanwijzing_peserta_nomor}}" id="nppv4"
                name="nppv4" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->undangan_aanwijzing_peserta_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->undangan_aanwijzing_peserta_jumlah}}"
                class="form-control m-input undangan_aanwijzing_peserta_jumlah"
                name="undangan_aanwijzing_peserta_jumlah"
                id="undangan_aanwijzing_peserta_jumlah" placeholder="Jumlah">
@@ -145,13 +148,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->undangan_aanwijzing_peserta_tgl}}"
+            value="{{$dataPengadaanDetail->undangan_aanwijzing_peserta_tgl}}"
             name="undangan_aanwijzing_peserta_tgl"
             id="undangan_aanwijzing_peserta_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->undangan_aanwijzing_peserta_hari}}" name="undangan_aanwijzing_peserta_hari"
+        <input value="{{$dataPengadaanDetail->undangan_aanwijzing_peserta_hari}}" name="undangan_aanwijzing_peserta_hari"
                id="undangan_aanwijzing_peserta_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -167,30 +170,30 @@
 
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
-        Undangan aanwijzing Direksi :
+        Undangan aanwijzing Direksi Pekerjaan :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->undangan_aanwijzing_direksi_nomor}}" id="nppv5"
+        <input type="text" value="{{$dataPengadaanDetail->undangan_aanwijzing_direksi_pekerjaan_nomor}}" id="nppv5"
                name="nppv5" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->undangan_aanwijzing_direksi_jumlah}}"
-               class="form-control m-input undangan_aanwijzing_direksi_jumlah"
-               name="undangan_aanwijzing_direksi_jumlah"
-               id="undangan_aanwijzing_direksi_jumlah" placeholder="Jumlah">
+        <input type="text" value="{{$dataPengadaanDetail->undangan_aanwijzing_direksi_pekerjaan_jumlah}}"
+               class="form-control m-input undangan_aanwijzing_direksi_pekerjaan_jumlah"
+               name="undangan_aanwijzing_direksi_pekerjaan_jumlah"
+               id="undangan_aanwijzing_direksi_pekerjaan_jumlah" placeholder="Jumlah">
         <span class="m-form__help "></span>
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->undangan_aanwijzing_direksi_tgl}}"
-            name="undangan_aanwijzing_direksi_tgl"
-            id="undangan_aanwijzing_direksi_tgl"
+            value="{{$dataPengadaanDetail->undangan_aanwijzing_direksi_pekerjaan_tgl}}"
+            name="undangan_aanwijzing_direksi_pekerjaan_tgl"
+            id="undangan_aanwijzing_direksi_pekerjaan_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->undangan_aanwijzing_direksi_hari}}" name="undangan_aanwijzing_direksi_hari"
-               id="undangan_aanwijzing_direksi_hari"
+        <input value="{{$dataPengadaanDetail->undangan_aanwijzing_direksi_pekerjaan_hari}}" name="undangan_aanwijzing_direksi_pekerjaan_hari"
+               id="undangan_aanwijzing_direksi_pekerjaan_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
@@ -203,17 +206,18 @@
     </div>
 </div>
 
+
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
         Aanwijzing :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->aanwijzing_nomor}}" id="nppv6"
+        <input type="text" value="{{$dataPengadaanDetail->aanwijzing_nomor}}" id="nppv6"
                name="nppv6" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->aanwijzing_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->aanwijzing_jumlah}}"
                class="form-control m-input aanwijzing_jumlah"
                name="aanwijzing_jumlah"
                id="aanwijzing_jumlah" placeholder="Jumlah">
@@ -221,13 +225,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->aanwijzing_tgl}}"
+            value="{{$dataPengadaanDetail->aanwijzing_tgl}}"
             name="aanwijzing_tgl"
             id="aanwijzing_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->aanwijzing_hari}}" name="aanwijzing_hari"
+        <input value="{{$dataPengadaanDetail->aanwijzing_hari}}" name="aanwijzing_hari"
                id="aanwijzing_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -245,12 +249,12 @@
         Addendum Rks :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->addendum_rks_nomor}}" id="nppv7"
+        <input type="text" value="{{$dataPengadaanDetail->addendum_rks_nomor}}" id="nppv7"
                name="nppv7" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->addendum_rks_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->addendum_rks_jumlah}}"
                class="form-control m-input addendum_rks_jumlah"
                name="addendum_rks_jumlah"
                id="addendum_rks_jumlah" placeholder="Jumlah">
@@ -258,13 +262,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->addendum_rks_tgl}}"
+            value="{{$dataPengadaanDetail->addendum_rks_tgl}}"
             name="addendum_rks_tgl"
             id="addendum_rks_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->addendum_rks_hari}}" name="addendum_rks_hari"
+        <input value="{{$dataPengadaanDetail->addendum_rks_hari}}" name="addendum_rks_hari"
                id="addendum_rks_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -282,12 +286,12 @@
         Pemasukan Dok Penawaran  :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->pemasukan_dok_penawaran_nomor}}" id="nppv8"
+        <input type="text" value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_nomor}}" id="nppv8"
                name="nppv8" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->pemasukan_dok_penawaran_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_jumlah}}"
                class="form-control m-input pemasukan_dok_penawaran_jumlah"
                name="pemasukan_dok_penawaran_jumlah"
                id="pemasukan_dok_penawaran_jumlah" placeholder="Jumlah">
@@ -295,13 +299,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->pemasukan_dok_penawaran_tgl}}"
+            value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_tgl}}"
             name="pemasukan_dok_penawaran_tgl"
             id="pemasukan_dok_penawaran_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->pemasukan_dok_penawaran_nomor}}" name="pemasukan_dok_penawaran_hari"
+        <input value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_nomor}}" name="pemasukan_dok_penawaran_hari"
                id="pemasukan_dok_penawaran_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -319,12 +323,12 @@
         Pembukaan Penawaran  :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->pembukaan_penawaran_nomor}}" id="nppv9"
+        <input type="text" value="{{$dataPengadaanDetail->pembukaan_penawaran_nomor}}" id="nppv9"
                name="nppv9" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->pembukaan_penawaran_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->pembukaan_penawaran_jumlah}}"
                class="form-control m-input pembukaan_penawaran_jumlah"
                name="pembukaan_penawaran_jumlah"
                id="pembukaan_penawaran_jumlah" placeholder="Jumlah">
@@ -332,13 +336,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->pembukaan_penawaran_tgl}}"
+            value="{{$dataPengadaanDetail->pembukaan_penawaran_tgl}}"
             name="pembukaan_penawaran_tgl"
             id="pembukaan_penawaran_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->pembukaan_penawaran_hari}}" name="pembukaan_penawaran_hari"
+        <input value="{{$dataPengadaanDetail->pembukaan_penawaran_hari}}" name="pembukaan_penawaran_hari"
                id="pembukaan_penawaran_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -357,12 +361,12 @@
         Evaluasi Dok Penawaran  :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->evaluasi_dok_penawaran_nomor}}" id="nppv10"
+        <input type="text" value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_nomor}}" id="nppv10"
                name="nppv10" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->evaluasi_dok_penawaran_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_jumlah}}"
                class="form-control m-input evaluasi_dok_penawaran_jumlah"
                name="evaluasi_dok_penawaran_jumlah"
                id="evaluasi_dok_penawaran_jumlah" placeholder="Jumlah">
@@ -370,13 +374,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->evaluasi_dok_penawaran_tgl}}"
+            value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_tgl}}"
             name="evaluasi_dok_penawaran_tgl"
             id="evaluasi_dok_penawaran_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->evaluasi_dok_penawaran_hari}}" name="evaluasi_dok_penawaran_hari"
+        <input value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_hari}}" name="evaluasi_dok_penawaran_hari"
                id="evaluasi_dok_penawaran_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -396,12 +400,12 @@
         Undangan Klarifikasi Dan Nego Penawaran  :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->undangan_klarifikasi_dan_nego_penawaran_nomor}}" id="nppv11"
+        <input type="text" value="{{$dataPengadaanDetail->undangan_klarifikasi_dan_nego_penawaran_nomor}}" id="nppv11"
                name="nppv11" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->undangan_klarifikasi_dan_nego_penawaran_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->undangan_klarifikasi_dan_nego_penawaran_jumlah}}"
                class="form-control m-input undangan_klarifikasi_dan_nego_penawaran_jumlah"
                name="undangan_klarifikasi_dan_nego_penawaran_jumlah"
                id="undangan_klarifikasi_dan_nego_penawaran_jumlah" placeholder="Jumlah">
@@ -409,13 +413,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->undangan_klarifikasi_dan_nego_penawaran_tgl}}"
+            value="{{$dataPengadaanDetail->undangan_klarifikasi_dan_nego_penawaran_tgl}}"
             name="undangan_klarifikasi_dan_nego_penawaran_tgl"
             id="undangan_klarifikasi_dan_nego_penawaran_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->undangan_klarifikasi_dan_nego_penawaran_hari}}" name="undangan_klarifikasi_dan_nego_penawaran_hari"
+        <input value="{{$dataPengadaanDetail->undangan_klarifikasi_dan_nego_penawaran_hari}}" name="undangan_klarifikasi_dan_nego_penawaran_hari"
                id="undangan_klarifikasi_dan_nego_penawaran_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -434,12 +438,12 @@
         Ba Hasil Klarifikasi Dan Nego Penawaran :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->ba_hasil_klarifikasi_dan_nego_penawaran_nomor}}" id="nppv12"
+        <input type="text" value="{{$dataPengadaanDetail->ba_hasil_klarifikasi_dan_nego_penawaran_nomor}}" id="nppv12"
                name="nppv12" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->ba_hasil_klarifikasi_dan_nego_penawaran_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->ba_hasil_klarifikasi_dan_nego_penawaran_jumlah}}"
                class="form-control m-input ba_hasil_klarifikasi_dan_nego_penawaran_jumlah"
                name="ba_hasil_klarifikasi_dan_nego_penawaran_jumlah"
                id="ba_hasil_klarifikasi_dan_nego_penawaran_jumlah" placeholder="Jumlah">
@@ -447,13 +451,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->ba_hasil_klarifikasi_dan_nego_penawaran_tgl}}"
+            value="{{$dataPengadaanDetail->ba_hasil_klarifikasi_dan_nego_penawaran_tgl}}"
             name="ba_hasil_klarifikasi_dan_nego_penawaran_tgl"
             id="ba_hasil_klarifikasi_dan_nego_penawaran_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->ba_hasil_klarifikasi_dan_nego_penawaran_hari}}" name="ba_hasil_klarifikasi_dan_nego_penawaran_hari"
+        <input value="{{$dataPengadaanDetail->ba_hasil_klarifikasi_dan_nego_penawaran_hari}}" name="ba_hasil_klarifikasi_dan_nego_penawaran_hari"
                id="ba_hasil_klarifikasi_dan_nego_penawaran_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -472,12 +476,12 @@
         Laporan Hasil Evaluasi :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->laporan_hasil_evaluasi_nomor}}" id="nppv13"
+        <input type="text" value="{{$dataPengadaanDetail->laporan_hasil_evaluasi_nomor}}" id="nppv13"
                name="nppv13" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->laporan_hasil_evaluasi_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->laporan_hasil_evaluasi_jumlah}}"
                class="form-control m-input laporan_hasil_evaluasi_jumlah"
                name="laporan_hasil_evaluasi_jumlah"
                id="laporan_hasil_evaluasi_jumlah" placeholder="Jumlah">
@@ -485,13 +489,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->laporan_hasil_evaluasi_tgl}}"
+            value="{{$dataPengadaanDetail->laporan_hasil_evaluasi_tgl}}"
             name="laporan_hasil_evaluasi_tgl"
             id="laporan_hasil_evaluasi_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->laporan_hasil_evaluasi_hari}}" name="laporan_hasil_evaluasi_hari"
+        <input value="{{$dataPengadaanDetail->laporan_hasil_evaluasi_hari}}" name="laporan_hasil_evaluasi_hari"
                id="laporan_hasil_evaluasi_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -510,12 +514,12 @@
         Nd Usulan Penetapan Calon Pemenang :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->nd_usulan_penetapan_calon_pemenang_nomor}}" id="nppv14"
+        <input type="text" value="{{$dataPengadaanDetail->nd_usulan_penetapan_calon_pemenang_nomor}}" id="nppv14"
                name="nppv14" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->nd_usulan_penetapan_calon_pemenang_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->nd_usulan_penetapan_calon_pemenang_jumlah}}"
                class="form-control m-input nd_usulan_penetapan_calon_pemenang_jumlah"
                name="nd_usulan_penetapan_calon_pemenang_jumlah"
                id="nd_usulan_penetapan_calon_pemenang_jumlah" placeholder="Jumlah">
@@ -523,13 +527,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->nd_usulan_penetapan_calon_pemenang_tgl}}"
+            value="{{$dataPengadaanDetail->nd_usulan_penetapan_calon_pemenang_tgl}}"
             name="nd_usulan_penetapan_calon_pemenang_tgl"
             id="nd_usulan_penetapan_calon_pemenang_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->nd_usulan_penetapan_calon_pemenang_hari}}" name="nd_usulan_penetapan_calon_pemenang_hari"
+        <input value="{{$dataPengadaanDetail->nd_usulan_penetapan_calon_pemenang_hari}}" name="nd_usulan_penetapan_calon_pemenang_hari"
                id="nd_usulan_penetapan_calon_pemenang_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -548,12 +552,12 @@
         Nd Penetapan Calon Pemenang :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->nd_penetapan_calon_pemenang_nomor}}" id="nppv15"
+        <input type="text" value="{{$dataPengadaanDetail->nd_penetapan_calon_pemenang_nomor}}" id="nppv15"
                name="nppv15" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->nd_penetapan_calon_pemenang_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->nd_penetapan_calon_pemenang_jumlah}}"
                class="form-control m-input nd_penetapan_calon_pemenang_jumlah"
                name="nd_penetapan_calon_pemenang_jumlah"
                id="nd_penetapan_calon_pemenang_jumlah" placeholder="Jumlah">
@@ -561,13 +565,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->nd_penetapan_calon_pemenang_tgl}}"
+            value="{{$dataPengadaanDetail->nd_penetapan_calon_pemenang_tgl}}"
             name="nd_penetapan_calon_pemenang_tgl"
             id="nd_penetapan_calon_pemenang_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->nd_penetapan_calon_pemenang_hari}}" name="nd_penetapan_calon_pemenang_hari"
+        <input value="{{$dataPengadaanDetail->nd_penetapan_calon_pemenang_hari}}" name="nd_penetapan_calon_pemenang_hari"
                id="nd_penetapan_calon_pemenang_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -586,12 +590,12 @@
         Pengumuman Calon Pemenang :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->pengumuman_calon_pemenang_nomor}}" id="nppv16"
+        <input type="text" value="{{$dataPengadaanDetail->pengumuman_calon_pemenang_nomor}}" id="nppv16"
                name="nppv16" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->pengumuman_calon_pemenang_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->pengumuman_calon_pemenang_jumlah}}"
                class="form-control m-input pengumuman_calon_pemenang_jumlah"
                name="pengumuman_calon_pemenang_jumlah"
                id="pengumuman_calon_pemenang_jumlah" placeholder="Jumlah">
@@ -599,13 +603,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->pengumuman_calon_pemenang_tgl}}"
+            value="{{$dataPengadaanDetail->pengumuman_calon_pemenang_tgl}}"
             name="pengumuman_calon_pemenang_tgl"
             id="pengumuman_calon_pemenang_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->pengumuman_calon_pemenang_hari}}" name="pengumuman_calon_pemenang_hari"
+        <input value="{{$dataPengadaanDetail->pengumuman_calon_pemenang_hari}}" name="pengumuman_calon_pemenang_hari"
                id="pengumuman_calon_pemenang_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -624,12 +628,12 @@
         Penunjukan Pemenang :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->penunjukan_pemenang_nomor}}" id="nppv17"
+        <input type="text" value="{{$dataPengadaanDetail->penunjukan_pemenang_nomor}}" id="nppv17"
                name="nppv17" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->penunjukan_pemenang_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->penunjukan_pemenang_jumlah}}"
                class="form-control m-input penunjukan_pemenang_jumlah"
                name="penunjukan_pemenang_jumlah"
                id="penunjukan_pemenang_jumlah" placeholder="Jumlah">
@@ -637,13 +641,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->penunjukan_pemenang_tgl}}"
+            value="{{$dataPengadaanDetail->penunjukan_pemenang_tgl}}"
             name="penunjukan_pemenang_tgl"
             id="penunjukan_pemenang_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->penunjukan_pemenang_hari}}" name="penunjukan_pemenang_hari"
+        <input value="{{$dataPengadaanDetail->penunjukan_pemenang_hari}}" name="penunjukan_pemenang_hari"
                id="penunjukan_pemenang_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -662,12 +666,12 @@
         SKKP Jumlah :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->skkp_nomor}}" id="nppv18"
+        <input type="text" value="{{$dataPengadaanDetail->skkp_nomor}}" id="nppv18"
                name="nppv18" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->skkp_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->skkp_jumlah}}"
                class="form-control m-input skkp_jumlah"
                name="skkp_jumlah"
                id="skkp_jumlah" placeholder="Jumlah">
@@ -675,13 +679,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->skkp_tgl}}"
+            value="{{$dataPengadaanDetail->skkp_tgl}}"
             name="skkp_tgl"
             id="skkp_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->skkp_hari}}" name="skkp_hari"
+        <input value="{{$dataPengadaanDetail->skkp_hari}}" name="skkp_hari"
                id="skkp_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -695,17 +699,18 @@
     </div>
 </div>
 
+
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
         Undangan Cda :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->undangan_cda_nomor}}" id="nppv19"
+        <input type="text" value="{{$dataPengadaanDetail->undangan_cda_nomor}}" id="nppv19"
                name="nppv19" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->undangan_cda_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->undangan_cda_jumlah}}"
                class="form-control m-input undangan_cda_jumlah"
                name="undangan_cda_jumlah"
                id="undangan_cda_jumlah" placeholder="Jumlah">
@@ -713,13 +718,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->undangan_cda_tgl}}"
+            value="{{$dataPengadaanDetail->undangan_cda_tgl}}"
             name="undangan_cda_tgl"
             id="undangan_cda_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->undangan_cda_hari}}" name="undangan_cda_hari"
+        <input value="{{$dataPengadaanDetail->undangan_cda_hari}}" name="undangan_cda_hari"
                id="undangan_cda_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -733,17 +738,18 @@
     </div>
 </div>
 
+
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
-        Undangan Cda :
+        Cda :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->cda_nomor}}" id="nppv20"
+        <input type="text" value="{{$dataPengadaanDetail->cda_nomor}}" id="nppv20"
                name="nppv20" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->cda_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->cda_jumlah}}"
                class="form-control m-input cda_jumlah"
                name="cda_jumlah"
                id="cda_jumlah" placeholder="Jumlah">
@@ -751,13 +757,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->cda_tgl}}"
+            value="{{$dataPengadaanDetail->cda_tgl}}"
             name="cda_tgl"
             id="cda_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->cda_hari}}" name="cda_hari"
+        <input value="{{$dataPengadaanDetail->cda_hari}}" name="cda_hari"
                id="cda_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -776,12 +782,12 @@
         Pj :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->pj_nomor}}" id="nppv21"
+        <input type="text" value="{{$dataPengadaanDetail->pj_nomor}}" id="nppv21"
                name="nppv21" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->pj_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->pj_jumlah}}"
                class="form-control m-input pj_jumlah"
                name="pj_jumlah"
                id="pj_jumlah" placeholder="Jumlah">
@@ -789,13 +795,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->pj_tgl}}"
+            value="{{$dataPengadaanDetail->pj_tgl}}"
             name="pj_tgl"
             id="pj_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->pj_hari}}" name="pj_hari"
+        <input value="{{$dataPengadaanDetail->pj_hari}}" name="pj_hari"
                id="pj_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
@@ -814,12 +820,12 @@
         Bastl :
     </label>
     <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaan->bastl_nomor}}" id="nppv22"
+        <input type="text" value="{{$dataPengadaanDetail->bastl_nomor}}" id="nppv22"
                name="nppv22" class="form-control m-input">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
-        <input type="text" value="{{$dataPengadaan->bastl_jumlah}}"
+        <input type="text" value="{{$dataPengadaanDetail->bastl_jumlah}}"
                class="form-control m-input bastl_jumlah"
                name="bastl_jumlah"
                id="bastl_jumlah" placeholder="Jumlah">
@@ -827,13 +833,13 @@
     </div>
     <div class="col-lg-2">
         <input
-            value="{{$dataPengadaan->bastl_tgl}}"
+            value="{{$dataPengadaanDetail->bastl_tgl}}"
             name="bastl_tgl"
             id="bastl_tgl"
             type="text" class="form-control" readonly placeholder="Tanggal"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaan->bastl_hari}}" name="bastl_hari"
+        <input value="{{$dataPengadaanDetail->bastl_hari}}" name="bastl_hari"
                id="bastl_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">

@@ -27,7 +27,7 @@ class MkPjController extends Controller
         $dataRole = DRole::all();
         $dataUser = User::all();
         if (request()->ajax()) {
-            return DataTables::of(Pengadaan::with('getperusahaan')->where(['id_mp1' => 2])->latest()->get())
+            return DataTables::of(Pengadaan::with('getperusahaan')->where(['id_mp1' => 1])->latest()->get())
                 ->addColumn('upload', function ($data) {
 
                     if (Auth::user()->jabatan == 'Admin') {
@@ -202,13 +202,13 @@ class MkPjController extends Controller
             }
 
 
-            $twilio_whatsapp_number = "6285272993360";
-            $account_sid = "AC95ff84cb05966ff362366691a6152f44";
-            $auth_token = "d467cb9e15a9fe801a7591d5fb2ab377";
-            $recipient = "6285272993360";
-            $client = new Client($account_sid, $auth_token);
-            $message = "Your registration pin code is ";
-            return $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
+//            $twilio_whatsapp_number = "+12162382485";
+//            $account_sid = "AC95ff84cb05966ff362366691a6152f44";
+//            $auth_token = "de2d67790233322a942bd3243f0a5beb";
+//            $recipient = "+6285272993360";
+//            $client = new Client($account_sid, $auth_token);
+//            $message = "Your registration pin code is ";
+//            $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
 
             return $pdf->Output();
 

@@ -1,4 +1,4 @@
-@section('title','SPK | BARANG')
+@section('title','SPBJ')
 @extends('../../../../../../main')
 @section('content')
     <div>
@@ -30,7 +30,7 @@
                         <li class="m-nav__item">
                             <a href='#' class="m-nav__link">
                                 <span class="m-nav__link-text">
-                                    SPK
+                                    PJ
                                 </span>
                             </a>
                         </li>
@@ -47,7 +47,7 @@
                     </ul>
                 </div>
                 <div>
-                    <a href='{!! url('user/jobcard/tambah') !!}'
+                    <a href='{!! url('user/jobcard/spbj/tambah') !!}'
                        class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
                         <span>
                             <i class="la la-cart-plus"></i>
@@ -179,7 +179,7 @@
                 $('.modal-content .modal-body').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/jobcard/" + id + "/info",
+                    url: "/user/jobcard/pj/" + id + "/info",
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
@@ -231,7 +231,7 @@
                 $('.metodePengadaan1').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/jobcard/" + id + "/info",
+                    url: "/user/jobcard/pj/" + id + "/info",
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
@@ -273,7 +273,7 @@
                 $('.metodePengadaan2').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/jobcard/" + id + "/info",
+                    url: "/user/jobcard/pj/" + id + "/info",
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
@@ -308,12 +308,14 @@
                 })
             });
 
+
+
             $(document).on('click', '.metode3', function () {
                 var id = $(this).attr('id');
                 $('.metodePengadaan3').empty()
                 $('#form_result').html('');
                 $.ajax({
-                    url: "/user/jobcard/" + id + "/info",
+                    url: "/user/jobcard/pj/" + id + "/info",
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
@@ -375,7 +377,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "/user/jobcard/index",
+                    url: "/user/jobcard/spbj/index",
                 },
                 columns: [
                     {
