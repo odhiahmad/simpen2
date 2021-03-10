@@ -88,8 +88,8 @@
 
                 </div>
             </div>
-            @endif
         </div>
+    @endif
 </div>
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
@@ -159,7 +159,7 @@
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
-    @if($dataPengadaanDetail->survei_harga_pasar_tgl != null)
+    @if($dataPengadaanDetail->undangan_pengadaan_langsung_tgl != null)
         <div class="col-lg-2">
             <a href="{!!url('user/jobcard/spk/download-uplh/' . $dataPengadaan->id )!!}"
                class="btn btn-brand btn-sm">
@@ -540,25 +540,13 @@
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
-    <div class="col-lg-2">
-        <div class="dropdown">
-            <button class="btn btn-brand dropdown-toggle btn-sm" type="button"
-                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
+    @if($dataPengadaanDetail->spk_tgl != null)
+        <div class="col-lg-2">
+            <a href="{!!url('user/jobcard/spk/download-spk/' . $dataPengadaan->id )!!}"
+               class="btn btn-brand btn-sm">
                 Download
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                <a href="{!!url('user/jobcard/spk/download-hasilPengadaan1/' . $dataPengadaan->id )!!}"
-                   class="dropdown-item">
-                    Hasil Pengadaan Langsung
-                </a>
-                <a href="{!!url('user/jobcard/spk/download-hasilPengadaan2/' . $dataPengadaan->id )!!}"
-                   class="dropdown-item">
-                    Daftar Hadir Hasil Pengadaan Langsung
-                </a>
-            </div>
+            </a>
         </div>
-    </div>
+    @endif
 </div>
 @include('pages.user.job-card.spk.js.jsUpdate')

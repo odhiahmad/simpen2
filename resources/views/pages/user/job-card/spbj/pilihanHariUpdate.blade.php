@@ -3,7 +3,7 @@
 </div>
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
-        Survei Harga Pasar:
+        Survey Harga Pasar:
     </label>
     <div class="col-lg-4">
         <input type="text" value="{{$dataPengadaanDetail->survey_harga_pasar_nomor}}" id="nppv1"
@@ -32,7 +32,7 @@
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
-    @if($dataPengadaanDetail->survei_harga_pasar_tgl != null)
+    @if($dataPengadaanDetail->survey_harga_pasar_tgl != null)
         <div class="col-lg-2">
             <div class="dropdown">
                 <button class="btn btn-brand dropdown-toggle btn-sm" type="button"
@@ -42,19 +42,19 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                    <a href="{!!url('user/jobcard/download-shp1/' . $dataPengadaan->id )!!}"
+                    <a href="{!!url('user/jobcard/spbj/download-shp1/' . $dataPengadaan->id )!!}"
                        class="dropdown-item">
                         Survey Harga Pasar
                     </a>
-                    <a href="{!!url('user/jobcard/download-shp2/' . $dataPengadaan->id )!!}"
+                    <a href="{!!url('user/jobcard/spbj/download-shp2/' . $dataPengadaan->id )!!}"
                        class="dropdown-item">
                         Form Daftar Hadir
                     </a>
 
                 </div>
             </div>
-            @endif
         </div>
+    @endif
 </div>
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
@@ -87,7 +87,7 @@
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-2">
-        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"
+        <a href="{!!url('user/jobcard/spbj/download-hps/' . $dataPengadaan->id )!!}"
            class="btn btn-brand btn-sm">
             Download
         </a>
@@ -124,12 +124,14 @@
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
-    <div class="col-lg-2">
-        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"
-           class="btn btn-brand btn-sm">
-            Download
-        </a>
-    </div>
+    @if($dataPengadaanDetail->undangan_pengadaan_langsung_tgl != null)
+        <div class="col-lg-2">
+            <a href="{!!url('user/jobcard/spbj/download-uplh/' . $dataPengadaan->id )!!}"
+               class="btn btn-brand btn-sm">
+                Download
+            </a>
+        </div>
+    @endif
 </div>
 
 
@@ -164,7 +166,7 @@
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-2">
-        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"
+        <a href="{!!url('user/jobcard/spbj/evaluasiDokumen1/' . $dataPengadaan->id )!!}"
            class="btn btn-brand btn-sm">
             Download
         </a>
@@ -202,7 +204,7 @@
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-2">
-        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"
+        <a href="{!!url('user/jobcard/spbj/evaluasiDokumen2/' . $dataPengadaan->id )!!}"
            class="btn btn-brand btn-sm">
             Download
         </a>
@@ -242,10 +244,10 @@
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-2">
-        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"
-           class="btn btn-brand btn-sm">
-            Download
-        </a>
+{{--        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"--}}
+{{--           class="btn btn-brand btn-sm">--}}
+{{--            Download--}}
+{{--        </a>--}}
     </div>
 </div>
 
@@ -281,12 +283,11 @@
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-2">
-        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"
+        <a href="{!!url('user/jobcard/spbj/downloadSpbj/' . $dataPengadaan->id )!!}"
            class="btn btn-brand btn-sm">
             Download
         </a>
     </div>
 </div>
 
-</div>
 @include('pages.user.job-card.spbj.jsUpdatePilihanHari')

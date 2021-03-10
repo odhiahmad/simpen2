@@ -48,6 +48,8 @@ class PerusahaanController extends Controller
             'kantor_cabang' => 'required',
             'rekening' => 'required',
             'npwp' => 'required',
+            'telpon' => 'required',
+            'faksimili' => 'required',
             'sebutan_jabatan' => 'required',
 
         );
@@ -79,6 +81,8 @@ class PerusahaanController extends Controller
             'kantor_cabang' => $request->kantor_cabang,
             'rekening' => $request->rekening,
             'npwp' => $request->npwp,
+            'telpon' => $request->telpon,
+            'faksimili' => $request->faksimili,
             'sebutan_jabatan' => $request->sebutan_jabatan,
             'bentuk_perusahaan' => $request->bentuk_dpt,
         );
@@ -106,6 +110,16 @@ class PerusahaanController extends Controller
     {
         $rules = array(
             'nama' => 'required',
+            'pimpinan' => 'required',
+            'notaris' => 'required',
+            'alamat' => 'required',
+            'bank' => 'required',
+            'kantor_cabang' => 'required',
+            'rekening' => 'required',
+            'npwp' => 'required',
+            'telpon' => 'required',
+            'faksimili' => 'required',
+            'sebutan_jabatan' => 'required',
         );
 
         $error = Validator::make($request->all(), $rules);
@@ -122,25 +136,49 @@ class PerusahaanController extends Controller
                 $image->move(public_path().'/dpt/', $name);  // your folder path
                 $data[] = $name;
             }
+
+            $form_data1 = array(
+                'foto' => json_encode($data),
+                'nama' => $request->nama,
+                'pimpinan' => $request->pimpinan,
+                'notaris' => $request->notaris,
+                'alamat' => $request->alamat,
+                'bank' => $request->bank,
+                'kantor_cabang' => $request->kantor_cabang,
+                'rekening' => $request->rekening,
+                'npwp' => $request->npwp,
+                'telpon' => $request->telpon,
+                'faksimili' => $request->faksimili,
+                'sebutan_jabatan' => $request->sebutan_jabatan,
+                'bentuk_perusahaan' => $request->bentuk_dpt,
+            );
+            Perusahaan::whereId($request->hidden_id)->update($form_data1);
+
+
+            return response()->json(['success' => 'Data is successfully updated']);
+
+        }else{
+            $form_data2 = array(
+                'nama' => $request->nama,
+                'pimpinan' => $request->pimpinan,
+                'notaris' => $request->notaris,
+                'alamat' => $request->alamat,
+                'bank' => $request->bank,
+                'kantor_cabang' => $request->kantor_cabang,
+                'rekening' => $request->rekening,
+                'npwp' => $request->npwp,
+                'telpon' => $request->telpon,
+                'faksimili' => $request->faksimili,
+                'sebutan_jabatan' => $request->sebutan_jabatan,
+                'bentuk_perusahaan' => $request->bentuk_dpt,
+            );
+            Perusahaan::whereId($request->hidden_id)->update($form_data2);
+
+
+            return response()->json(['success' => 'Data is successfully updated']);
         }
 
-        $form_data = array(
-            'foto' => json_encode($data),
-            'nama' => $request->nama,
-            'pimpinan' => $request->pimpinan,
-            'notaris' => $request->notaris,
-            'alamat' => $request->alamat,
-            'bank' => $request->bank,
-            'kantor_cabang' => $request->kantor_cabang,
-            'rekening' => $request->rekening,
-            'npwp' => $request->npwp,
-            'sebutan_jabatan' => $request->sebutan_jabatan,
-            'bentuk_dpt' => $request->bentuk_dpt,
-        );
-        Perusahaan::whereId($request->hidden_id)->update($form_data);
 
-
-        return response()->json(['success' => 'Data is successfully updated']);
     }
 
     public function destroy($id)

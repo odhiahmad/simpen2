@@ -355,7 +355,7 @@
 
             $('#ok_button').click(function () {
                 $.ajax({
-                    url: "/user/jobcard/destroy/spk/" + user_id,
+                    url: "/user/jobcard/spk/destroy/" + user_id,
                     beforeSend: function () {
                         $('#ok_button').text('Deleting...');
                     },

@@ -308,7 +308,7 @@
             event.preventDefault();
             if ($('#action').val() == 'Add') {
                 $.ajax({
-                    url: '{{route('jobcard.spbj.update')}}',
+                    url: '{{route('jobcard.pj.updateTetas2')}}',
                     method: 'POST',
                     data: new FormData(this),
                     contentType: false,

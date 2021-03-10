@@ -15,6 +15,7 @@
             var tglJumlah6 = $('#aanwijzing_jumlah');
             var tglJumlah7 = $('#addendum_rks_jumlah');
             var tglJumlah8 = $('#pemasukan_dok_penawaran_jumlah');
+            var tglJumlah23 = $('#pemasukan_dok_penawaran_jumlah_dari');
             var tglJumlah9 = $('#pembukaan_penawaran_jumlah');
             var tglJumlah10 = $('#evaluasi_dok_penawaran_jumlah');
             var tglJumlah11 = $('#undangan_klarifikasi_dan_nego_penawaran_jumlah');
@@ -38,6 +39,7 @@
             var jp6 = parseInt(tglJumlah6.val());
             var jp7 = parseInt(tglJumlah7.val());
             var jp8 = parseInt(tglJumlah8.val());
+            var jp23 = parseInt(tglJumlah23.val());
             var jp9 = parseInt(tglJumlah9.val());
             var jp10 = parseInt(tglJumlah10.val());
             var jp11 = parseInt(tglJumlah11.val());
@@ -66,21 +68,22 @@
             var tambahTgl5 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5));
             var tambahTgl6 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6));
             var tambahTgl7 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7));
-            var tambahTgl8 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8));
-            var tambahTgl9 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9));
-            var tambahTgl10 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10));
-            var tambahTgl11 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11));
-            var tambahTgl12 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12));
-            var tambahTgl13 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13));
-            var tambahTgl14 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14));
-            var tambahTgl15 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15));
-            var tambahTgl16 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16));
-            var tambahTgl17 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17));
-            var tambahTgl18 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18));
-            var tambahTgl19 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19));
-            var tambahTgl20 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20));
-            var tambahTgl21 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21));
-            var tambahTgl22 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22));
+            var tambahTgl23 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp23));
+            var tambahTgl8 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8+ jp23));
+            var tambahTgl9 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9+ jp23));
+            var tambahTgl10 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10+ jp23));
+            var tambahTgl11 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11+ jp23));
+            var tambahTgl12 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12+ jp23));
+            var tambahTgl13 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13+ jp23));
+            var tambahTgl14 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14+ jp23));
+            var tambahTgl15 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15+ jp23));
+            var tambahTgl16 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16+ jp23));
+            var tambahTgl17 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17+ jp23));
+            var tambahTgl18 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18+ jp23));
+            var tambahTgl19 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19+ jp23));
+            var tambahTgl20 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20+ jp23));
+            var tambahTgl21 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21+ jp23));
+            var tambahTgl22 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22+ jp23));
 
             $('#survey_harga_pasar_tgl').datepicker('setDate', tambahTgl1);
             $('#survey_harga_pasar_hari').val(hari[tambahTgl1.getDay()])
@@ -92,6 +95,7 @@
             $('#aanwijzing_tgl').datepicker('setDate', tambahTgl6);
             $('#addendum_rks_tgl').datepicker('setDate', tambahTgl7);
             $('#pemasukan_dok_penawaran_tgl').datepicker('setDate', tambahTgl8);
+            $('#pemasukan_dok_penawaran_tgl_dari').datepicker('setDate', tambahTgl23);
             $('#pembukaan_penawaran_tgl').datepicker('setDate', tambahTgl9);
             $('#evaluasi_dok_penawaran_tgl').datepicker('setDate', tambahTgl10);
             $('#undangan_klarifikasi_dan_nego_penawaran_tgl').datepicker('setDate', tambahTgl11);
@@ -114,6 +118,7 @@
             $('#aanwijzing_hari').val(hari[tambahTgl6.getDay()]);
             $('#addendum_rks_hari').val(hari[tambahTgl7.getDay()]);
             $('#pemasukan_dok_penawaran_hari').val(hari[tambahTgl8.getDay()]);
+            $('#pemasukan_dok_penawaran_hari_dari').val(hari[tambahTgl23.getDay()]);
             $('#pembukaan_penawaran_hari').val(hari[tambahTgl9.getDay()]);
             $('#evaluasi_dok_penawaran_hari').val(hari[tambahTgl10.getDay()]);
             $('#undangan_klarifikasi_dan_nego_penawaran_hari').val(hari[tambahTgl11.getDay()]);

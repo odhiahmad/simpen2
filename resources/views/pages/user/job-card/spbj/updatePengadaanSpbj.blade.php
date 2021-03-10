@@ -400,32 +400,50 @@
                         </div>
 
                         <div class="form-group m-form__group row">
+{{--                            <div class="col-lg-6">--}}
+{{--                                <label>--}}
+{{--                                    VFMC 1--}}
+{{--                                </label>--}}
+{{--                                <select class="form-control vfmc" id="vfmc" name="vfmc">--}}
+{{--                                    @foreach ($dataVfmc as $key)--}}
+{{--                                        <option--}}
+{{--                                            value="{{$key->nama}}" {{($dataPengadaan->vfmc == $key->nama) ?"selected":''}}>--}}
+{{--                                            {{$key->nama}}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                                <span class="m-form__help">`</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-lg-6">--}}
+{{--                                <label>--}}
+{{--                                    VFMC 2--}}
+{{--                                </label>--}}
+{{--                                <select class="form-control vfmc2" id="vfmc2" name="vfmc2">--}}
+{{--                                    @foreach ($dataVfmc as $key)--}}
+{{--                                        <option--}}
+{{--                                            value="{{$key->nama}}" {{($dataPengadaan->vfmc2 == $key->nama) ?"selected":''}}>--}}
+{{--                                            {{$key->nama}}--}}
+{{--                                        </option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                                <span class="m-form__help"></span>--}}
+{{--                            </div>--}}
                             <div class="col-lg-6">
                                 <label>
-                                    VFMC 1
+                                    Jabatan Direksi:
                                 </label>
-                                <select class="form-control vfmc" id="vfmc" name="vfmc">
-                                    @foreach ($dataVfmc as $key)
-                                        <option
-                                            value="{{$key->nama}}" {{($dataPengadaan->vfmc == $key->nama) ?"selected":''}}>
-                                            {{$key->nama}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <span class="m-form__help">`</span>
+                                <input type="text" class="form-control m-input" value="{{$dataPengadaan->jabatan_direksi}}"
+                                       id="jabatan_direksi" name="jabatan_direksi"
+                                       placeholder="Masukan Jabatan Direksi">
+                                <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    VFMC 2
+                                    Alamat Penyerahan:
                                 </label>
-                                <select class="form-control vfmc2" id="vfmc2" name="vfmc2">
-                                    @foreach ($dataVfmc as $key)
-                                        <option
-                                            value="{{$key->nama}}" {{($dataPengadaan->vfmc2 == $key->nama) ?"selected":''}}>
-                                            {{$key->nama}}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control m-input" value="{{$dataPengadaan->alamat_penyerahan}}"
+                                       id="alamat_penyerahan" name="alamat_penyerahan"
+                                       placeholder="Masukan Alamat Penyerahan">
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">

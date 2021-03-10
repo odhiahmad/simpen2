@@ -117,6 +117,72 @@ class JobCardSpbjController extends Controller
         return view('pages/user/job-card/spbj/indexPengadaanSpbj');
     }
 
+    public function indexMonitoring()
+    {
+        if (request()->ajax()) {
+            return DataTables::of(Pengadaan::with(['getMp1', 'getMp2'])->latest()->get())
+                ->addColumn('action', function ($data) {
+                    $button = '';
+
+                    if ($data->id_mp5 != null || $data->id_mp5 != 0) {
+                        $button .= '<a href="update-data/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp5 . '" type="button"  class="update1 btn btn-warning btn-sm">Update</a>';
+                    } else if ($data->id_mp4 != null || $data->id_mp4 != 0) {
+                        $button .= '<a href="update-data/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp4 . '" type="button"  class="update2 btn btn-warning btn-sm">Update</a>';
+                    } else if ($data->id_mp3 != null || $data->id_mp3 != 0) {
+                        $button .= '<a href="update-data/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp3 . '" type="button"  class="update3 btn btn-warning btn-sm">Update</a>';
+                    } else {
+                        $button .= '<a href="update-data/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp2 . '" type="button"  class="update4 btn btn-warning btn-sm">Update</a>';
+                    }
+
+
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="hapus" id="' . $data->id . '" class="hapus btn btn-danger btn-sm">Hapus</button>';
+                    return $button;
+                })
+                ->addColumn('info', function ($data) {
+                    $button = '<button type="button" name="info" id="' . $data->id . '" class="info btn btn-warning btn-sm">No Nota Dinas : 0' . $data->no_nota_dinas . '</button>';
+                    return $button;
+                })
+                ->addColumn('warna', function ($data) {
+                    if ($data->status == 'PROSES') {
+                        $button = '<button type="button"  class="btn btn-outline-warning btn-sm">' . $data->status . '</button>';
+                        return $button;
+                    } else if ($data->status == 'DRAFT') {
+                        $button = '<button type="button"  class="btn btn-metal btn-sm">' . $data->status . '</button>';
+                        return $button;
+                    } else if ($data->status == 'TTD KONTRAK') {
+                        $button = '<button type="button"  class="btn btn-primary btn-sm">' . $data->status . '</button>';
+                        return $button;
+                    } else if ($data->status == 'TERKONTRAK') {
+                        $button = '<button type="button"  class="btn btn-warning btn-sm">' . $data->status . '</button>';
+                        return $button;
+                    } else if ($data->status == 'BACKLOG') {
+                        $button = '<button type="button"  class="btn btn-accent btn-sm">' . $data->status . '</button>';
+                        return $button;
+                    } else if ($data->status == 'DIBATALKAN') {
+                        $button = '<button type="button"  class="btn btn-danger btn-sm">' . $data->status . '</button>';
+                        return $button;
+                    }
+                })
+                ->addColumn('metode', function ($data) {
+                    if ($data->id_mp5 != null || $data->id_mp5 != 0) {
+                        $button = '<button type="button" name="metode3" id="' . $data->id . '" class="metode3 btn btn-warning btn-sm">' . $data->metode_pengadaan . '</button>';
+                        return $button;
+                    } else if ($data->id_mp4 != null || $data->id_mp4 != 0) {
+                        $button = '<button type="button" name="metode2" id="' . $data->id . '" class="metode2 btn btn-warning btn-sm">' . $data->metode_pengadaan . '</button>';
+                        return $button;
+                    } else {
+                        $button = '<button type="button" name="metode1" id="' . $data->id . '" class="metode1 btn btn-warning btn-sm">' . $data->metode_pengadaan . '</button>';
+                        return $button;
+                    }
+
+                })
+                ->rawColumns(['action', 'info', 'metode', 'warna'])
+                ->make(true);
+        }
+        return view('pages/user/job-card/indexMonitoringJobCard');
+    }
+
     public function info($id)
     {
         if (request()->ajax()) {
@@ -589,7 +655,9 @@ class JobCardSpbjController extends Controller
     public function destroy($id)
     {
         $data = Pengadaan::findOrFail($id);
+        $data1 = PengadaanDetailSpbj::where('id_pengadaan',$id)->first();
         $data->delete();
+        $data1->delete();
     }
 }
 

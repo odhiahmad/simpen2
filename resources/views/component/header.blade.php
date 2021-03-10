@@ -216,6 +216,17 @@
                                             <li class="m-menu__item"
                                                 data-menu-submenu-toggle="hover" data-redirect="true"
                                                 aria-haspopup="true">
+                                                <a href='{!! url('user/jobcard/mj/index'); !!}'
+                                                   class="m-menu__link ">
+                                                    <span class="m-menu__item-here"></span>
+                                                    <span class="m-menu__link-text">
+													Monitoring Job Card
+												</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-menu__item"
+                                                data-menu-submenu-toggle="hover" data-redirect="true"
+                                                aria-haspopup="true">
                                                 <a href='{!! url('user/jobcard/pj/index'); !!}'
                                                    class="m-menu__link ">
                                                     <span class="m-menu__item-here"></span>

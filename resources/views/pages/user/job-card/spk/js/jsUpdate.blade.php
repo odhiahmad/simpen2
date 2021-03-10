@@ -1171,7 +1171,7 @@
 
         });
 
-        $('#sample_form').on('submit', function (event) {
+        $('#sample_form').submit(function (event) {
             event.preventDefault();
             if ($('#action').val() == 'Add') {
                 $.ajax({
@@ -1186,19 +1186,19 @@
                         $('#action_button').val('Loading ...')
                     },
                     success: function (data) {
-                        if (data.errors) {
-                            $('#action_button').val('Submit')
-                            for (var count = 0; count < data.errors.length; count++) {
-                                toastr.error(data.errors[count])
-                            }
-
-                        }
-                        if (data.success) {
+                       if (data.success) {
                             toastr.success(data.success)
                             $('#action_button').val('Submit')
                         }
 
 
+                    },
+                    error:function (data) {
+                        for (var count = 0; count < data.errors.length; count++) {
+                            toastr.error(data.errors[count])
+                        }
+                        toastr.error(data.errors)
+                        $('#action_button').val('Submit')
                     }
                 });
 

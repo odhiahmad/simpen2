@@ -186,6 +186,24 @@
                                 </div>
                                 <div class="form-group m-form__group row">
                                     <label class="col-form-label col-lg-3 col-sm-12">
+                                        Nomor Telepon
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="telpon" name="telpon"
+                                               placeholder="Masukan Telepon">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
+                                        Faksimili
+                                    </label>
+                                    <div class="col-lg-8 col-md-9 col-sm-12">
+                                        <input type="text" class="form-control m-input" id="faksimili" name="faksimili"
+                                               placeholder="Masukan Faksimili">
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-form-label col-lg-3 col-sm-12">
                                         Sebutan Jabatan
                                     </label>
                                     <div class="col-lg-8 col-md-9 col-sm-12">
@@ -203,12 +221,11 @@
                                     </div>
                                 </div>
                                 <div class="input-group hdtuto control-group lst increment" >
-                                    <table class="table table-bordered" id="dynamic_field_sub">
+                                    <table class="table table-bordered" id="dynamic_field">
                                         <tr>
                                             <td>
                                                 <button type="button" name="add_foto" id="add_foto"
-                                                        class="btn btn-success">Add
-                                                    Sub Pekerjaan
+                                                        class="btn btn-success">Add Foto
                                                 </button>
                                             </td>
                                         </tr>
@@ -217,14 +234,6 @@
 {{--                                    <div class="input-group-btn">--}}
 {{--                                        <button class="btn btn-success tambah" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>--}}
 {{--                                    </div>--}}
-                                </div>
-                                <div class="clone hide">
-                                    <div class="hdtuto control-group lst input-group" style="margin-top:10px">
-                                        <input type="file" name="filenames[]" class="myfrm form-control">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-danger hapus" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
-                                        </div>
-                                    </div>
                                 </div>
                                 <br/>
                                 <div class="form-group" align="center">
@@ -249,6 +258,25 @@
             });
             $("body").on("click",".hapus",function(){
                 $(this).parents(".control-group lst input-group").remove();
+            });
+
+            var j = 1;
+            $('#add_foto').click(function () {
+                j++;
+                $('#dynamic_field').append(
+                    '<tr id="row' + j + '">' +
+                    '<td>' +
+                    '<input type="file" name="filenames[]" class="myfrm form-control">' +
+                    '</td>' +
+                    '<td>' +
+                    '<button type="button" name="remove_pekerjaan" id="' + j + '" class="btn btn-danger btn_remove">X</button>' +
+                    '</td>' +
+                    '</tr>');
+            });
+
+            $(document).on('click', '.btn_remove', function () {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
             });
 
             $('#user_table').DataTable({
@@ -336,6 +364,14 @@
                         html += '<tr>';
                         html += '<td> NPWP</td>';
                         html += '<td>' + getData.npwp + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Telepon</td>';
+                        html += '<td>' + getData.telpon + '</td>';
+                        html += '</tr>';
+                        html += '<tr>';
+                        html += '<td> Faksimili</td>';
+                        html += '<td>' + getData.faksimili + '</td>';
                         html += '</tr>';
                         html += '<tr>';
                         html += '<td> Sebutan Jabatan</td>';
@@ -437,10 +473,12 @@
                         $('#kantor_cabang').val(html.data.kantor_cabang);
                         $('#rekening').val(html.data.rekening);
                         $('#npwp').val(html.data.npwp);
+                        $('#telpon').val(html.data.telpon);
+                        $('#faksimili').val(html.data.faksimili);
                         $('#sebutan_jabatan').val(html.data.sebutan_jabatan);
                         $('#bentuk_dpt').val(html.data.bentuk_perusahaan);
 
-                        $('#hidden_id').val(html.data.id);
+                        $('#hidden_id').val(id);
                         $('.modal-title').text("Edit New Record");
                         $('#action_button').val("Edit");
                         $('#action').val("Edit");

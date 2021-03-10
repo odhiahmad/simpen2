@@ -43,13 +43,12 @@
                             <!--begin::New Feedbacks-->
                             <a href='{!! url('user/data-kontrak/index'); !!}' class="m-widget24">
                                 <div class="m-widget24__item">
-                                    <h4 class="m-widget24__title">Kontrak Baru</h4>
+                                    <h4 class="m-widget24__title">RAB</h4>
                                     <br/>
                                     <span class="m-widget24__desc">
-                          di Inisiasi Pengadaan
                         </span>
                                     <span class="m-widget24__stats m--font-info">
-                          26
+                          Rp.@convert($totalRab)
                         </span>
                                     <div class="m--space-10"></div>
                                 </div>
@@ -60,13 +59,12 @@
                             <!--begin::New Orders-->
                             <a href='{!! url('user/inisiasi-pengadaan/index'); !!}' class="m-widget24">
                                 <div class="m-widget24__item">
-                                    <h4 class="m-widget24__title">Kontrak Dalam Proses</h4>
+                                    <h4 class="m-widget24__title">Proses</h4>
                                     <br/>
                                     <span class="m-widget24__desc">
-                          di Inisiasi Pengadaan
                         </span>
                                     <span class="m-widget24__stats m--font-danger">
-                          67
+                          {{$totalProses}}
                         </span>
                                     <div class="m--space-10"></div>
 
@@ -78,13 +76,13 @@
                             <!--begin::New Users-->
                             <a href='{!! url('user/inisiasi-pengadaan-sipil/data-master'); !!}' class="m-widget24">
                                 <div class="m-widget24__item">
-                                    <h4 class="m-widget24__title">Kontrak Selesai</h4>
+                                    <h4 class="m-widget24__title">Terkontrak</h4>
                                     <br/>
                                     <span class="m-widget24__desc">
-                          di Inisiasi Pengadaan
+
                         </span>
                                     <span class="m-widget24__stats m--font-success">
-                          76
+                           Rp.@convert($totalTerkontrak)
                         </span>
                                     <div class="m--space-10"></div>
 
@@ -92,12 +90,57 @@
                                     <span class="m-widget24__number">  </span>
                                 </div>
                             </a>
-                            </div>
-                            <!--end::New Users-->
                         </div>
+                        <!--end::New Users-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <!--begin::Portlet-->
+
+
+                            <div class="m-portlet__body">
+                                <div id="chart" style="height:500px;"></div>
+                            </div>
+
+                        <!--end::Portlet-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    <script>
+
+
+        jQuery(document).ready(function () {
+
+
+            var chart =
+                Morris.Line({
+                    element: 'chart',
+
+                    data: [0,0],
+                    xkey: 'month',
+                    ykeys: ['kontrak','rab'],
+                    labels: ['RAB','Kontrak'],
+
+                    hideHover: 'auto',
+                    pointStrokeColors: ['white'],
+                    lineWidth: '2px',
+                    parseTime: false,
+                    lineColors: ['Skyblue', 'Red'],
+                });
+
+            $.ajax({
+                url: "beranda", //dummy server
+                method: "GET", //dummy server requires GET not POST
+                datatype: "json",
+                success: function(data) {
+                    chart.setData(data)
+                }
+
+            });
+        });
+    </script>
 @endsection

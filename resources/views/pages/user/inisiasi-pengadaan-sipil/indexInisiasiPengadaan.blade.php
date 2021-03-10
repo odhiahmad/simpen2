@@ -458,7 +458,7 @@
                     '<select class="form-control pekerjaan_list" id="' + j + '" name="pekerjaansub[]"><option>Pilih pekerjaan </option>@foreach ($dataPekerjaan as $key)<option value="{{ $key->id }}">{{ $key->nama}}</option>@endforeach</select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="number" name="harga_satuan[]" placeholder="Masukan Harga Satuan" class="form-control harga_satuan_list" />' +
+                    '<input type="number" name="harga_satuan[]" placeholder="Masukan Junmlah Barang" class="form-control harga_satuan_list" />' +
                     '</td>' +
                     '<td>' +
                     '<button type="button" name="remove_pekerjaan" id="' + j + '" class="btn btn-danger btn_remove_sub">X</button>' +

@@ -5,7 +5,7 @@
 
     $(document).ready(function () {
 
-        $("#refreshTanggal").click(function(){
+        $("#refreshTanggal").click(function () {
             var hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu",];
 
             var tglJumlah1 = $('#survey_harga_pasar_jumlah')
@@ -32,6 +32,7 @@
             var tglJumlah22 = $('#cda_jumlah');
             var tglJumlah23 = $('#pj_jumlah');
             var tglJumlah24 = $('#bastl_jumlah');
+            var tglJumlah25 = $('#pemasukan_dok_penawaran_jumlah_dari');
 
             var jp1 = parseInt(tglJumlah1.val());
             var jp2 = parseInt(tglJumlah2.val());
@@ -57,6 +58,7 @@
             var jp22 = parseInt(tglJumlah22.val());
             var jp23 = parseInt(tglJumlah23.val());
             var jp24 = parseInt(tglJumlah24.val());
+            var jp25 = parseInt(tglJumlah25.val());
 
 
             var tanggalDiterimaP = $('#tanggal_diterima_panitia')
@@ -70,23 +72,24 @@
             var tambahTgl5 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5));
             var tambahTgl6 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6));
             var tambahTgl7 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7));
-            var tambahTgl8 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8));
-            var tambahTgl9 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9));
-            var tambahTgl10 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10));
-            var tambahTgl11 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11));
-            var tambahTgl12 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12));
-            var tambahTgl13 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13));
-            var tambahTgl14 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14));
-            var tambahTgl15 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15));
-            var tambahTgl16 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16));
-            var tambahTgl17 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17));
-            var tambahTgl18 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18));
-            var tambahTgl19 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19));
-            var tambahTgl20 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20));
-            var tambahTgl21 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21));
-            var tambahTgl22 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22));
-            var tambahTgl23 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22 + jp23));
-            var tambahTgl24 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22 + jp23 + jp24));
+            var tambahTgl25 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp25));
+            var tambahTgl8 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp25));
+            var tambahTgl9 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp25));
+            var tambahTgl10 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp25));
+            var tambahTgl11 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp25));
+            var tambahTgl12 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp25));
+            var tambahTgl13 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp25));
+            var tambahTgl14 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp25));
+            var tambahTgl15 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp25));
+            var tambahTgl16 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp25));
+            var tambahTgl17 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp25));
+            var tambahTgl18 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp25));
+            var tambahTgl19 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp25));
+            var tambahTgl20 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp25));
+            var tambahTgl21 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp25));
+            var tambahTgl22 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22 + jp25));
+            var tambahTgl23 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22 + jp23 + jp25));
+            var tambahTgl24 = new Date(gTd.getFullYear(), gTd.getMonth(), gTd.getDate() + (jp1 + jp1 + jp2 + jp3 + jp4 + jp5 + jp6 + jp7 + jp8 + jp9 + jp10 + jp11 + jp12 + jp13 + jp14 + jp15 + jp16 + jp17 + jp18 + jp19 + jp20 + jp21 + jp22 + jp23 + jp24 + jp25));
 
             $('#survey_harga_pasar_tgl').datepicker('setDate', tambahTgl1);
             $('#survey_harga_pasar_hari').val(hari[tambahTgl1.getDay()])
@@ -114,6 +117,7 @@
             $('#cda_tgl').datepicker('setDate', tambahTgl22);
             $('#pj_tgl').datepicker('setDate', tambahTgl23);
             $('#bastl_tgl').datepicker('setDate', tambahTgl24);
+            $('#pemasukan_dok_penawaran_tgl_dari').datepicker('setDate', tambahTgl25);
 
             $('#hps_hari').val(hari[tambahTgl2.getDay()]);
             $('#pengumuman_hari').val(hari[tambahTgl3.getDay()]);
@@ -138,6 +142,8 @@
             $('#cda_hari').val(hari[tambahTgl22.getDay()]);
             $('#pj_hari').val(hari[tambahTgl23.getDay()]);
             $('#bastl_hari').val(hari[tambahTgl24.getDay()]);
+
+            $('#pemasukan_dok_penawaran_hari_dari').val(hari[tambahTgl25.getDay()]);
         });
 
 

@@ -30,7 +30,7 @@
                         <li class="m-nav__item">
                             <a href='#' class="m-nav__link">
                                 <span class="m-nav__link-text">
-                                    PJ
+                                    SPBJ
                                 </span>
                             </a>
                         </li>
@@ -357,7 +357,7 @@
 
             $('#ok_button').click(function () {
                 $.ajax({
-                    url: "/user/jobcard/destroy/" + user_id,
+                    url: "/user/jobcard/spbj/destroy/" + user_id,
                     beforeSend: function () {
                         $('#ok_button').text('Deleting...');
                     },

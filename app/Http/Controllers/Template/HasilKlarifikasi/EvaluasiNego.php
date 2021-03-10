@@ -4,7 +4,9 @@
 namespace App\Http\Controllers\Template\HasilKlarifikasi;
 
 
+use App\Http\Controllers\Template\TanggalIndo;
 use App\Pengadaan;
+use App\PengadaanDetailSpk;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -30,7 +32,19 @@ class EvaluasiNego
                 ),
             ),
         );
+
         $data = Pengadaan::where('id',$id)->first();
+        $dataDetail = PengadaanDetailSpk::where('id_pengadaan',$id)->first();
+
+        $tanggalIndo = new TanggalIndo();
+
+
+        $tanggal1=$tanggalIndo->tgl_aja($dataDetail->rks_tgl);
+        $bulan1=$tanggalIndo->bln_aja($dataDetail->rks_tgl);
+        $tahun1=$tanggalIndo->thn_aja($dataDetail->rks_tgl);
+        $gabungan1 = $tanggal1.' '.$bulan1.' '.$tahun1;
+
+
         $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(5);
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(2);
@@ -54,9 +68,9 @@ class EvaluasiNego
         $sheet->mergeCells('A7:H7')
             ->setCellValue('A7', $data->judul)->getStyle('A7')->getAlignment()->applyFromArray($arrayStyle);
         $sheet->mergeCells('A8:H8')
-            ->setCellValue('A8', 'RKS Nomor:'.$data->rks)->getStyle('A8')->getAlignment()->applyFromArray($arrayStyle);
+            ->setCellValue('A8', 'RKS Nomor : '.$dataDetail->rks_nomor)->getStyle('A8')->getAlignment()->applyFromArray($arrayStyle);
         $sheet->mergeCells('A9:H9')
-            ->setCellValue('A9', 'Tanggal :'.$data->tanggal)->getStyle('A9')->getAlignment()->applyFromArray($arrayStyle);
+            ->setCellValue('A9', 'Tanggal : '.$gabungan1)->getStyle('A9')->getAlignment()->applyFromArray($arrayStyle);
 
 
         $sheet->mergeCells('B12:D12');

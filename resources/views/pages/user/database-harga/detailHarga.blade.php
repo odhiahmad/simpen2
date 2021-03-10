@@ -289,6 +289,4 @@
                 }
             })
         });
-    </script>
-
-@endsection
+    </script>dsection

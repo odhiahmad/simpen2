@@ -20,36 +20,26 @@ class UpdateControllerPj extends Controller
         $dokumenKontrak = $request->file('kontrak_file');
         $dokumenProses = $request->file('proses_file');
 
-        $dokumenKontrakNama = $request->kontrak;
-        $dokumenProsesNama = $request->proses;
+
 
         $new_name = $request->kontrak;
         $new_name1 = $request->proses;
 
         if ($dokumenKontrak != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->kontrak != null) {
-                unlink(public_path('data-kontrak/kontrak/') . $dokumenKontrakNama);
-            }
+
 
             $image = $request->file('kontrak_file');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('data-kontrak/kontrak'), $new_name);
+            $image->move(public_path('data-kontrak/kontrak/'.$request->id.'/'), $new_name);
 
         }
 
         if ($dokumenProses != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->proses != null) {
-                unlink(public_path('data-kontrak/proses/') . $dokumenProsesNama);
-            }
 
             $image1 = $request->file('proses_file');
-
             $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
-            $image1->move(public_path('data-kontrak/proses'), $new_name1);
+            $image1->move(public_path('data-kontrak/proses/'.$request->id.'/'), $new_name1);
         }
-
 
         $rules = array(
             'tanggal_mulai' => 'required',
@@ -111,6 +101,11 @@ class UpdateControllerPj extends Controller
             'addendum_rks_hari' => $request->addendum_rks_hari,
 
             'pemasukan_dok_penawaran_nomor' => $request->nppv8,
+
+            'pemasukan_dok_penawaran_jumlah_dari' => $request->pemasukan_dok_penawaran_jumlah_dari,
+            'pemasukan_dok_penawaran_tgl_dari' =>$request->pemasukan_dok_penawaran_tgl_dari,
+            'pemasukan_dok_penawaran_hari_dari' => $request->pemasukan_dok_penawaran_hari_dari,
+
             'pemasukan_dok_penawaran_jumlah' => $request->pemasukan_dok_penawaran_jumlah,
             'pemasukan_dok_penawaran_tgl' =>$request->pemasukan_dok_penawaran_tgl,
             'pemasukan_dok_penawaran_hari' => $request->pemasukan_dok_penawaran_hari,
@@ -233,8 +228,10 @@ class UpdateControllerPj extends Controller
             'sumber_dana' => $request->sumber_dana,
             'masa_garansi' => $request->masa_garansi,
             'syarat_bidang' => $request->syarat_bidang,
-            'vfmc' => $request->vfmc,
-            'vfmc2' => $request->vfmc2,
+//            'vfmc' => $request->vfmc,
+//            'vfmc2' => $request->vfmc2,
+            'jabatan_direksi' => $request->jabatan_direksi,
+            'alamat_penyerahan' => $request->alamat_penyerahan,
             'pengguna' => $request->pengguna,
             'nip' => $request->nip,
             'pejabat_pelaksana' => $request->pejabat_pelaksana,
@@ -265,8 +262,11 @@ class UpdateControllerPj extends Controller
         );
 
 
-        if (Pengadaan::whereId($request->id)->update($form_data) && PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)) {
-            return response()->json(['success' => 'Data Added successfully.']);
+        if (Pengadaan::whereId($request->id)->update($form_data)) {
+            if(PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)){
+                return response()->json(['success' => 'Data Added successfully.']);
+            }
+
         } else {
             return response()->json(['errors' => 'Gagal']);
         }
@@ -280,34 +280,25 @@ class UpdateControllerPj extends Controller
         $dokumenKontrak = $request->file('kontrak_file');
         $dokumenProses = $request->file('proses_file');
 
-        $dokumenKontrakNama = $request->kontrak;
-        $dokumenProsesNama = $request->proses;
+
 
         $new_name = $request->kontrak;
         $new_name1 = $request->proses;
 
         if ($dokumenKontrak != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->kontrak != null) {
-                unlink(public_path('data-kontrak/kontrak/') . $dokumenKontrakNama);
-            }
+
 
             $image = $request->file('kontrak_file');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('data-kontrak/kontrak'), $new_name);
+            $image->move(public_path('data-kontrak/kontrak/'.$request->id.'/'), $new_name);
 
         }
 
         if ($dokumenProses != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->proses != null) {
-                unlink(public_path('data-kontrak/proses/') . $dokumenProsesNama);
-            }
 
             $image1 = $request->file('proses_file');
-
             $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
-            $image1->move(public_path('data-kontrak/proses'), $new_name1);
+            $image1->move(public_path('data-kontrak/proses/'.$request->id.'/'), $new_name1);
         }
 
 
@@ -371,6 +362,11 @@ class UpdateControllerPj extends Controller
             'addendum_rks_hari' => $request->addendum_rks_hari,
 
             'pemasukan_dok_penawaran_nomor' => $request->nppv8,
+
+            'pemasukan_dok_penawaran_jumlah_dari' => $request->pemasukan_dok_penawaran_jumlah_dari,
+            'pemasukan_dok_penawaran_tgl_dari' =>$request->pemasukan_dok_penawaran_tgl_dari,
+            'pemasukan_dok_penawaran_hari_dari' => $request->pemasukan_dok_penawaran_hari_dari,
+
             'pemasukan_dok_penawaran_jumlah' => $request->pemasukan_dok_penawaran_jumlah,
             'pemasukan_dok_penawaran_tgl' =>$request->pemasukan_dok_penawaran_tgl,
             'pemasukan_dok_penawaran_hari' => $request->pemasukan_dok_penawaran_hari,
@@ -508,8 +504,10 @@ class UpdateControllerPj extends Controller
             'sumber_dana' => $request->sumber_dana,
             'masa_garansi' => $request->masa_garansi,
             'syarat_bidang' => $request->syarat_bidang,
-            'vfmc' => $request->vfmc,
-            'vfmc2' => $request->vfmc2,
+//            'vfmc' => $request->vfmc,
+//            'vfmc2' => $request->vfmc2,
+            'jabatan_direksi' => $request->jabatan_direksi,
+            'alamat_penyerahan' => $request->alamat_penyerahan,
             'pengguna' => $request->pengguna,
             'nip' => $request->nip,
             'pejabat_pelaksana' => $request->pejabat_pelaksana,
@@ -539,9 +537,10 @@ class UpdateControllerPj extends Controller
             'sistem_denda' => $request->sistem_denda,
         );
 
-
-        if (Pengadaan::whereId($request->id)->update($form_data) && PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)) {
-            return response()->json(['success' => 'Data Added successfully.']);
+        if (Pengadaan::whereId($request->id)->update($form_data)) {
+            if(PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)){
+                return response()->json(['success' => 'Data Added successfully.']);
+            }
         } else {
             return response()->json(['errors' => 'Gagal']);
         }
@@ -555,36 +554,26 @@ class UpdateControllerPj extends Controller
         $dokumenKontrak = $request->file('kontrak_file');
         $dokumenProses = $request->file('proses_file');
 
-        $dokumenKontrakNama = $request->kontrak;
-        $dokumenProsesNama = $request->proses;
+
 
         $new_name = $request->kontrak;
         $new_name1 = $request->proses;
 
         if ($dokumenKontrak != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->kontrak != null) {
-                unlink(public_path('data-kontrak/kontrak/') . $dokumenKontrakNama);
-            }
+
 
             $image = $request->file('kontrak_file');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('data-kontrak/kontrak'), $new_name);
+            $image->move(public_path('data-kontrak/kontrak/'.$request->id.'/'), $new_name);
 
         }
 
         if ($dokumenProses != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->proses != null) {
-                unlink(public_path('data-kontrak/proses/') . $dokumenProsesNama);
-            }
 
             $image1 = $request->file('proses_file');
-
             $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
-            $image1->move(public_path('data-kontrak/proses'), $new_name1);
+            $image1->move(public_path('data-kontrak/proses/'.$request->id.'/'), $new_name1);
         }
-
 
         $rules = array(
             'tanggal_mulai' => 'required',
@@ -646,6 +635,11 @@ class UpdateControllerPj extends Controller
             'addendum_rks_hari' => $request->addendum_rks_hari,
 
             'pemasukan_dok_penawaran_nomor' => $request->nppv8,
+
+            'pemasukan_dok_penawaran_jumlah_dari' => $request->pemasukan_dok_penawaran_jumlah_dari,
+            'pemasukan_dok_penawaran_tgl_dari' =>$request->pemasukan_dok_penawaran_tgl_dari,
+            'pemasukan_dok_penawaran_hari_dari' => $request->pemasukan_dok_penawaran_hari_dari,
+
             'pemasukan_dok_penawaran_jumlah' => $request->pemasukan_dok_penawaran_jumlah,
             'pemasukan_dok_penawaran_tgl' =>$request->pemasukan_dok_penawaran_tgl,
             'pemasukan_dok_penawaran_hari' => $request->pemasukan_dok_penawaran_hari,
@@ -758,8 +752,10 @@ class UpdateControllerPj extends Controller
             'sumber_dana' => $request->sumber_dana,
             'masa_garansi' => $request->masa_garansi,
             'syarat_bidang' => $request->syarat_bidang,
-            'vfmc' => $request->vfmc,
-            'vfmc2' => $request->vfmc2,
+//            'vfmc' => $request->vfmc,
+//            'vfmc2' => $request->vfmc2,
+            'jabatan_direksi' => $request->jabatan_direksi,
+            'alamat_penyerahan' => $request->alamat_penyerahan,
             'pengguna' => $request->pengguna,
             'nip' => $request->nip,
             'pejabat_pelaksana' => $request->pejabat_pelaksana,
@@ -790,8 +786,10 @@ class UpdateControllerPj extends Controller
         );
 
 
-        if (Pengadaan::whereId($request->id)->update($form_data) && PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)) {
-            return response()->json(['success' => 'Data Added successfully.']);
+        if (Pengadaan::whereId($request->id)->update($form_data)) {
+            if(PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)){
+                return response()->json(['success' => 'Data Added successfully.']);
+            }
         } else {
             return response()->json(['errors' => 'Gagal']);
         }
@@ -806,36 +804,26 @@ class UpdateControllerPj extends Controller
         $dokumenKontrak = $request->file('kontrak_file');
         $dokumenProses = $request->file('proses_file');
 
-        $dokumenKontrakNama = $request->kontrak;
-        $dokumenProsesNama = $request->proses;
+
 
         $new_name = $request->kontrak;
         $new_name1 = $request->proses;
 
         if ($dokumenKontrak != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->kontrak != null) {
-                unlink(public_path('data-kontrak/kontrak/') . $dokumenKontrakNama);
-            }
+
 
             $image = $request->file('kontrak_file');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('data-kontrak/kontrak'), $new_name);
+            $image->move(public_path('data-kontrak/kontrak/'.$request->id.'/'), $new_name);
 
         }
 
         if ($dokumenProses != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->proses != null) {
-                unlink(public_path('data-kontrak/proses/') . $dokumenProsesNama);
-            }
 
             $image1 = $request->file('proses_file');
-
             $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
-            $image1->move(public_path('data-kontrak/proses'), $new_name1);
+            $image1->move(public_path('data-kontrak/proses/'.$request->id.'/'), $new_name1);
         }
-
 
         $rules = array(
             'tanggal_mulai' => 'required',
@@ -897,6 +885,11 @@ class UpdateControllerPj extends Controller
             'addendum_rks_hari' => $request->addendum_rks_hari,
 
             'pemasukan_dok_penawaran_nomor' => $request->nppv8,
+
+            'pemasukan_dok_penawaran_jumlah_dari' => $request->pemasukan_dok_penawaran_jumlah_dari,
+            'pemasukan_dok_penawaran_tgl_dari' =>$request->pemasukan_dok_penawaran_tgl_dari,
+            'pemasukan_dok_penawaran_hari_dari' => $request->pemasukan_dok_penawaran_hari_dari,
+
             'pemasukan_dok_penawaran_jumlah' => $request->pemasukan_dok_penawaran_jumlah,
             'pemasukan_dok_penawaran_tgl' =>$request->pemasukan_dok_penawaran_tgl,
             'pemasukan_dok_penawaran_hari' => $request->pemasukan_dok_penawaran_hari,
@@ -1024,8 +1017,10 @@ class UpdateControllerPj extends Controller
             'sumber_dana' => $request->sumber_dana,
             'masa_garansi' => $request->masa_garansi,
             'syarat_bidang' => $request->syarat_bidang,
-            'vfmc' => $request->vfmc,
-            'vfmc2' => $request->vfmc2,
+//            'vfmc' => $request->vfmc,
+//            'vfmc2' => $request->vfmc2,
+            'jabatan_direksi' => $request->jabatan_direksi,
+            'alamat_penyerahan' => $request->alamat_penyerahan,
             'pengguna' => $request->pengguna,
             'nip' => $request->nip,
             'pejabat_pelaksana' => $request->pejabat_pelaksana,
@@ -1056,8 +1051,10 @@ class UpdateControllerPj extends Controller
         );
 
 
-        if (Pengadaan::whereId($request->id)->update($form_data) && PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)) {
-            return response()->json(['success' => 'Data Added successfully.']);
+        if (Pengadaan::whereId($request->id)->update($form_data)) {
+            if(PengadaanDetailPj::where('id_pengadaan',$request->id)->update($form_data_hari)){
+                return response()->json(['success' => 'Data Added successfully.']);
+            }
         } else {
             return response()->json(['errors' => 'Gagal']);
         }

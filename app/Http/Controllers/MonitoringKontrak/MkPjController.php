@@ -12,12 +12,10 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\Settings;
 use setasign\Fpdi\Fpdi;
 use Twilio\Rest\Client;
 use Yajra\DataTables\DataTables;
+
 
 class MkPjController extends Controller
 {
@@ -39,14 +37,14 @@ class MkPjController extends Controller
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
 
 
-                        $button .= '<a href="downloadProses/' . $data->proses . '"  class="detail dropdown-item">Proses</a>';
-                        $button .= '<a target="_blank" href="downloadKontrak/' . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
+                        $button .= '<a href="downloadProses/'.$data->id.'/' . $data->proses . '"  class="detail dropdown-item">Proses</a>';
+                        $button .= '<a target="_blank" href="downloadKontrak/'.$data->id.'/'  . $data->kontrak . '" class="detail dropdown-item">Kontrak</a>';
 
                         $button .= '</div></div>';
                         return $button;
                     }
                     if (AturUser::where(['id_user' => Auth::user()->id, 'id_pengadaan' => $data->id])->count() == 1) {
-                        $button = '<a target="_blank" href="downloadKontrak/' . $data->kontrak . '" class="detail btn btn-warning btn-sm">Kontrak</a>';
+                        $button = '<a target="_blank" href="downloadKontrak/'.$data->id.'/'  . $data->kontrak . '" class="detail btn btn-warning btn-sm">Kontrak</a>';
                         return $button;
                     }
                 })
@@ -129,6 +127,7 @@ class MkPjController extends Controller
 
         $cek = AturUser::where(['id_user' => $id, 'id_pengadaan' => $idP])->count();
         $getUser = User::where(['id' => $id])->first();
+        $getPengadaan = Pengadaan::where('id',$idP)->first();
         if ($cek === 0) {
 
             $aturUser = new AturUser();
@@ -139,6 +138,18 @@ class MkPjController extends Controller
 
 
             if ($aturUser->save()) {
+                $sid = "AC95ff84cb05966ff362366691a6152f44";
+                $token = "de2d67790233322a942bd3243f0a5beb";
+                $twilio = new Client($sid, $token);
+
+                $twilio->messages
+                    ->create("whatsapp:".$getUser->no_hp, // to
+                        array(
+                            "from" => "whatsapp:+14155238886",
+                            "body" => "Anda diberikan hak akes untuk mendownload Kontrak Pengadaan ".$getPengadaan->judul
+                        )
+                    );
+
                 return response()->json(['success' => 'Data Added successfully.']);
             } else {
                 return response()->json(['success' => 'Gagal']);
@@ -181,7 +192,7 @@ class MkPjController extends Controller
         $pdf->Rotate(0);
     }
 
-    function add_watermark($file, $nama)
+    function add_watermark($file, $nama,$judul)
     {
         $pdf = new Fpdi();
 
@@ -202,13 +213,7 @@ class MkPjController extends Controller
             }
 
 
-//            $twilio_whatsapp_number = "+12162382485";
-//            $account_sid = "AC95ff84cb05966ff362366691a6152f44";
-//            $auth_token = "de2d67790233322a942bd3243f0a5beb";
-//            $recipient = "+6285272993360";
-//            $client = new Client($account_sid, $auth_token);
-//            $message = "Your registration pin code is ";
-//            $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
+
 
             return $pdf->Output();
 
@@ -253,11 +258,12 @@ class MkPjController extends Controller
     }
 
 
-    public function downloadKontrak($id)
+    public function downloadKontrak($idP,$id)
     {
         //PDF file is stored under project/public/download/info.pdf
-        $file = public_path('data-kontrak') . "/kontrak/" . $id;
-        $this->add_watermark($file, $id);
+        $pengadaan = Pengadaan::where('id',$idP)->first();
+        $file = public_path('data-kontrak') . "/kontrak/".$idP."/". $id;
+        $this->add_watermark($file, $id,$pengadaan->judul);
 //        $headers = array(
 //            'Content-Type: application/pdf',
 //        );
@@ -265,10 +271,10 @@ class MkPjController extends Controller
 
     }
 
-    public function downloadProses($id)
+    public function downloadProses($idP,$id)
     {
 
-        $file = public_path('data-kontrak') . "/proses/" . $id;
+        $file = public_path('data-kontrak') . "/proses/" .$idP."/" . $id;
         $headers = array(
             'Content-Type: application/pdf',
         );

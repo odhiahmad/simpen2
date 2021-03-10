@@ -40,7 +40,6 @@ use App\ModelsResource\DSyaratBidangUsaha;
 use App\ModelsResource\DTempatPenyerahan;
 use App\ModelsResource\DVfmc;
 use App\Pengadaan;
-use App\PengadaanDetailPj;
 use App\PengadaanDetailSpk;
 use App\Perusahaan;
 use Illuminate\Http\Request;
@@ -57,13 +56,13 @@ class JobCardController extends Controller
                 ->addColumn('action', function ($data) {
                     $button = '';
                     if ($data->id_mp5 != null || $data->id_mp5 != 0) {
-                        $button .= '<a href="update-data-spk-1/' . $data->id . '/' . $data->id_mp2 . '/'.$data->id_mp5.'" type="button"  class="update1 btn btn-warning btn-sm">Update</a>';
+                        $button .= '<a href="update-data-spk-1/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp5 . '" type="button"  class="update1 btn btn-warning btn-sm">Update</a>';
                     } else if ($data->id_mp4 != null || $data->id_mp4 != 0) {
-                        $button .= '<a href="update-data-spk-2/' . $data->id . '/' . $data->id_mp2 . '/'.$data->id_mp4.'" type="button"  class="update2 btn btn-warning btn-sm">Update</a>';
+                        $button .= '<a href="update-data-spk-2/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp4 . '" type="button"  class="update2 btn btn-warning btn-sm">Update</a>';
                     } else if ($data->id_mp3 != null || $data->id_mp3 != 0) {
-                        $button .= '<a href="update-data-spk-3/' . $data->id . '/' . $data->id_mp2 . '/'.$data->id_mp3.'" type="button"  class="update2 btn btn-warning btn-sm">Update</a>';
+                        $button .= '<a href="update-data-spk-3/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp3 . '" type="button"  class="update2 btn btn-warning btn-sm">Update</a>';
                     } else {
-                        $button .= '<a href="update-data-spk-4/' . $data->id . '/' . $data->id_mp2 . '/'.$data->id_mp2.'" type="button"  class="update3 btn btn-warning btn-sm">Update</a>';
+                        $button .= '<a href="update-data-spk-4/' . $data->id . '/' . $data->id_mp2 . '/' . $data->id_mp2 . '" type="button"  class="update3 btn btn-warning btn-sm">Update</a>';
                     }
 
                     $button .= '&nbsp;&nbsp;';
@@ -78,19 +77,19 @@ class JobCardController extends Controller
                     if ($data->status == 'PROSES') {
                         $button = '<button type="button"  class="btn btn-outline-warning btn-sm">' . $data->status . '</button>';
                         return $button;
-                    }else if($data->status == 'DRAFT') {
+                    } else if ($data->status == 'DRAFT') {
                         $button = '<button type="button"  class="btn btn-metal btn-sm">' . $data->status . '</button>';
                         return $button;
-                    }else if($data->status == 'TTD KONTRAK') {
+                    } else if ($data->status == 'TTD KONTRAK') {
                         $button = '<button type="button"  class="btn btn-primary btn-sm">' . $data->status . '</button>';
                         return $button;
-                    }else if($data->status == 'TERKONTRAK') {
+                    } else if ($data->status == 'TERKONTRAK') {
                         $button = '<button type="button"  class="btn btn-warning btn-sm">' . $data->status . '</button>';
                         return $button;
-                    }else if($data->status == 'BACKLOG') {
+                    } else if ($data->status == 'BACKLOG') {
                         $button = '<button type="button"  class="btn btn-accent btn-sm">' . $data->status . '</button>';
                         return $button;
-                    }else if($data->status == 'DIBATALKAN') {
+                    } else if ($data->status == 'DIBATALKAN') {
                         $button = '<button type="button"  class="btn btn-danger btn-sm">' . $data->status . '</button>';
                         return $button;
                     }
@@ -108,7 +107,7 @@ class JobCardController extends Controller
                     }
 
                 })
-                ->rawColumns(['action', 'info', 'metode','warna'])
+                ->rawColumns(['action', 'info', 'metode', 'warna'])
                 ->make(true);
         }
         return view('pages/user/job-card/spk/indexPengadaan');
@@ -134,50 +133,6 @@ class JobCardController extends Controller
         return Datatables::of($data)->make(true);
     }
 
-    public function downloadRks($id)
-    {
-        $surveiHarga = new SurveiHargaPasar1();
-        $surveiHarga->SurveyHargaPasar1($id);
-
-        $data = Pengadaan::where('id', $id)->first();
-        $file = public_path('data-pengadaan') . "/rks/rks" . '.doc';
-
-        $headers = array(
-            'Content-Type: application/docx',
-        );
-
-        return Response::download($file, $data->judul . '-RKS.doc', $headers);
-    }
-
-    public function downloadShp1($id)
-    {
-        $surveiHarga = new SurveiHargaPasar1();
-        $surveiHarga->SurveyHargaPasar1($id);
-
-        $data = Pengadaan::where('id', $id)->first();
-        $file = public_path('data-pengadaan') . "/survei-harga-pasar/" . $data->judul . '.docx';
-
-        $headers = array(
-            'Content-Type: application/docx',
-        );
-
-        return Response::download($file, $data->judul . ' Survey Harga Pasar.docx', $headers);
-    }
-
-    public function downloadShp2($id)
-    {
-        $surveiHarga = new SurveiHargaPasar1();
-        $surveiHarga->SurveyHargaPasar2($id);
-
-        $data = Pengadaan::where('id', $id)->first();
-        $file = public_path('data-pengadaan') . "/survei-harga-pasar/" . $data->judul . '2.docx';
-
-        $headers = array(
-            'Content-Type: application/docx',
-        );
-
-        return Response::download($file, $data->judul . ' Form Survey Harga Pasar.docx', $headers);
-    }
 
     public function downloadHps($id)
     {
@@ -418,7 +373,7 @@ class JobCardController extends Controller
         echo $output;
     }
 
-    public function indexUpdateView($id,$id1,$id2)
+    public function indexUpdateView($id, $id1, $id2)
     {
         $dataCoo = DCoo::all();
         $dataPenerbitCoo = DPenerbitCoo::all();
@@ -437,11 +392,11 @@ class JobCardController extends Controller
         $dataMetodePengadaan = DMetodePengadaan::where('id_induk', '0')->get();
         $dataPengawas = DPengawas::all();
         $dataPerjanjianKontrak = DPerjanjianKontrak::all();
-        $dataPicPelaksana = DPicPelaksana::all();
+        $dataPicPelaksana = DPicPelaksana::where('metode', 'spk')->get();
         $dataSumberDana = DSumberDana::all();
         $dataSyaratBidangUsaha = DSyaratBidangUsaha::all();
-        $dataTempatPenyerahan = DTempatPenyerahan::all();
-        $dataVfmc = DVfmc::all();
+        $dataTempatPenyerahan = DTempatPenyerahan::where('metode', 'spk')->get();
+        $dataVfmc = DVfmc::where('metode', 'spk')->get();
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         $dataStatusBerakhir = DStatusBerakhir::all();
@@ -503,11 +458,11 @@ class JobCardController extends Controller
         $dataMetodePengadaan = DMetodePengadaan::where('id_induk', '0')->get();
         $dataPengawas = DPengawas::all();
         $dataPerjanjianKontrak = DPerjanjianKontrak::all();
-        $dataPicPelaksana = DPicPelaksana::all();
+        $dataPicPelaksana = DPicPelaksana::where('metode', 'spk')->get();
         $dataSumberDana = DSumberDana::all();
         $dataSyaratBidangUsaha = DSyaratBidangUsaha::all();
-        $dataTempatPenyerahan = DTempatPenyerahan::all();
-        $dataVfmc = DVfmc::all();
+        $dataTempatPenyerahan = DTempatPenyerahan::where('metode', 'spk')->get();
+        $dataVfmc = DVfmc::where('metode', 'spk')->get();
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
 
@@ -544,34 +499,24 @@ class JobCardController extends Controller
         $dokumenKontrak = $request->file('kontrak_file');
         $dokumenProses = $request->file('proses_file');
 
-        $dokumenKontrakNama = $request->kontrak;
-        $dokumenProsesNama = $request->proses;
 
         $new_name = $request->kontrak;
         $new_name1 = $request->proses;
 
         if ($dokumenKontrak != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->kontrak != null) {
-                unlink(public_path('data-kontrak/kontrak/') . $dokumenKontrakNama);
-            }
+
 
             $image = $request->file('kontrak_file');
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('data-kontrak/kontrak'), $new_name);
+            $image->move(public_path('data-kontrak/kontrak/' . $request->id . '/'), $new_name);
 
         }
 
         if ($dokumenProses != '') {
-            $cekFoto = Pengadaan::where('id', $request->id)->first();
-            if ($cekFoto->proses != null) {
-                unlink(public_path('data-kontrak/proses/') . $dokumenProsesNama);
-            }
 
             $image1 = $request->file('proses_file');
-
             $new_name1 = rand() . '.' . $image1->getClientOriginalExtension();
-            $image1->move(public_path('data-kontrak/proses'), $new_name1);
+            $image1->move(public_path('data-kontrak/proses/' . $request->id . '/'), $new_name1);
         }
 
 
@@ -589,10 +534,10 @@ class JobCardController extends Controller
             'fungsi_pembangkit' => 'required',
             'pic_pelaksana' => 'required',
             'status' => 'required',
-            'status_berakhir'=>'required'
+            'status_berakhir' => 'required'
         );
 
-        $getMp1 = DMetodePengadaan::where('id',$request->metode_pengadaan)->first();
+        $getMp1 = DMetodePengadaan::where('id', $request->metode_pengadaan)->first();
         $error = Validator::make($request->all(), $rules);
         if ($error->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
@@ -632,8 +577,10 @@ class JobCardController extends Controller
             'sumber_dana' => $request->sumber_dana,
             'masa_garansi' => $request->masa_garansi,
             'syarat_bidang' => $request->syarat_bidang,
-            'vfmc' => $request->vfmc,
-            'vfmc2' => $request->vfmc2,
+//            'vfmc' => $request->vfmc,
+//            'vfmc2' => $request->vfmc2,
+            'jabatan_direksi' => $request->jabatan_direksi,
+            'alamat_penyerahan' => $request->alamat_penyerahan,
             'pengguna' => $request->pengguna,
             'nip' => $request->nip,
             'pejabat_pelaksana' => $request->pejabat_pelaksana,
@@ -717,10 +664,14 @@ class JobCardController extends Controller
             'rks_hari' => $request->rks_hari,
         );
 
-        if (Pengadaan::whereId($request->id)->update($form_data) && PengadaanDetailSpk::where('id_pengadaan',$request->id)->update($form_data_detail)) {
-            return response()->json(['success' => 'Data Added successfully.']);
-        } else {
-            return response()->json(['errors' => 'Gagal']);
+
+        if (Pengadaan::whereId($request->id)->update($form_data)) {
+            if (PengadaanDetailSpk::where('id_pengadaan', $request->id)->update($form_data_detail)) {
+                return response()->json(['success' => 'Data Added successfully.']);
+            } else {
+                return response()->json(['gagal' => 'Gagal']);
+            }
+
         }
 
 
@@ -748,7 +699,7 @@ class JobCardController extends Controller
         if ($error->fails()) {
             return response()->json(['errors' => $error->errors()->all()]);
         }
-        $getMp1 = DMetodePengadaan::where('id',$request->metode_pengadaan)->first();
+        $getMp1 = DMetodePengadaan::where('id', $request->metode_pengadaan)->first();
 
         $pengadaan = new Pengadaan();
 
@@ -788,6 +739,8 @@ class JobCardController extends Controller
     public function destroy($id)
     {
         $data = Pengadaan::findOrFail($id);
+        $data1 = PengadaanDetailSpk::where('id_pengadaan', $id)->first();
         $data->delete();
+        $data1->delete();
     }
 }

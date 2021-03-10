@@ -21,6 +21,8 @@ class Perusahaan extends Model
         'npwp',
         'sebutan_jabatan',
         'bentuk_perusahaan',
+        'telpon',
+        'faksimili',
         'foto',
     ];
 

@@ -62,7 +62,7 @@
                                                 Pekerjaan
                                             </th>
                                             <th>
-                                                Vol Pekerjaan
+                                                Harga
                                             </th>
                                             <th>
                                                 Satuan Pekerjaan

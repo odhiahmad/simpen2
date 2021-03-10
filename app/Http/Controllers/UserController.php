@@ -63,6 +63,7 @@ class UserController extends Controller
             'username' => $request->username,
             'password' => Hash::make($request->password),
             'jabatan' => $request->jabatan,
+            'role' => $request->role_user,
             'role_user' => $request->role_user,
             'no_hp' => $request->no_hp
         );
@@ -118,6 +119,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
                 'jabatan' => $request->jabatan,
                 'role_user' => $request->role_user,
+                'role' => $request->role_user,
                 'no_hp' => $request->no_hp,
 
             );
@@ -145,6 +147,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
                 'jabatan' => $request->jabatan,
                 'role_user' => $request->role_user,
+                'role' => $request->role_user,
                 'no_hp' => $request->no_hp,
 
             );

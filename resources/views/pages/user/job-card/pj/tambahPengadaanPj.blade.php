@@ -249,7 +249,7 @@
                                 <label>
                                     RAB:
                                 </label>
-                                <input type="text" value="0" class="form-control m-input" id="rab" name="rab"
+                                <input type="number" value="0" class="form-control m-input" id="rab" name="rab"
                                        placeholder="Masukan RAB">
                                 <span class="m-form__help"></span>
                             </div>

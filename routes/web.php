@@ -14,6 +14,8 @@ use \App\Http\Controllers\JobCard\JobCardPjController;
 use \App\Http\Controllers\JobCard\JobCardSpbjController;
 
 use \App\Http\Controllers\JobCard\Spk\DownloadControllerSpk;
+use \App\Http\Controllers\JobCard\Pj\DownloadControllerPj;
+use \App\Http\Controllers\JobCard\Spbj\DownloadControllerSpbj;
 
 use \App\Http\Controllers\PengadaanSipil\PengadaanSipilController;
 
@@ -64,8 +66,12 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
     });
 
     Route::group(['prefix'=>'jobcard'],function (){
+        Route::group(['prefix'=>'mj'],function () {
+            Route::get('index', [JobCardSpbjController::class, 'indexMonitoring']);
+        });
+
         Route::group(['prefix'=>'pj'],function (){
-            Route::get('destroy/{id}', [JobCardPjController::class, 'pj.destroy']);
+            Route::get('destroy/{id}', [JobCardPjController::class, 'destroy']);
             Route::get('index',  [JobCardPjController::class, 'index']);
             Route::get('tambah',  [JobCardPjController::class, 'tambahPengadaan']);
 
@@ -89,26 +95,83 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
 
             Route::get('{id}/info',  [JobCardPjController::class, 'info']);
 
-            Route::get('download-rks/{id}',  [JobCardPjController::class, 'downloadRks']);
+            Route::get('download-shp1/{id}',  [DownloadControllerPj::class, 'downloadSurveyHargaPasar']);
+            Route::get('download-shp2/{id}',  [DownloadControllerPj::class, 'downloadSurveyHargaPasar2']);
+            Route::get('download-rks/{id}',  [DownloadControllerPj::class, 'downloadRks']);
+            Route::get('download-hps/{id}',  [DownloadControllerPj::class, 'downloadHps']);
+            Route::get('downloadPengumuman/{id}',  [DownloadControllerPj::class, 'downloadPengumuman']);
+            Route::get('download-und-cda/{id}',  [DownloadControllerPj::class, 'downloadUndanganCda']);
+            Route::get('download-berita-acara-cda/{id}',  [DownloadControllerPj::class, 'downloadBeritaAcaraCda']);
+            Route::get('download-daftar-hadir-pelaksana-cda/{id}',  [DownloadControllerPj::class, 'downloadDaftarHadirPelaksanaCda']);
+            Route::get('download-daftar-hadir-penyedia-cda/{id}',  [DownloadControllerPj::class, 'downloadDaftarHadirPenyediaCda']);
+            Route::get('download-nd-usulan-calon/{id}',  [DownloadControllerPj::class, 'downloadNdUsulanCalon']);
+            Route::get('download-nd-penetapan-pemenang/{id}',  [DownloadControllerPj::class, 'downloadNdPenetapanPemenang']);
+            Route::get('download-laporan-hasil-evaluasi/{id}',  [DownloadControllerPj::class, 'downloadLaporanHasilEvaluasi']);
 
-            Route::get('download-shp1/{id}',  [JobCardPjController::class, 'downloadShp1']);
-            Route::get('download-shp2/{id}',  [JobCardPjController::class, 'downloadShp2']);
-            Route::get('download-hps/{id}',  [JobCardPjController::class, 'downloadHps']);
-            Route::get('download-uplh/{id}',  [JobCardPjController::class, 'downloadUplh']);
+            Route::get('download-undangan-hasil-klarifikasi/{id}',  [DownloadControllerPj::class, 'downloadUndanganHasilKlarifikasi']);
+            Route::get('download-form-daftar-hadir-penyedia/{id}',  [DownloadControllerPj::class, 'downloadDaftarHadirPenyediaKlarifikasi']);
+            Route::get('download-form-daftar-hadir-pelaksana/{id}',  [DownloadControllerPj::class, 'downloadDaftarHadirPelaksanaKlarifikasi']);
 
-            Route::get('evaluasiDokumen1/{id}',  [JobCardPjController::class, 'downloadEvaluasiDokumen1']);
-            Route::get('evaluasiDokumen2/{id}',  [JobCardPjController::class, 'downloadEvaluasiDokumen2']);
-            Route::get('evaluasiDokumen3/{id}',  [JobCardPjController::class, 'downloadEvaluasiDokumen3']);
+            Route::get('download-berita-acara-klarifikasi/{id}',  [DownloadControllerPj::class, 'downloadBeritaAcaraKlarifikasi']);
+            Route::get('download-rekapitulasi/{id}',  [DownloadControllerPj::class, 'downloadRekapitulasi']);
 
-            Route::get('download-ndPenetapan/{id}',  [JobCardPjController::class, 'downloadNdPenetapan']);
-            Route::get('download-hasilPengadaan1/{id}',  [JobCardPjController::class, 'downloadHasilPengadaan1']);
-            Route::get('download-hasilPengadaan2/{id}',  [JobCardPjController::class, 'downloadHasilPengadaan2']);
-            Route::get('download-hasilKlarifikasi1/{id}',  [JobCardPjController::class, 'downloadHasilKlarifikasi1']);
-            Route::get('download-hasilKlarifikasi2/{id}',  [JobCardPjController::class, 'downloadHasilKlarifikasi2']);
-            Route::get('download-hasilKlarifikasi3/{id}',  [JobCardPjController::class, 'downloadHasilKlarifikasi3']);
-            Route::get('download-hasilKlarifikasi4/{id}',  [JobCardPjController::class, 'downloadHasilKlarifikasi4']);
-            Route::get('download-spkBarang',  [JobCardPjController::class, 'downloadSpkBarang']);
-            Route::get('download-daftarKuantitas',  [JobCardPjController::class, 'downloadDaftarKuantitas']);
+            Route::get('download-asman/{id}',  [DownloadControllerPj::class, 'downloadAsman']);
+            Route::get('download-penjelasan/{id}',  [DownloadControllerPj::class, 'downloadPenjelasan']);
+            Route::get('download-aanwijzing-form/{id}',  [DownloadControllerPj::class, 'downloadAanwijzingForm']);
+            Route::get('download-aanwijzing-berita-acara/{id}',  [DownloadControllerPj::class, 'downloadAanwijzingBeritaAcara']);
+            Route::get('download-aanwijzing-daftar-hadir-penyedia/{id}',  [DownloadControllerPj::class, 'downloadAanwijzingDaftarHadir']);
+
+            Route::get('download-addendum/{id}',  [DownloadControllerPj::class, 'downloadAddendum']);
+
+            Route::get('download-pembukaan1-ba/{id}',  [DownloadControllerPj::class, 'downloadPembukaan1Ba']);
+            Route::get('download-pembukaan1-catatan/{id}',  [DownloadControllerPj::class, 'downloadPembukaan1Catatan']);
+            Route::get('download-pembukaan1-pelaksana/{id}',  [DownloadControllerPj::class, 'downloadPembukaan1Pelaksana']);
+            Route::get('download-pembukaan1-penyedia/{id}',  [DownloadControllerPj::class, 'downloadPembukaan1Penyedia']);
+
+            Route::get('download-eva1-daftar-hadir/{id}',  [DownloadControllerPj::class, 'downloadEva1Hadir']);
+            Route::get('download-eva1-hasil-penilaian/{id}',  [DownloadControllerPj::class, 'downloadEva1Penilaian']);
+            Route::get('download-eva1-rekap-hasil/{id}',  [DownloadControllerPj::class, 'downloadEva1Hasil']);
+            Route::get('download-eva1-pengumuman/{id}',  [DownloadControllerPj::class, 'downloadEva1Pengumuman']);
+
+            Route::get('download-pembukaan2-ba/{id}',  [DownloadControllerPj::class, 'downloadPembukaan2Ba']);
+            Route::get('download-pembukaan2-undangan/{id}',  [DownloadControllerPj::class, 'downloadPembukaan2Undangan']);
+            Route::get('download-pembukaan2-pelaksana/{id}',  [DownloadControllerPj::class, 'downloadPembukaan2Pelaksana']);
+            Route::get('download-pembukaan2-penyedia/{id}',  [DownloadControllerPj::class, 'downloadPembukaan2Penyedia']);
+
+            Route::get('download-eva2-daftar-hadir/{id}',  [DownloadControllerPj::class, 'downloadEva2Hadir']);
+            Route::get('download-eva2-hasil-penilaian/{id}',  [DownloadControllerPj::class, 'downloadEva2Penilaian']);
+            Route::get('download-eva2-rekap-hasil/{id}',  [DownloadControllerPj::class, 'downloadEva2Hasil']);
+            Route::get('download-eva2-catatan-koreksi/{id}',  [DownloadControllerPj::class, 'downloadEva2CatatanKoreksi']);
+            Route::get('download-eva2-pengumuman/{id}',  [DownloadControllerPj::class, 'downloadEva2Pengumuman']);
+
+            Route::get('download-undangan-pembuktian/{id}',  [DownloadControllerPj::class, 'downloadUndanganPembuktian']);
+
+            Route::get('download-skpp/{id}',  [DownloadControllerPj::class, 'downloadSkpp']);
+            Route::get('download-sppbj/{id}',  [DownloadControllerPj::class, 'downloadSppbj']);
+
+            Route::get('download-pengumuman-calon/{id}',  [DownloadControllerPj::class, 'downloadPengumumanCalon']);
+
+            Route::get('download-pembuktian-undangan/{id}',  [DownloadControllerPj::class, 'downloadPembuktianUndangan']);
+            Route::get('download-pembuktian-daftar-penyedia/{id}',  [DownloadControllerPj::class, 'downloadPembuktianDaftarPenyedia']);
+            Route::get('download-pembuktian-daftar-pelaksana/{id}',  [DownloadControllerPj::class, 'downloadPembuktianDaftarPelaksana']);
+            Route::get('download-pembuktian-hasil/{id}',  [DownloadControllerPj::class, 'downloadPembuktianHasil']);
+            Route::get('download-pembuktian-rekap/{id}',  [DownloadControllerPj::class, 'downloadPembuktianRekap']);
+
+            Route::get('download-pemasukan-penawaran/{id}',  [DownloadControllerPj::class, 'downloadPemasukanPenawaran']);
+
+            Route::get('download-pembukaan-penawaran-ba/{id}',  [DownloadControllerPj::class, 'downloadPembukaanPenawaranBa']);
+            Route::get('download-pembukaan-penawaran-catatan/{id}',  [DownloadControllerPj::class, 'downloadPembukaanPenawaranCatatan']);
+            Route::get('download-pembukaan-penawaran-pelaksana/{id}',  [DownloadControllerPj::class, 'downloadPembukaanPenawaranPelaksana']);
+            Route::get('download-pembukaan-penawaran-penyedia/{id}',  [DownloadControllerPj::class, 'downloadPembukaanPenawaranPenyedia']);
+
+            Route::get('download-eva-penawaran-ba/{id}',  [DownloadControllerPj::class, 'downloadEvaPenawaranBa']);
+            Route::get('download-eva-penawaran-catatan/{id}',  [DownloadControllerPj::class, 'downloadEvaPenawaranCatatan']);
+            Route::get('download-eva-penawaran-daftar/{id}',  [DownloadControllerPj::class, 'downloadEvaPenawaranDaftar']);
+            Route::get('download-eva-penawaran-rekap/{id}',  [DownloadControllerPj::class, 'downloadEvaPenawaranRekap']);
+            Route::get('download-eva-penawaran-rekap-hasil/{id}',  [DownloadControllerPj::class, 'downloadEvaPenawaranRekapHasil']);
+
+
+
 
         });
         Route::group(['prefix'=>'spbj'],function (){
@@ -126,26 +189,27 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
 
             Route::get('{id}/info',  [JobCardSpbjController::class, 'info']);
 
-            Route::get('download-rks/{id}',  [JobCardSpbjController::class, 'downloadRks']);
+            Route::get('download-rks/{id}',  [DownloadControllerSpbj::class, 'downloadRks']);
 
-            Route::get('download-shp1/{id}',  [JobCardSpbjController::class, 'downloadShp1']);
-            Route::get('download-shp2/{id}',  [JobCardSpbjController::class, 'downloadShp2']);
-            Route::get('download-hps/{id}',  [JobCardSpbjController::class, 'downloadHps']);
-            Route::get('download-uplh/{id}',  [JobCardSpbjController::class, 'downloadUplh']);
+            Route::get('download-shp1/{id}',  [DownloadControllerSpbj::class, 'downloadSurveyHargaPasar']);
+            Route::get('download-shp2/{id}',  [DownloadControllerSpbj::class, 'downloadSurveyHargaPasar2']);
+            Route::get('download-hps/{id}',  [JobCardController::class, 'downloadHps']);
+            Route::get('download-uplh/{id}',  [DownloadControllerSpbj::class, 'downloadUpl']);
 
-            Route::get('evaluasiDokumen1/{id}',  [JobCardSpbjController::class, 'downloadEvaluasiDokumen1']);
-            Route::get('evaluasiDokumen2/{id}',  [JobCardSpbjController::class, 'downloadEvaluasiDokumen2']);
-            Route::get('evaluasiDokumen3/{id}',  [JobCardSpbjController::class, 'downloadEvaluasiDokumen3']);
+            Route::get('evaluasiDokumen1/{id}',  [DownloadControllerSpbj::class, 'downloadEvaluasiDokumen1']);
+            Route::get('evaluasiDokumen2/{id}',  [DownloadControllerSpbj::class, 'downloadEvaluasiDokumen2']);
+            Route::get('evaluasiDokumen3/{id}',  [DownloadControllerSpbj::class, 'downloadEvaluasiDokumen3']);
 
-            Route::get('download-ndPenetapan/{id}',  [JobCardSpbjController::class, 'downloadNdPenetapan']);
-            Route::get('download-hasilPengadaan1/{id}',  [JobCardSpbjController::class, 'downloadHasilPengadaan1']);
-            Route::get('download-hasilPengadaan2/{id}',  [JobCardSpbjController::class, 'downloadHasilPengadaan2']);
-            Route::get('download-hasilKlarifikasi1/{id}',  [JobCardSpbjController::class, 'downloadHasilKlarifikasi1']);
-            Route::get('download-hasilKlarifikasi2/{id}',  [JobCardSpbjController::class, 'downloadHasilKlarifikasi2']);
-            Route::get('download-hasilKlarifikasi3/{id}',  [JobCardSpbjController::class, 'downloadHasilKlarifikasi3']);
-            Route::get('download-hasilKlarifikasi4/{id}',  [JobCardSpbjController::class, 'downloadHasilKlarifikasi4']);
-            Route::get('download-spkBarang',  [JobCardSpbjController::class, 'downloadSpkBarang']);
-            Route::get('download-daftarKuantitas',  [JobCardSpbjController::class, 'downloadDaftarKuantitas']);
+            Route::get('downloadSpbj/{id}',  [DownloadControllerSpbj::class, 'downloadSpbj']);
+            Route::get('download-ndPenetapan/{id}',  [DownloadControllerSpbj::class, 'downloadNdUsulanTetapPemenang']);
+            Route::get('download-hasilPengadaan1/{id}',  [DownloadControllerSpbj::class, 'downloadBaHasilPengadaanLangsung1']);
+            Route::get('download-hasilPengadaan2/{id}',  [DownloadControllerSpbj::class, 'downloadBaHasilPengadaanLangsung2']);
+            Route::get('download-hasilKlarifikasi1/{id}',  [DownloadControllerSpbj::class, 'downloadBaHasilKlarifikasi1']);
+            Route::get('download-hasilKlarifikasi2/{id}',  [DownloadControllerSpbj::class, 'downloadBaHasilKlarifikasi2']);
+            Route::get('download-hasilKlarifikasi3/{id}',  [JobCardController::class, 'downloadHasilKlarifikasi3']);
+            Route::get('download-hasilKlarifikasi4/{id}',  [DownloadControllerSpbj::class, 'downloadBaHasilKlarifikasi4']);
+            Route::get('download-spk/{id}',  [DownloadControllerSpbj::class, 'downloadSpk']);
+            Route::get('download-daftarKuantitas',  [JobCardController::class, 'downloadDaftarKuantitas']);
         });
         Route::group(['prefix'=>'spk'],function (){
             Route::get('destroy/{id}', [JobCardController::class, 'destroy']);
@@ -177,14 +241,14 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
             Route::get('evaluasiDokumen2/{id}',  [DownloadControllerSpk::class, 'downloadEvaluasiDokumen2']);
             Route::get('evaluasiDokumen3/{id}',  [DownloadControllerSpk::class, 'downloadEvaluasiDokumen3']);
 
-            Route::get('download-ndPenetapan/{id}',  [JobCardController::class, 'downloadNdPenetapan']);
+            Route::get('download-ndPenetapan/{id}',  [DownloadControllerSpk::class, 'downloadNdUsulanTetapPemenang']);
             Route::get('download-hasilPengadaan1/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilPengadaanLangsung1']);
             Route::get('download-hasilPengadaan2/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilPengadaanLangsung2']);
             Route::get('download-hasilKlarifikasi1/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilKlarifikasi1']);
             Route::get('download-hasilKlarifikasi2/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilKlarifikasi2']);
             Route::get('download-hasilKlarifikasi3/{id}',  [JobCardController::class, 'downloadHasilKlarifikasi3']);
             Route::get('download-hasilKlarifikasi4/{id}',  [DownloadControllerSpk::class, 'downloadBaHasilKlarifikasi4']);
-            Route::get('download-spkBarang',  [JobCardController::class, 'downloadSpkBarang']);
+            Route::get('download-spk/{id}',  [DownloadControllerSpk::class, 'downloadSpk']);
             Route::get('download-daftarKuantitas',  [JobCardController::class, 'downloadDaftarKuantitas']);
         });
 
@@ -216,8 +280,8 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
             Route::post('aturUser', [MkPjController::class,'aturUser'])->name('monitoringKontrak.pj.aturUser');
             Route::post('convertPdf', [MkPjController::class,'convertPdf'])->name('monitoringKontrak.pj.convertPdf');
             Route::post('hapusTemp', [MkPjController::class,'hapusTemp'])->name('monitoringKontrak.pj.hapusTemp');
-            Route::get('downloadKontrak/{id}', [MkPjController::class,'downloadKontrak'])->name('monitoringKontrak.pj.downloadKontrak');
-            Route::get('downloadProses/{id}', [MkPjController::class,'downloadProses'])->name('monitoringKontrak.pj.downloadProses');
+            Route::get('downloadKontrak/{idP}/{id}', [MkPjController::class,'downloadKontrak'])->name('monitoringKontrak.pj.downloadKontrak');
+            Route::get('downloadProses/{idP}/{id}', [MkPjController::class,'downloadProses'])->name('monitoringKontrak.pj.downloadProses');
         });
         Route::group(['prefix'=>'spk'],function (){
             Route::get('{id}/direksi',  [MkSpkController::class, 'direksi']);
@@ -235,8 +299,8 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
             Route::post('aturUser', [MkSpkController::class,'aturUser'])->name('monitoringKontrak.spk.aturUser');
             Route::post('convertPdf', [MkSpkController::class,'convertPdf'])->name('monitoringKontrak.spk.convertPdf');
             Route::post('hapusTemp', [MkSpkController::class,'hapusTemp'])->name('monitoringKontrak.spk.hapusTemp');
-            Route::get('downloadKontrak/{id}', [MkSpkController::class,'downloadKontrak'])->name('monitoringKontrak.spk.downloadKontrak');
-            Route::get('downloadProses/{id}', [MkSpkController::class,'downloadProses'])->name('monitoringKontrak.spk.downloadProses');
+            Route::get('downloadKontrak/{idP}/{id}', [MkSpkController::class,'downloadKontrak'])->name('monitoringKontrak.spk.downloadKontrak');
+            Route::get('downloadProses/{idP}/{id}', [MkSpkController::class,'downloadProses'])->name('monitoringKontrak.spk.downloadProses');
         });
         Route::group(['prefix'=>'spbj'],function (){
             Route::get('{id}/direksi',  [MkSpbjController::class, 'direksi']);
@@ -254,8 +318,8 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
             Route::post('aturUser', [MkSpbjController::class,'aturUser'])->name('monitoringKontrak.spbj.aturUser');
             Route::post('convertPdf', [MkSpbjController::class,'convertPdf'])->name('monitoringKontrak.spbj.convertPdf');
             Route::post('hapusTemp', [MkSpbjController::class,'hapusTemp'])->name('monitoringKontrak.spbj.hapusTemp');
-            Route::get('downloadKontrak/{id}', [MkSpbjController::class,'downloadKontrak'])->name('monitoringKontrak.spbj.downloadKontrak');
-            Route::get('downloadProses/{id}', [MkSpbjController::class,'downloadProses'])->name('monitoringKontrak.spbj.downloadProses');
+            Route::get('downloadKontrak/{idP}/{id}', [MkSpbjController::class,'downloadKontrak'])->name('monitoringKontrak.spbj.downloadKontrak');
+            Route::get('downloadProses/{idP}/{id}', [MkSpbjController::class,'downloadProses'])->name('monitoringKontrak.spbj.downloadProses');
         });
 
     });
