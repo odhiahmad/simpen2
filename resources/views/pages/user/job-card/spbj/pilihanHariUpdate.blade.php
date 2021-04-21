@@ -3,6 +3,44 @@
 </div>
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
+        RKS:
+    </label>
+    <div class="col-lg-4">
+        <input value="{{$dataPengadaanDetail->rks_nomor}}" type="text" id="nppv8" name="nppv8"
+               class="form-control m-input">
+        <span class="m-form__help"></span>
+    </div>
+    <div class="col-lg-1">
+        <input type="text" class="form-control m-input rks_jumlah"
+               name="rks_jumlah"
+               value="{{$dataPengadaanDetail->rks_jumlah}}"
+               id="rks_jumlah" placeholder="Jumlah">
+        <span class="m-form__help "></span>
+    </div>
+    <div class="col-lg-2">
+        <input
+            name="rks_tgl"
+            id="rks_tgl"
+            value="{{$dataPengadaanDetail->rks_tgl}}"
+            type='text' class="form-control" readonly placeholder="Tanggal"/>
+    </div>
+    <div class="col-lg-1">
+        <input name="rks_hari"
+               id="rks_hari"
+               readonly
+               value="{{$dataPengadaanDetail->rks_hari}}"
+               type="text" class="form-control m-input" placeholder="Hari">
+        <span class="m-form__help"></span>
+    </div>
+    <div class="col-lg-2">
+        <a href="{!!url('user/jobcard/spbj/download-rks/' . $dataPengadaan->id )!!}"
+           class="btn btn-brand btn-sm">
+            Download
+        </a>
+    </div>
+</div>
+<div class="form-group m-form__group row">
+    <label class="col-lg-2 col-form-label">
         Survey Harga Pasar:
     </label>
     <div class="col-lg-4">
@@ -86,12 +124,14 @@
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
+    @if($dataPengadaanDetail->survey_harga_pasar_tgl != null)
     <div class="col-lg-2">
         <a href="{!!url('user/jobcard/spbj/download-hps/' . $dataPengadaan->id )!!}"
            class="btn btn-brand btn-sm">
             Download
         </a>
     </div>
+    @endif
 </div>
 
 <div class="form-group m-form__group row">
@@ -137,11 +177,29 @@
 
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
-        Pemasukan Dok Penawaran  :
+        Pemasukan Dok Penawaran :
     </label>
-    <div class="col-lg-4">
-        <input type="text" value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_nomor}}" id="nppv4"
-               name="nppv4" class="form-control m-input">
+    <div class="col-lg-1">
+        <input type="text" value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_jumlah_dari}}"
+               class="form-control m-input pemasukan_dok_penawaran_jumlah_dari"
+               name="pemasukan_dok_penawaran_jumlah_dari"
+               id="pemasukan_dok_penawaran_jumlah_dari" placeholder="Jumlah">
+        <span class="m-form__help "></span>
+    </div>
+    <div class="col-lg-2">
+        <input
+            value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_tgl_dari}}"
+            name="pemasukan_dok_penawaran_tgl_dari"
+            id="pemasukan_dok_penawaran_tgl_dari"
+            type="text" class="form-control" readonly placeholder="Tanggal Dari"/>
+        <span class="m-form__help"></span>
+    </div>
+    <div class="col-lg-1">
+        <input value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_hari_dari}}"
+               name="pemasukan_dok_penawaran_hari_dari"
+               id="pemasukan_dok_penawaran_hari_dari"
+               readonly
+               type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
@@ -156,20 +214,22 @@
             value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_tgl}}"
             name="pemasukan_dok_penawaran_tgl"
             id="pemasukan_dok_penawaran_tgl"
-            type="text" class="form-control" readonly placeholder="Tanggal"/>
+            type="text" class="form-control" readonly placeholder="Tanggal Sampai"/>
     </div>
     <div class="col-lg-1">
-        <input value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_nomor}}" name="pemasukan_dok_penawaran_hari"
+        <input value="{{$dataPengadaanDetail->pemasukan_dok_penawaran_hari}}" name="pemasukan_dok_penawaran_hari"
                id="pemasukan_dok_penawaran_hari"
                readonly
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-2">
-        <a href="{!!url('user/jobcard/spbj/evaluasiDokumen1/' . $dataPengadaan->id )!!}"
-           class="btn btn-brand btn-sm">
-            Download
-        </a>
+        @if($dataPengadaanDetail->pemasukan_dok_penawaran_tgl != null)
+            <a href="{!!url('user/jobcard/spbj/download-pemasukan-penawaran/' . $dataPengadaan->id )!!}"
+               class="btn btn-brand btn-sm">
+                Download
+            </a>
+        @endif
     </div>
 </div>
 
@@ -177,9 +237,30 @@
     <label class="col-lg-2 col-form-label">
         Evaluasi Dok Penawaran :
     </label>
-    <div class="col-lg-4">
+    {{-- <div class="col-lg-12">
         <input type="text" value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_nomor}}" id="nppv5"
                name="nppv5" class="form-control m-input">
+        <span class="m-form__help"></span>
+    </div> --}}
+    <div class="col-lg-1">
+        <input type="text" value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_jumlah_dari}}"
+               class="form-control m-input evaluasi_dok_penawaran_jumlah_dari"
+               name="evaluasi_dok_penawaran_jumlah_dari"
+               id="evaluasi_dok_penawaran_jumlah_dari" placeholder="Jumlah">
+        <span class="m-form__help "></span>
+    </div>
+    <div class="col-lg-2">
+        <input
+            value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_tgl_dari}}"
+            name="evaluasi_dok_penawaran_tgl_dari"
+            id="evaluasi_dok_penawaran_tgl_dari"
+            type="text" class="form-control" readonly placeholder="Tanggal"/>
+    </div>
+    <div class="col-lg-1">
+        <input value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_hari_dari}}" name="evaluasi_dok_penawaran_hari_dari"
+               id="evaluasi_dok_penawaran_hari_dari"
+               readonly
+               type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
     <div class="col-lg-1">
@@ -203,15 +284,26 @@
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
-    <div class="col-lg-2">
+    @if($dataPengadaanDetail->evaluasi_dok_penawaran_tgl != null)
+    <div class="col-lg-1">
         <a href="{!!url('user/jobcard/spbj/evaluasiDokumen2/' . $dataPengadaan->id )!!}"
            class="btn btn-brand btn-sm">
             Download
         </a>
     </div>
+    @endif
 </div>
 
-
+<div class="form-group m-form__group row">
+    <label class="col-lg-3 col-form-label">
+        Evaluasi Dok Penawaran Nomor:
+    </label>
+    <div class="col-lg-7">
+        <input type="text" value="{{$dataPengadaanDetail->evaluasi_dok_penawaran_nomor}}" id="nppv5"
+               name="nppv5" class="form-control m-input">
+        <span class="m-form__help"></span>
+    </div>
+</div>
 
 <div class="form-group m-form__group row">
     <label class="col-lg-2 col-form-label">
@@ -243,11 +335,14 @@
                type="text" class="form-control m-input" placeholder="Hari">
         <span class="m-form__help"></span>
     </div>
+    @if($dataPengadaanDetail->ba_hasil_klarifikasi_dan_nego_penawaran_tgl != null)
     <div class="col-lg-2">
-{{--        <a href="{!!url('user/jobcard/download-hps/' . $dataPengadaan->id )!!}"--}}
-{{--           class="btn btn-brand btn-sm">--}}
-{{--            Download--}}
-{{--        </a>--}}
+        <a href="{!!url('user/jobcard/spbj/download-berita-acara-klarifikasi/' . $dataPengadaan->id )!!}"
+           class="btn btn-brand btn-sm">
+            Download
+        </a>
+    </div>
+    @endif
     </div>
 </div>
 

@@ -72,6 +72,7 @@ class DatabaseHargaController extends Controller
 
     public function indexUbahHarga(Request $request)
     {
+
         $databaseHarga = DatabaseHarga::where('id', $request->id)->first();
         return view('pages/user/database-harga/editHarga', compact('databaseHarga'));
     }

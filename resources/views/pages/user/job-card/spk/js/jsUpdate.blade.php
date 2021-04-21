@@ -46,7 +46,7 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.spk.barang.fetch')}}",
+                    url: "{{route('jobcard.spk.fetch')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
@@ -67,7 +67,7 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.spk.barang.fetchJenis1')}}",
+                    url: "{{route('jobcard.spk.fetchJenis1')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
@@ -89,7 +89,7 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.spk.barang.fetch')}}",
+                    url: "{{route('jobcard.spk.fetch')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
@@ -110,7 +110,7 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.spk.barang.fetch')}}",
+                    url: "{{route('jobcard.spk.fetch')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
@@ -121,6 +121,36 @@
             }
         })
 
+
+        $('.tempat_penyerahan').change(function () {
+            if ($(this).val() != '') {
+
+                var select = $(this).attr("id");
+                var value = $(this).val();
+                var id = $('.tempat_penyerahan option:selected').data('id');
+                var dependent = $(this).data('dependent')
+                var _token = $('input[name="_token"]').val()
+
+                $.ajax({
+                    url: "{{route('jobcard.spbj.getAlamatPenyerahan')}}",
+                    method: "POST",
+                    data: {select: select,id:id, value: value, _token: _token, dependent: dependent},
+                    success: function (result) {
+                        console.log(result.data.alamat)
+                        $("#alamat_penyerahan").val(result.data.alamat);
+                    
+                    }
+                })
+            }
+        })
+
+        $('.jabatan_direksi').change(function () {
+            if ($(this).val() != '') {
+
+                $(".direksi").val($('.jabatan_direksi option:selected').data('id'));
+                
+            }
+        })
 
         $("#rab, #nilai_kontrak").keyup(function () {
             // $("#rab").val(CurrencyFormat($("#rab").val()));
@@ -157,6 +187,12 @@
         $(".metode_pengadaan_jenis1").select2({
             placeholder: "Pilih Metode",
         });
+
+        $(".jabatan_direksi").select2({
+            placeholder: "Pilih Jabatan Direksi",
+        });
+
+        
         $(".pos_anggaran").select2({
             placeholder: "Pilih Pos Anggaran",
         });

@@ -486,60 +486,19 @@ class JobCardSpbjController extends Controller
         echo $output;
     }
 
-    public function indexUpdateView($id, $id1, $id2)
+    public function fetchAlamatPenyerahan(Request $request)
     {
-        $dataCoo = DCoo::all();
-        $dataPenerbitCoo = DPenerbitCoo::all();
-        $dataPenerbitGaransi = DPenerbitGaransi::all();
-        $dataSistemDenda = DSistemDenda::all();
-        $dataPerusahaan = Perusahaan::all();
-        $dataPosAnggaran = DPosAnggaran::all();
-        $dataPengadaan = Pengadaan::with(['getMp1', 'getmp2', 'getMp3', 'getMp4', 'getMp5'])->where('id', $id)->first();
-        $dataPengadaanDetail = PengadaanDetailPj::where('id_pengadaan', $id)->first();
-        $dataBagian = DBagian::all();
-        $dataCaraPembayaran = DCaraPembayaran::all();
-        $dataFungsiPembangkit = DFungsiPembangkit::all();
-        $dataJenis = DJenis::all();
-        $dataMasaBerlaku = DMasaBerlaku::all();
-        $dataMasaGaransi = DMasaGaransi::all();
-        $dataMetodePengadaan = DMetodePengadaan::where('id_induk', '0')->get();
-        $dataPengawas = DPengawas::all();
-        $dataPerjanjianKontrak = DPerjanjianKontrak::all();
-        $dataPicPelaksana = DPicPelaksana::where('metode', 'pj')->get();
-        $dataSumberDana = DSumberDana::all();
-        $dataSyaratBidangUsaha = DSyaratBidangUsaha::all();
-        $dataTempatPenyerahan = DTempatPenyerahan::where('metode', 'pj')->get();
-        $dataVfmc = DVfmc::where('metode', 'pj')->get();
-        $dataStatus = DStatus::all();
-        $dataJabatanPengawas = DJabatanPengawas::all();
-        $dataStatusBerakhir = DStatusBerakhir::all();
-        return view('pages/user/job-card/pj/updatePengadaanPj', compact([
-            'dataCoo',
-            'dataPenerbitCoo',
-            'dataPenerbitGaransi',
-            'dataSistemDenda',
-            'dataPerusahaan',
-            'dataPosAnggaran',
-            'dataPengadaan',
-            'dataBagian',
-            'dataCaraPembayaran',
-            'dataFungsiPembangkit',
-            'dataJenis',
-            'dataMasaBerlaku',
-            'dataMasaGaransi',
-            'dataMetodePengadaan',
-            'dataPengawas',
-            'dataPerjanjianKontrak',
-            'dataPicPelaksana',
-            'dataSumberDana',
-            'dataSyaratBidangUsaha',
-            'dataTempatPenyerahan',
-            'dataVfmc',
-            'dataStatus',
-            'dataJabatanPengawas',
-            'dataStatusBerakhir'
-        ]));
+    
+        $value = $request->get('id');
+      
+
+        $data = DTempatPenyerahan::where('id', $value)->first();
+
+        return response()->json(['data' => $data,'id' => $value]);
+        
     }
+
+
 
     public function tambahPengadaan()
     {
@@ -561,7 +520,7 @@ class JobCardSpbjController extends Controller
         $dataPicPelaksana = DPicPelaksana::where('metode', '=', 'pj')->get();
         $dataSumberDana = DSumberDana::all();
         $dataSyaratBidangUsaha = DSyaratBidangUsaha::all();
-        $dataTempatPenyerahan = DTempatPenyerahan::where('metode', 'pj')->get();
+        $dataTempatPenyerahan = DTempatPenyerahan::where('metode', 'spbj')->get();
         $dataVfmc = DVfmc::where('metode', 'pj')->get();
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();

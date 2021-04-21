@@ -174,6 +174,45 @@
 
             var user_id;
 
+            $('#user_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "/user/jobcard/spbj/index",
+                },
+                columns: [
+                    {
+                        data: 'judul',
+                        name: 'judul'
+                    },
+                    {
+                        data: 'metode',
+                        name: 'metode,'
+                    },
+                    {
+                        data: 'rab',
+                        name: 'rab', render: $.fn.dataTable.render.number(',', '.', 2, 'Rp. ')
+                    },
+                    {
+                        data: 'info',
+                        name: 'info',
+                    },
+                    {
+                        data: 'pic_pelaksana',
+                        name: 'pic_pelaksana',
+                    },
+                    {
+                        data: 'warna',
+                        name: 'warna',
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        order: false
+                    },
+                ]
+            });
+
             $(document).on('click', '.info', function () {
                 var id = $(this).attr('id');
                 $('.modal-content .modal-body').empty()
@@ -373,44 +412,7 @@
             });
 
 
-            var t = $('#user_table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "/user/jobcard/spbj/index",
-                },
-                columns: [
-                    {
-                        data: 'judul',
-                        name: 'judul'
-                    },
-                    {
-                        data: 'metode',
-                        name: 'metode,'
-                    },
-                    {
-                        data: 'rab',
-                        name: 'rab', render: $.fn.dataTable.render.number(',', '.', 2, 'Rp. ')
-                    },
-                    {
-                        data: 'info',
-                        name: 'info',
-                    },
-                    {
-                        data: 'pic_pelaksana',
-                        name: 'pic_pelaksana',
-                    },
-                    {
-                        data: 'warna',
-                        name: 'warna',
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        order: false
-                    },
-                ]
-            });
+         
 
 
         });

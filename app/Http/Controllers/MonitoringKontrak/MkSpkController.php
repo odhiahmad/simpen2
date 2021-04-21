@@ -130,28 +130,31 @@ class MkSpkController extends Controller
 
         if ($cek === 0) {
 
-            $aturUser = new AturUser();
-
-            $aturUser->id_user = $id;
-            $aturUser->id_pengadaan = $idP;
-            $aturUser->role = $getUser->role;
-
-
-            if ($aturUser->save()) {
-
-                $sid = "AC95ff84cb05966ff362366691a6152f44";
-                $token = "de2d67790233322a942bd3243f0a5beb";
-                $twilio = new Client($sid, $token);
-
-                $twilio->messages
-                    ->create("whatsapp:".$getUser->no_hp, // to
-                        array(
-                            "from" => "whatsapp:+14155238886",
-                            "body" => "Anda diberikan hak akes untuk mendownload Kontrak Pengadaan ".$getPengadaan->judul
-                        )
-                    );
-
-                return response()->json(['success' => 'Data Added successfully.']);
+            $key='2cf2e98cd167f9252dae06cdcf3ab68de0c806511d89f177'; //this is demo key please change with your own key
+            $url='http://116.203.191.58/api/async_send_message';
+            $data = array(
+              "phone_no"=> $getUser->no_hp,
+              "key"		=>$key,
+              "message"	=> "Anda diberikan hak akes untuk mendownload Kontrak Pengadaan ".$getPengadaan->judul,
+              "skip_link"	=>True // This optional for skip snapshot of link in message
+            );
+            $data_string = json_encode($data);
+            
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_VERBOSE, 0);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 360);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+              'Content-Type: application/json',
+              'Content-Length: ' . strlen($data_string))
+            );
+            echo $res=curl_exec($ch);
+            curl_close($ch);
 
 
             } else {

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\JobCard\Spbj;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Template\TanggalIndo;
 use App\Pengadaan;
+use App\Perusahaan;
 use App\PengadaanDetailSpbj;
 use App\PengadaanDetailSpk;
 use Novay\WordTemplate\WordTemplate;
@@ -39,7 +40,7 @@ class DownloadControllerSpbj extends Controller
 
         );
 
-        $nama_file = 'survey-harga-pasar.doc';
+        $nama_file = 'rks.doc';
 
         return $word->export($file, $array, $nama_file);
     }
@@ -277,118 +278,115 @@ class DownloadControllerSpbj extends Controller
         return $word->export($file, $array, $nama_file);
     }
 
-    public function downloadBaHasilKlarifikasi1($id){
-        $data = Pengadaan::with('getperusahaan')->where('id',$id)->first();
-        $dataDetail = PengadaanDetailSpbj::where('id_pengadaan',$id)->first();
-
+    public function downloadBeritaAcaraKlarifikasi($id)
+    {
+        $data = Pengadaan::where('id', $id)->first();
+        $dataDetail = PengadaanDetailSpbj::where('id_pengadaan', $id)->first();
+        $perusahaan = Perusahaan::where('id', $data->id_perusahaan)->first();
         $tanggalIndo = new TanggalIndo();
 
-        $tanggal=$tanggalIndo->tgl_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $bulan=$tanggalIndo->bln_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $tahun=$tanggalIndo->thn_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $gabungan = $tanggal.' '.$bulan.' '.$tahun;
+        $tanggal = $tanggalIndo->tgl_aja($dataDetail->ba_hasil_klarifikasi_dan_nego_penawaran_tgl);
+        $bulan = $tanggalIndo->bln_aja($dataDetail->ba_hasil_klarifikasi_dan_nego_penawaran_tgl);
+        $tahun = $tanggalIndo->thn_aja($dataDetail->ba_hasil_klarifikasi_dan_nego_penawaran_tgl);
+        $gabungan = $tanggal . ' ' . $bulan . ' ' . $tahun;
 
-        $tanggal1=$tanggalIndo->tgl_aja($dataDetail->rks_tgl);
-        $bulan1=$tanggalIndo->bln_aja($dataDetail->rks_tgl);
-        $tahun1=$tanggalIndo->thn_aja($dataDetail->rks_tgl);
-        $gabungan1 = $tanggal1.' '.$bulan1.' '.$tahun1;
+        $tanggal1 = $tanggalIndo->tgl_aja($dataDetail->rks_tgl);
+        $bulan1 = $tanggalIndo->bln_aja($dataDetail->rks_tgl);
+        $tahun1 = $tanggalIndo->thn_aja($dataDetail->rks_tgl);
+        $gabungan1 = $tanggal1 . ' ' . $bulan1 . ' ' . $tahun1;
+
 
         $word = new WordTemplate();
-        $file = public_path('doc/spk/eva_pembuktian_kualifikasi.rtf');
+        $file = public_path('doc/spbj/berita_acara_klarifikasi.rtf');
 
         $array = array(
-            '[Judul]' => $data->judul,
-            '[Rks]' => $dataDetail->rks_nomor,
-            '[Tanggal_Rks]' => $gabungan1,
-            '[Hari]' => $dataDetail->ba_hasil_klarifikasi_hari,
-            '[Tanggal]' => $tanggalIndo->terbilang($tanggal),
-            '[Bulan]' => $bulan,
-            '[Tahun]' => $tanggalIndo->terbilang($tahun),
-            '[Pejabat_Pelaksana]' => $data->pejabat_pelaksana,
-            '[Nama_Perusahaan]' => $data['getperusahaan']['nama'],
-            '[Alamat]' => $data['getperusahaan']['alamat'],
-            '[Npwp]' => $data['getperusahaan']['npwp'],
-
+            '[nomor]' => $dataDetail->ba_hasil_klarifikasi_dan_nego_penawaran_nomor,
+            '[rks_nomor]' => $dataDetail->rks_nomor,
+            '[rks_tanggal]' => $gabungan1,
+            '[hps]' => $data->hps,
+            '[penawaran]' => $data->harga_penawaran,
+            '[perusahaan_nama]' => $perusahaan->nama,
+            '[perusahaan_alamat]' => $perusahaan->alamat,
+            '[perusahaan_npwp]' => $perusahaan->npwp,
+            '[perusahaan_pimpinan]' => $perusahaan->pimpinan,
+            '[pejabat_pelaksana]' => $data->pejabat_pelaksana,
+            '[manager]' => $data->direksi,
         );
 
-        $nama_file = 'eva_pembuktian_kualifikasi.doc';
+        $nama_file = 'berita_acara_klarifikasi.doc';
 
         return $word->export($file, $array, $nama_file);
     }
 
-    public function downloadBaHasilKlarifikasi2($id){
-        $data = Pengadaan::with('getperusahaan')->where('id',$id)->first();
-        $dataDetail = PengadaanDetailSpbj::where('id_pengadaan',$id)->first();
+    public function downloadRekapitulasi($id)
+    {
+        $data = Pengadaan::with('getmp2')->where('id', $id)->first();
+        $dataDetail = PengadaanDetailPj::where('id_pengadaan', $id)->first();
+        $perusahaan = Perusahaan::where('id', $data->id_perusahaan)->first();
+
+        $spreadsheet = new Spreadsheet();
+
+        $loadFile = public_path('doc/pj/klarifikasi_dan_nego/rekapitulasi.xls');
+        $sSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($loadFile);
+        $worksheet = $sSheet->getSheetByName('Hasil Koreksi');
+        $worksheet->setCellValue('A10', 'RKS No. : ' . $dataDetail->addendum_rks_nomor);
+        $worksheet->setCellValue('A9', 'Tanggal : ' . $dataDetail->addendum_rks_tgl);
+
+        $worksheet->setCellValue('C43', $perusahaan->pimpinan);
+        $worksheet->setCellValue('G43', $data->pejabat_pelaksana);
+        $worksheet->setCellValue('D52', $data->direksi);
+
+        $date = date('d-m-y-' . substr((string)microtime(), 1, 8));
+        $date = str_replace(".", "", $date);
+        $filename = "export_" . $date . ".xlsx";
+
+        try {
+            $writer = new Xlsx($sSheet);
+            $writer->save($filename);
+            $content = file_get_contents($filename);
+        } catch (Exception $e) {
+            exit($e->getMessage());
+        }
+
+        header("Content-Disposition: attachment; filename=" . $filename);
+
+        unlink($filename);
+        exit($content);
+    }
+
+    public function downloadPemasukanPenawaran($id)
+    {
+        $data = Pengadaan::where('id', $id)->first();
+        $dataDetail = PengadaanDetailSpbj::where('id_pengadaan', $id)->first();
 
         $tanggalIndo = new TanggalIndo();
 
-        $tanggal=$tanggalIndo->tgl_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $bulan=$tanggalIndo->bln_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $tahun=$tanggalIndo->thn_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $gabungan = $tanggal.' '.$bulan.' '.$tahun;
+        $tanggal = $tanggalIndo->tgl_aja($dataDetail->pemasukan_dok_penawaran_tgl_dari);
+        $bulan = $tanggalIndo->bln_aja($dataDetail->pemasukan_dok_penawaran_tgl_dari);
+        $tahun = $tanggalIndo->thn_aja($dataDetail->pemasukan_dok_penawaran_tgl_dari);
+        $gabungan = $tanggal . ' ' . $bulan . ' ' . $tahun;
+
+        $tanggal1 = $tanggalIndo->tgl_aja($dataDetail->pemasukan_dok_penawaran_tgl);
+        $bulan1 = $tanggalIndo->bln_aja($dataDetail->pemasukan_dok_penawaran_tgl);
+        $tahun1 = $tanggalIndo->thn_aja($dataDetail->pemasukan_dok_penawaran_tgl);
+        $gabungan1 = $tanggal1 . ' ' . $bulan1 . ' ' . $tahun1;
 
         $word = new WordTemplate();
-        $file = public_path('doc/spk/daftar_hadir_eva_pembuktian.rtf');
+        $file = public_path('doc/spbj/pemasukan_dok_penawaran.rtf');
 
         $array = array(
-            '[Judul]' => $data->judul,
-            '[Tanggal]' => $gabungan,
-            '[Pejabat_Pelaksana]' => $data->pejabat_pelaksana,
-            '[Pic_Pelaksana]' => $data->pic_pelaksana,
-            '[Direksi]' => $data->direksi
+            '[hari]' => $dataDetail->pemasukan_dok_penawaran_hari_dari,
+            '[tanggal]' =>$gabungan,
+            '[hari1]' => $dataDetail->pemasukan_dok_penawaran_hari,
+            '[tanggal1]' => $gabungan1,
+
         );
 
-        $nama_file = 'daftar_hadir_eva_pembuktian_kualifikasi.doc';
+        $nama_file = 'pemasukan_dok_penawaran.doc';
 
         return $word->export($file, $array, $nama_file);
     }
 
-    public function downloadBaHasilKlarifikasi4($id){
-        $data = Pengadaan::with('getperusahaan')->where('id',$id)->first();
-        $dataDetail = PengadaanDetailSpbj::where('id_pengadaan',$id)->first();
-
-        $tanggalIndo = new TanggalIndo();
-
-        $tanggal=$tanggalIndo->tgl_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $bulan=$tanggalIndo->bln_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $tahun=$tanggalIndo->thn_aja($dataDetail->ba_hasil_klarifikasi_tgl);
-        $gabungan = $tanggal.' '.$bulan.' '.$tahun;
-
-        $tanggal1=$tanggalIndo->tgl_aja($dataDetail->rks_tgl);
-        $bulan1=$tanggalIndo->bln_aja($dataDetail->rks_tgl);
-        $tahun1=$tanggalIndo->thn_aja($dataDetail->rks_tgl);
-        $gabungan1 = $tanggal1.' '.$bulan1.' '.$tahun1;
-
-        $word = new WordTemplate();
-        $file = public_path('doc/spk/daftar_hadir_eva_nego.rtf');
-
-        $array = array(
-            '[Judul]' => $data->judul,
-            '[Rks]' => $dataDetail->rks_nomor,
-            '[Tanggal_Rks]' => $gabungan1,
-            '[Hari]' => $dataDetail->ba_hasil_klarifikasi_hari,
-            '[Hps]' => $data->harga_penawaran,
-            '[Hps_Pajak]' => $data->harga_kontrak,
-            '[Waktu_Penyelesaian]' => $data->jangka_waktu,
-            '[Tanggal_Penuh]' => $gabungan,
-            '[Tanggal]' => $tanggalIndo->terbilang($tanggal),
-            '[Bulan]' => $bulan,
-            '[Tahun]' => $tanggalIndo->terbilang($tahun),
-            '[Pejabat_Pelaksana]' => $data->pejabat_pelaksana,
-            '[Pic_Pelaksana]' => $data->pic_pelaksana,
-            '[Direksi]' => $data->direksi,
-            '[Manager]' => $data->ketua_tim,
-            '[Direktur]' => $data['getperusahaan']['pimpinan'],
-            '[Nama_Perusahaan]' => $data['getperusahaan']['nama'],
-            '[Alamat]' => $data['getperusahaan']['alamat'],
-            '[Npwp]' => $data['getperusahaan']['npwp'],
-
-        );
-
-        $nama_file = 'daftar-hadir-eva-nego.doc';
-
-        return $word->export($file, $array, $nama_file);
-    }
 
     public function downloadBaHasilPengadaanLangsung1($id){
         $data = Pengadaan::with('getperusahaan')->where('id',$id)->first();

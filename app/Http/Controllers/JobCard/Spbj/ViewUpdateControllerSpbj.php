@@ -27,10 +27,12 @@ use App\ModelsResource\DSumberDana;
 use App\ModelsResource\DSyaratBidangUsaha;
 use App\ModelsResource\DTempatPenyerahan;
 use App\ModelsResource\DVfmc;
+use App\ModelsResource\DDireksi;
 use App\Pengadaan;
 use App\PengadaanDetailPj;
 use App\PengadaanDetailSpbj;
 use App\Perusahaan;
+
 
 class ViewUpdateControllerSpbj extends Controller
 {
@@ -53,15 +55,17 @@ class ViewUpdateControllerSpbj extends Controller
         $dataMetodePengadaan = DMetodePengadaan::where('id_induk', '0')->get();
         $dataPengawas = DPengawas::all();
         $dataPerjanjianKontrak = DPerjanjianKontrak::all();
-        $dataPicPelaksana = DPicPelaksana::where('metode', 'pj')->get();
+        $dataPicPelaksana = DPicPelaksana::where('metode', 'spk')->get();
         $dataSumberDana = DSumberDana::all();
         $dataSyaratBidangUsaha = DSyaratBidangUsaha::all();
-        $dataTempatPenyerahan = DTempatPenyerahan::where('metode', 'pj')->get();
+        $dataTempatPenyerahan = DTempatPenyerahan::where('metode', 'spbj')->get();
         $dataVfmc = DVfmc::where('metode', 'pj')->get();
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         $dataStatusBerakhir = DStatusBerakhir::all();
+        $dataJabatanDireksi = DDireksi::all();
         return view('pages/user/job-card/spbj/updatePengadaanSpbj', compact([
+            'dataJabatanDireksi',
             'dataCoo',
             'dataPenerbitCoo',
             'dataPenerbitGaransi',

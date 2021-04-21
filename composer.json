@@ -5,6 +5,7 @@
             "url": "https://packagist.org"
         }
     },
+
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
@@ -30,7 +31,8 @@
         "setasign/fpdi": "^2.3",
         "spatie/laravel-medialibrary": "^7.5",
         "twilio/sdk": "^6.15",
-        "yajra/laravel-datatables-oracle": "~9.0"
+        "yajra/laravel-datatables-oracle": "~9.0",
+        "ext-zip": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

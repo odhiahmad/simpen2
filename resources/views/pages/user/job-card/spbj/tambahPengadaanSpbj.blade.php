@@ -72,7 +72,7 @@
                         <div class="form-group m-form__group row">
                             <div class="col-lg-6">
                                 <label>
-                                    No Proses Lakdan:
+                                    No RAB:
                                 </label>
                                 <input type="text" class="form-control m-input" id="no_proses" name="no_proses"
                                        placeholder="Masukan Nomor Proses">

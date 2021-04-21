@@ -67,6 +67,12 @@ class UpdateControllerSpbj extends Controller
         }
 
         $form_data_hari = array(
+
+            'rks_nomor' => $request->nppv8,
+            'rks_jumlah' => $request->rks_jumlah,
+            'rks_tgl' => $request->rks_tgl,
+            'rks_hari' => $request->rks_hari,
+
             'survey_harga_pasar_nomor' => $request->nppv1,
             'survey_harga_pasar_jumlah' => $request->survey_harga_pasar_jumlah,
             'survey_harga_pasar_tgl' => $request->survey_harga_pasar_tgl,
@@ -82,20 +88,22 @@ class UpdateControllerSpbj extends Controller
             'undangan_pengadaan_langsung_tgl' =>$request->pemasukan_dok_penawaran_tgl,
             'undangan_pengadaan_langsung_hari' => $request->undangan_pengadaan_langsung_hari,
 
+            'pemasukan_dok_penawaran_jumlah_dari' => $request->pemasukan_dok_penawaran_jumlah_dari,
+            'pemasukan_dok_penawaran_tgl_dari' =>$request->pemasukan_dok_penawaran_tgl_dari,
+            'pemasukan_dok_penawaran_hari_dari' => $request->pemasukan_dok_penawaran_hari_dari,
 
-
-            'pemasukan_dok_penawaran_nomor' => $request->nppv4,
             'pemasukan_dok_penawaran_jumlah' => $request->pemasukan_dok_penawaran_jumlah,
             'pemasukan_dok_penawaran_tgl' =>$request->pemasukan_dok_penawaran_tgl,
             'pemasukan_dok_penawaran_hari' => $request->pemasukan_dok_penawaran_hari,
 
-
             'evaluasi_dok_penawaran_nomor' => $request->nppv5,
+            'evaluasi_dok_penawaran_jumlah_dari' => $request->evaluasi_dok_penawaran_jumlah_dari,
+            'evaluasi_dok_penawaran_tgl_dari' => $request->evaluasi_dok_penawaran_tgl_dari,
+            'evaluasi_dok_penawaran_hari_dari' => $request->evaluasi_dok_penawaran_hari_dari,
+
             'evaluasi_dok_penawaran_jumlah' => $request->evaluasi_dok_penawaran_jumlah,
             'evaluasi_dok_penawaran_tgl' => $request->evaluasi_dok_penawaran_tgl,
             'evaluasi_dok_penawaran_hari' => $request->evaluasi_dok_penawaran_hari,
-
-
 
             'ba_hasil_klarifikasi_dan_nego_penawaran_nomor' => $request->nppv6,
             'ba_hasil_klarifikasi_dan_nego_penawaran_jumlah' => $request->ba_hasil_klarifikasi_dan_nego_penawaran_jumlah,

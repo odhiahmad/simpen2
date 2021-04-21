@@ -34,6 +34,7 @@ use App\ModelsResource\DPicPelaksana;
 use App\ModelsResource\DPosAnggaran;
 use App\ModelsResource\DSistemDenda;
 use App\ModelsResource\DStatus;
+use App\ModelsResource\DDireksi;
 use App\ModelsResource\DStatusBerakhir;
 use App\ModelsResource\DSumberDana;
 use App\ModelsResource\DSyaratBidangUsaha;
@@ -400,12 +401,14 @@ class JobCardController extends Controller
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         $dataStatusBerakhir = DStatusBerakhir::all();
+        $dataJabatanDireksi = DDireksi::all();
         $dataId1 = $id;
         $dataId2 = $id1;
         $dataId3 = $id2;
 
         return view('pages/user/job-card/spk/updatePengadaan', compact([
             'dataCoo',
+            'dataJabatanDireksi',
             'dataPenerbitCoo',
             'dataPenerbitGaransi',
             'dataSistemDenda',
@@ -742,5 +745,17 @@ class JobCardController extends Controller
         $data1 = PengadaanDetailSpk::where('id_pengadaan', $id)->first();
         $data->delete();
         $data1->delete();
+    }
+
+    public function fetchAlamatPenyerahan(Request $request)
+    {
+    
+        $value = $request->get('id');
+      
+
+        $data = DTempatPenyerahan::where('id', $value)->first();
+
+        return response()->json(['data' => $data,'id' => $value]);
+        
     }
 }

@@ -82,7 +82,7 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.pj.fetch')}}",
+                    url: "{{route('jobcard.spbj.fetch')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
@@ -103,16 +103,45 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.pj.fetchJenis1')}}",
+                    url: "{{route('jobcard.spbj.fetchJenis1')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
-
                         $('.metode_pengadaan_jenis2').html(result)
                         $('.metode_pengadaan_jenis3').html('')
                         $('.metode_pengadaan_jenis4').html('')
                     }
                 })
+            }
+        })
+
+        $('.tempat_penyerahan').change(function () {
+            if ($(this).val() != '') {
+
+                var select = $(this).attr("id");
+                var value = $(this).val();
+                var id = $('.tempat_penyerahan option:selected').data('id');
+                var dependent = $(this).data('dependent')
+                var _token = $('input[name="_token"]').val()
+
+                $.ajax({
+                    url: "{{route('jobcard.spbj.getAlamatPenyerahan')}}",
+                    method: "POST",
+                    data: {select: select,id:id, value: value, _token: _token, dependent: dependent},
+                    success: function (result) {
+                        console.log(result.data.alamat)
+                        $("#alamat_penyerahan").val(result.data.alamat);
+                    
+                    }
+                })
+            }
+        })
+
+        $('.jabatan_direksi').change(function () {
+            if ($(this).val() != '') {
+
+                $(".direksi").val($('.jabatan_direksi option:selected').data('id'));
+                
             }
         })
 
@@ -125,7 +154,7 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.pj.fetch')}}",
+                    url: "{{route('jobcard.spbj.fetch')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
@@ -147,7 +176,7 @@
                 var _token = $('input[name="_token"]').val()
 
                 $.ajax({
-                    url: "{{route('jobcard.pj.fetch')}}",
+                    url: "{{route('jobcard.spbj.fetch')}}",
                     method: "POST",
                     data: {select: select, value: value, _token: _token, dependent: dependent},
                     success: function (result) {
@@ -196,6 +225,10 @@
         });
         $(".pos_anggaran").select2({
             placeholder: "Pilih Pos Anggaran",
+        });
+
+        $(".jabatan_direksi").select2({
+            placeholder: "Pilih Jabatan Direksi",
         });
 
         $("#bagian").select2({
@@ -270,7 +303,7 @@
             // },
         });
 
-        $("#spbj_tgl,#undangan_pengadaan_langsung_tgl,#pembukaan_penawaran_sampul_satu_tgl,#evaluasi_dok_penawaran_sampul_satu_tgl,#pembukaan_penawaran_sampul_dua_tgl,#evaluasi_dok_penawaran_sampul_dua_tgl,#pengumuman_hasil_evaluasi_sampul_satu_tgl,#pengumuman_tgl,#undangan_aanwijzing_direksi_pekerjaan_tgl,#undangan_aanwijzing_peserta_tgl,#aanwijzing_tgl,#addendum_rks_tgl,#pemasukan_dok_penawaran_tgl,#pembukaan_penawaran_tgl,#evaluasi_dokumen_tgl,#evaluasi_dok_penawaran_tgl,#undangan_pembuktian_kualifikasi_tgl,#pembuktian_kualifikasi_tgl,#undangan_klarifikasi_dan_nego_penawaran_tgl,#nd_penetapan_calon_pemenang_tgl,#ba_hasil_klarifikasi_dan_nego_penawaran_tgl,#ba_hasil_klarifikasi_tgl,#laporan_hasil_evaluasi_tgl,#nd_usulan_penetapan_calon_pemenang_tgl,#pengumuman_calon_pemenang_tgl,#penunjukan_pemenang_tgl,#skkp_tgl,#undangan_cda_tgl,#cda_tgl,#pj_tgl,#bastl_tgl").datepicker({
+        $("#pemasukan_dok_penawaran_tgl_dari,#evaluasi_dok_penawaran_tgl_dari,#spbj_tgl,#undangan_pengadaan_langsung_tgl,#pembukaan_penawaran_sampul_satu_tgl,#evaluasi_dok_penawaran_sampul_satu_tgl,#pembukaan_penawaran_sampul_dua_tgl,#evaluasi_dok_penawaran_sampul_dua_tgl,#pengumuman_hasil_evaluasi_sampul_satu_tgl,#pengumuman_tgl,#undangan_aanwijzing_direksi_pekerjaan_tgl,#undangan_aanwijzing_peserta_tgl,#aanwijzing_tgl,#addendum_rks_tgl,#pemasukan_dok_penawaran_tgl,#pembukaan_penawaran_tgl,#evaluasi_dokumen_tgl,#evaluasi_dok_penawaran_tgl,#undangan_pembuktian_kualifikasi_tgl,#pembuktian_kualifikasi_tgl,#undangan_klarifikasi_dan_nego_penawaran_tgl,#nd_penetapan_calon_pemenang_tgl,#ba_hasil_klarifikasi_dan_nego_penawaran_tgl,#ba_hasil_klarifikasi_tgl,#laporan_hasil_evaluasi_tgl,#nd_usulan_penetapan_calon_pemenang_tgl,#pengumuman_calon_pemenang_tgl,#penunjukan_pemenang_tgl,#skkp_tgl,#undangan_cda_tgl,#cda_tgl,#pj_tgl,#bastl_tgl").datepicker({
             format: 'yyyy-mm-dd',
             todayHighlight: !0,
             // orientation: "bottom left",
