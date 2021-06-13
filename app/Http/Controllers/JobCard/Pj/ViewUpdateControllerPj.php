@@ -27,6 +27,7 @@ use App\ModelsResource\DSumberDana;
 use App\ModelsResource\DSyaratBidangUsaha;
 use App\ModelsResource\DTempatPenyerahan;
 use App\ModelsResource\DVfmc;
+use App\ModelsResource\DDireksi;
 use App\Pengadaan;
 use App\PengadaanDetailPj;
 use App\Perusahaan;
@@ -60,7 +61,9 @@ class ViewUpdateControllerPj extends Controller
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         $dataStatusBerakhir = DStatusBerakhir::all();
+        $dataJabatanDireksi = DDireksi::all();
         return view('pages/user/job-card/pj/updatePengadaanTeka1/updatePengadaan', compact([
+            'dataJabatanDireksi',
             'dataCoo',
             'dataPenerbitCoo',
             'dataPenerbitGaransi',
@@ -116,7 +119,9 @@ class ViewUpdateControllerPj extends Controller
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         $dataStatusBerakhir = DStatusBerakhir::all();
+        $dataJabatanDireksi = DDireksi::all();
         return view('pages/user/job-card/pj/updatePengadaanTeka2/updatePengadaan', compact([
+            'dataJabatanDireksi',
             'dataCoo',
             'dataPenerbitCoo',
             'dataPenerbitGaransi',
@@ -172,7 +177,9 @@ class ViewUpdateControllerPj extends Controller
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         $dataStatusBerakhir = DStatusBerakhir::all();
+        $dataJabatanDireksi = DDireksi::all();
         return view('pages/user/job-card/pj/updatePengadaanTetas1/updatePengadaan', compact([
+            'dataJabatanDireksi',
             'dataCoo',
             'dataPenerbitCoo',
             'dataPenerbitGaransi',
@@ -228,7 +235,9 @@ class ViewUpdateControllerPj extends Controller
         $dataStatus = DStatus::all();
         $dataJabatanPengawas = DJabatanPengawas::all();
         $dataStatusBerakhir = DStatusBerakhir::all();
+        $dataJabatanDireksi = DDireksi::all();
         return view('pages/user/job-card/pj/updatePengadaanTetas2/updatePengadaan', compact([
+            'dataJabatanDireksi',
             'dataCoo',
             'dataPenerbitCoo',
             'dataPenerbitGaransi',

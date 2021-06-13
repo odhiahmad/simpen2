@@ -604,4 +604,16 @@ class JobCardPjController extends Controller
         $data->delete();
         $data1->delete();
     }
+
+    public function fetchAlamatPenyerahan(Request $request)
+    {
+    
+        $value = $request->get('id');
+      
+
+        $data = DTempatPenyerahan::where('id', $value)->first();
+
+        return response()->json(['data' => $data,'id' => $value]);
+        
+    }
 }

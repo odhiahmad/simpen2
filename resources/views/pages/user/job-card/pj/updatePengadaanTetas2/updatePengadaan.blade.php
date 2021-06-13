@@ -287,13 +287,22 @@
                                         name="tempat_penyerahan">
                                     @foreach ($dataTempatPenyerahan as $key)
                                         <option
-                                            value="{{$key->nama}}" {{($dataPengadaan->tempat_penyerahan == $key->nama) ?"selected":''}}>
+                                            value="{{$key->nama}}" data-id="{{$key->id}}" {{($dataPengadaan->tempat_penyerahan == $key->nama) ?"selected":''}}>
                                             {{$key->nama}}
                                         </option>
                                     @endforeach
 
                                 </select>
                                 <span class="m-form__help">`</span>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>
+                                    Alamat Penyerahan:
+                                </label>
+                                <input type="text" class="form-control m-input alamat_penyerahan" disabled value="{{$dataPengadaan->alamat_penyerahan}}"
+                                       id="alamat_penyerahan" name="alamat_penyerahan"
+                                       placeholder="Alamat Penyerahan">
+                                <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
                                 <label>
@@ -429,24 +438,30 @@
 {{--                                <span class="m-form__help"></span>--}}
 {{--                            </div>--}}
 
-                            <div class="col-lg-6">
+                             <div class="col-lg-6">
                                 <label>
-                                    Jabatan Direksi:
+                                    Jabatan Direksi
                                 </label>
-                                <input type="text" class="form-control m-input" value="{{$dataPengadaan->jabatan_direksi}}"
-                                       id="jabatan_direksi" name="jabatan_direksi"
-                                       placeholder="Masukan Jabatan Direksi">
+                                <select class="form-control jabatan_direksi" id="jabatan_direksi" name="jabatan_direksi">
+                                    @foreach ($dataJabatanDireksi as $key)
+                                        <option
+                                            value="{{ $key->bagian }}" data-id="{{$key->nama}}" {{($dataPengadaan->jabatan_direksi == $key->nama) ?"selected":''}}>
+                                            {{ $key->bagian}}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="col-lg-6">
                                 <label>
-                                    Alamat Penyerahan:
+                                    Direksi:
                                 </label>
-                                <input type="text" class="form-control m-input" value="{{$dataPengadaan->alamat_penyerahan}}"
-                                       id="alamat_penyerahan" name="alamat_penyerahan"
-                                       placeholder="Masukan Alamat Penyerahan">
+                                <input type="text" class="form-control m-input direksi" disabled value="{{$dataPengadaan->direksi}}"
+                                       id="direksi" name="direksi"
+                                       placeholder="Direksi">
                                 <span class="m-form__help"></span>
                             </div>
+                            
                             <div class="col-lg-6">
                                 <label>
                                     Pengguna:
@@ -475,15 +490,7 @@
                                        placeholder="Masukan Pejabat Pelaksana">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-6">
-                                <label>
-                                    Direksi:
-                                </label>
-                                <input type="text" class="form-control m-input" value="{{$dataPengadaan->direksi}}"
-                                       id="direksi" name="direksi"
-                                       placeholder="Masukan Direksi">
-                                <span class="m-form__help"></span>
-                            </div>
+                           
                             <div class="col-lg-6">
                                 <label>
                                     Pengawas

@@ -488,15 +488,7 @@
                                        placeholder="Masukan Pejabat Pelaksana">
                                 <span class="m-form__help"></span>
                             </div>
-                            <div class="col-lg-6">
-                                <label>
-                                    Direksi:
-                                </label>
-                                <input type="text" class="form-control m-input" value="{{$dataPengadaan->direksi}}"
-                                       id="direksi" name="direksi"
-                                       placeholder="Masukan Direksi">
-                                <span class="m-form__help"></span>
-                            </div>
+                            
                             <div class="col-lg-6">
                                 <label>
                                     Pengawas

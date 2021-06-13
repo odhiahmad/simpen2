@@ -261,7 +261,8 @@
                                     </div>
                                 </li>
                             @endif
-                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi' || Auth::user()->jabatan == 'Pengawas')
+                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi' || Auth::user()->jabatan == 'Pengawas' || Auth::user()->jabatan == 'Tim Mutu'
+                            || Auth::user()->jabatan == 'Logistik'|| Auth::user()->jabatan == 'Keuangan')
                                 <li class="{{ request()->is('user/monitoring-kontrak/*') ? 'm-menu__item  m-menu__item--active m-menu__item--rel' : 'm-menu__item  m-menu__item--submenu m-menu__item--rel' }}"
                                     data-menu-submenu-toggle="click" aria-haspopup="true">
                                     <a href="#" class="m-menu__link m-menu__toggle">
@@ -312,7 +313,7 @@
                                     </div>
                                 </li>
                             @endif
-                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi' || Auth::user()->jabatan == 'Pengawas')
+                            @if(Auth::user()->jabatan == 'Admin')
                                 <li class="{{ request()->is('user/inisiasi-pengadaan-sipil/*') ? 'm-menu__item  m-menu__item--active m-menu__item--rel' : 'm-menu__item  m-menu__item--submenu m-menu__item--rel' }}"
                                     data-menu-submenu-toggle="click" aria-haspopup="true">
                                     <a href="#" class="m-menu__link m-menu__toggle">
@@ -358,7 +359,7 @@
                                     </div>
                                 </li>
                             @endif
-                            @if(Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Direksi' || Auth::user()->jabatan == 'Pengawas')
+                            @if(Auth::user()->jabatan == 'Admin')
                                 <li class="{{ request()->is('user/database-harga/*') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
                                     aria-haspopup="true">
                                     <a href='{!! url('user/database-harga/index'); !!}' class="m-menu__link ">
@@ -380,6 +381,7 @@
                                     </a>
                                 </li>
                             @endif
+                            @if(Auth::user()->jabatan  === 'Admin')
                             <li class="{{ request()->is('user/dpt/index') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"
                                 aria-haspopup="true">
                                 <a href='{!! url('user/dpt/index'); !!}' class="m-menu__link ">
@@ -389,6 +391,7 @@
 												</span>
                                 </a>
                             </li>
+                            @endif
 
 
                             {{--                                <li class="{{ request()->is('user/inisiasi-pengadaan/*') ? 'm-menu__item  m-menu__item--active' : 'm-menu__item' }}"--}}

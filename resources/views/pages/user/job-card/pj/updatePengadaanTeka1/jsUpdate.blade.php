@@ -158,6 +158,36 @@
             }
         })
 
+        $('.tempat_penyerahan').change(function () {
+            if ($(this).val() != '') {
+
+                var select = $(this).attr("id");
+                var value = $(this).val();
+                var id = $('.tempat_penyerahan option:selected').data('id');
+                var dependent = $(this).data('dependent')
+                var _token = $('input[name="_token"]').val()
+
+                $.ajax({
+                    url: "{{route('jobcard.pj.getAlamatPenyerahan')}}",
+                    method: "POST",
+                    data: {select: select,id:id, value: value, _token: _token, dependent: dependent},
+                    success: function (result) {
+                        console.log(result.data.alamat)
+                        $("#alamat_penyerahan").val(result.data.alamat);
+                    
+                    }
+                })
+            }
+        });
+
+        $('.jabatan_direksi').change(function () {
+            if ($(this).val() != '') {
+
+                $(".direksi").val($('.jabatan_direksi option:selected').data('id'));
+                
+            }
+        });
+
 
         $("#rab, #nilai_kontrak").keyup(function () {
             // $("#rab").val(CurrencyFormat($("#rab").val()));

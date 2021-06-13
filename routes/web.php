@@ -95,6 +95,8 @@ Route::group(['prefix'=>'user','middleware' => ['user']],function (){
 
             // Route::post('fetchJenis1',  [JobCardPjController::class, 'fetchDataJenis1'])->name('jobcard.pj.fetchTempatPenyerahan');
 
+            Route::post('fetchAlamatPenyerahan',  [JobCardPjController::class, 'fetchAlamatPenyerahan'])->name('jobcard.pj.getAlamatPenyerahan');
+
             Route::get('{id}/info',  [JobCardPjController::class, 'info']);
 
             Route::get('download-shp1/{id}',  [DownloadControllerPj::class, 'downloadSurveyHargaPasar']);
